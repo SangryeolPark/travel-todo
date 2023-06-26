@@ -4,10 +4,9 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import './../styles/calendar.css';
 import moment from 'moment';
 
-const Calendar = ({ data }) => {
-  console.log(data);
+const Calendar = ({ originData }) => {
   let travelList = [];
-  data.forEach(item => {
+  originData.forEach(item => {
     // 기존 종료일 + 1
     const defualtEndDate = item.endDate;
     const date = new Date(defualtEndDate);
@@ -17,7 +16,7 @@ const Calendar = ({ data }) => {
     const eventData = {
       borderColor: item.color,
       backgroundColor: item.color,
-      title: `${item.city} ${item.county}`,
+      title: `${item.city} ${item.detailCity}`,
       start: item.startDate,
       end: newEndDate,
     };

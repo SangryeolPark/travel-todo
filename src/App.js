@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout } from 'antd';
 import { Header, Content } from './styles/AppStyle';
-import Calendar from './pages/Calendar';
-import TodoInput from './pages/TodoInput';
+// import Calendar from './pages/Calendar';
+import Todo from './pages/Todo';
+
 const App = () => {
   // const [collapsed, setCollapsed] = useState(false);
 
-  const data = [
+  const originData = [
     {
       id: 1,
       city: '경상북도',
-      county: '안동시',
+      detailCity: '안동시',
       color: 'pink',
       startDate: '2023-06-30',
       endDate: '2023-07-01',
@@ -18,6 +19,7 @@ const App = () => {
         {
           id: 1,
           title: '월영교 방문',
+          complete: false,
           checkList: [
             {
               id: 1,
@@ -34,6 +36,7 @@ const App = () => {
         {
           id: 1,
           title: '안동 시장 구경',
+          complete: true,
           checkList: [
             {
               id: 1,
@@ -52,7 +55,7 @@ const App = () => {
     {
       id: 1,
       city: '대구광역시',
-      county: '북구',
+      detailCity: '북구',
       color: 'skyblue',
       startDate: '2023-06-27',
       endDate: '2023-06-28',
@@ -60,6 +63,7 @@ const App = () => {
         {
           id: 1,
           title: '경북대학교 방문',
+          complete: false,
           checkList: [
             {
               id: 1,
@@ -76,6 +80,7 @@ const App = () => {
         {
           id: 1,
           title: '함지산 등산',
+          complete: false,
           checkList: [
             {
               id: 1,
@@ -92,6 +97,8 @@ const App = () => {
       ],
     },
   ];
+  const [data, setData] = useState(originData);
+  console.log(data);
 
   return (
     <Layout>
@@ -107,8 +114,8 @@ const App = () => {
             borderRadius: 10,
           }}
         >
-          <Calendar data={data} />
-          {/* <TodoInput data={data} /> */}
+          {/* <Calendar originData={originData} /> */}
+          <Todo setData={setData} data={data} />
         </div>
       </Content>
     </Layout>
