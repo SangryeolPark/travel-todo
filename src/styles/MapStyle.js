@@ -10,8 +10,14 @@ const commonStyle = `
 
 const MapContainer = styled.div`
   display: flex;
+  position: relative;
   width: 100%;
   gap: 15px;
+  > button {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+  }
 `;
 
 const MapImage = styled.div`
