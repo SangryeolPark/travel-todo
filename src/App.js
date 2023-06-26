@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { Layout } from 'antd';
+import { Route, Routes } from 'react-router-dom';
 import { Header, Content } from './styles/AppStyle';
-// import Calendar from './pages/Calendar';
 import Todo from './pages/Todo';
+import Home from './pages/Home';
+import Map from './pages/Map';
+import Calendar from './pages/Calendar';
+import NotFound from './pages/NotFound';
+import Korea from './components/map/Korea';
+import MapDetail from './components/map/MapDetail';
 
 const App = () => {
-  // const [collapsed, setCollapsed] = useState(false);
-
   const originData = [
     {
       id: 1,
@@ -97,6 +101,7 @@ const App = () => {
       ],
     },
   ];
+
   const [data, setData] = useState(originData);
   console.log(data);
 
@@ -106,17 +111,16 @@ const App = () => {
         <span>Travel Todo</span>
       </Header>
       <Content>
-        <div
-          style={{
-            width: '100%',
-            height: '100%',
-            background: 'white',
-            borderRadius: 10,
-          }}
-        >
-          {/* <Calendar originData={originData} /> */}
-          <Todo setData={setData} data={data} />
-        </div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/map" element={<Map />}>
+            <Route index element={<Korea />} />
+            <Route path=":region" element={<MapDetail />} />
+          </Route>
+          <Route path="/calendar" element={<Calendar originData={originData} />} />
+          <Route path="/todo" element={<Todo setData={setData} data={data} />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </Content>
     </Layout>
   );
