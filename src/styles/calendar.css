@@ -1,0 +1,83 @@
+.wrap {
+  max-width: 1200px;
+  padding: 50px;
+  margin: 0 auto;
+}
+
+:root {
+  --fc-border-color: #cbcbcb;
+}
+
+:where(.css-dev-only-do-not-override-1wazalj) a {
+  color: #666666;
+  cursor: default;
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+  background-color: #f3f8ff;
+}
+
+.fc-event-title-container {
+  cursor: pointer;
+}
+
+.fc .fc-toolbar {
+  display: block;
+  position: relative;
+}
+
+.fc .fc-toolbar.fc-header-toolbar {
+  margin-bottom: 10px;
+}
+
+.fc-toolbar-title {
+  text-align: center;
+}
+
+.fc .fc-button-group {
+  position: inherit;
+}
+
+.fc .fc-button-primary {
+  background-color: #fff;
+  border-color: #fff;
+  color: #575757;
+}
+
+.fc-direction-ltr .fc-button-group > .fc-button:not(:last-child) {
+  position: absolute;
+  top: 0;
+  left: 35%;
+}
+
+.fc-direction-ltr .fc-button-group > .fc-button:not(:first-child) {
+  position: absolute;
+  top: 0;
+  right: 35%;
+}
+
+.fc-col-header-cell {
+  background: rgb(214 229 249);
+}
+
+.fc-day a {
+  color: #5e5e5e;
+  font-size: 18px;
+}
+
+.fc-day-sun a {
+  color: red;
+}
+
+.fc-day-sat a {
+  color: blue;
+}
+
+.fc .fc-daygrid-day-top {
+  justify-content: center;
+}
+
+.fc-daygrid-day-number {
+  font-size: 16px;
+  font-weight: 500;
+}
