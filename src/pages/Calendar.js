@@ -3,6 +3,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import './../styles/calendar.css';
 import moment from 'moment';
+import styled from '@emotion/styled';
 
 const Calendar = ({ originData }) => {
   let travelList = [];
@@ -22,9 +23,15 @@ const Calendar = ({ originData }) => {
     };
     travelList = [...travelList, eventData];
   });
+
   return (
     <div className="wrap">
-      <FullCalendar defaultView="dayGridMonth" plugins={[dayGridPlugin]} events={travelList} />
+      <FullCalendar
+        height="calc(100vh - 130px)"
+        initialView="dayGridMonth"
+        plugins={[dayGridPlugin]}
+        events={travelList}
+      />
     </div>
   );
 };

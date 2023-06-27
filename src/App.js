@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { Layout } from 'antd';
 import { Route, Routes } from 'react-router-dom';
 import { Header, Content } from './styles/AppStyle';
-import Todo from './pages/Todo';
 import Home from './pages/Home';
 import Map from './pages/Map';
 import Calendar from './pages/Calendar';
 import NotFound from './pages/NotFound';
 import Korea from './components/map/Korea';
 import MapDetail from './components/map/MapDetail';
+import Todo from './pages/Todo';
 
 const App = () => {
   const originData = [
