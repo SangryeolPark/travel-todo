@@ -1,14 +1,15 @@
 import React from 'react';
 
-const TodoInput = () => {
+const TodoInput = ({ data, setData }) => {
   const handleInput = () => {
-    console.log('안녕');
-    return (
-      <>
-        <input type="checkbox" />
-        <input type="text" />
-      </>
-    );
+    const newVisitList = {
+      id: Date.now(),
+      title: '',
+      complete: false,
+    };
+    const visitList = [...data[0].visitList, newVisitList];
+    const newTodo = [{ ...data[0], visitList: visitList }];
+    setData(newTodo);
   };
   return (
     <div>

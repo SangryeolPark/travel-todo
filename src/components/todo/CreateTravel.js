@@ -46,10 +46,9 @@ const CreateTravel = ({ data, setData }) => {
   const [startDate, setStartDate] = useState(data[0].startDate);
   const [endDate, setEndDate] = useState(data[0].endDate);
   const dateValue = [null, null];
-  // const dateValue = [dayjs(Date.now()), dayjs(Date.now())];
+  // const dateValue = [dayjs(startDate), dayjs(endDate)];
 
   const handleProvinceChange = value => {
-    console.log(value);
     setCity(value);
     setCities(cityData[value]);
     setDetailCity(cityData[value][0]);
@@ -84,15 +83,12 @@ const CreateTravel = ({ data, setData }) => {
       startDate: startDate,
       endDate: endDate,
     };
-    console.log(newData);
     setData([...data, newData]);
   };
 
   const handleDate = value => {
-    console.log(value);
     const startDate = moment(value[0].$d).format('YYYY-MM-DD');
     const endDate = moment(value[1].$d).format('YYYY-MM-DD');
-    console.log(startDate, endDate);
     setStartDate(startDate);
     setEndDate(endDate);
   };
