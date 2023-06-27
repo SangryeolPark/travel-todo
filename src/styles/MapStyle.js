@@ -25,6 +25,7 @@ const MapImage = styled.div`
   flex-shrink: 0;
   ${commonStyle};
   padding: 30px;
+  background: skyblue;
 `;
 
 const TravelList = styled.div`
