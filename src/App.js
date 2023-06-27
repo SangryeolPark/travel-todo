@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { Layout } from 'antd';
 import { Route, Routes } from 'react-router-dom';
-import { Header, Content } from './styles/AppStyle';
 import Home from './pages/Home';
 import Map from './pages/Map';
 import Calendar from './pages/Calendar';
@@ -9,6 +7,7 @@ import NotFound from './pages/NotFound';
 import Korea from './components/map/Korea';
 import MapDetail from './components/map/MapDetail';
 import Todo from './pages/Todo';
+import Main from './pages/Main';
 
 const App = () => {
   const originData = [
@@ -106,23 +105,18 @@ const App = () => {
   console.log(data);
 
   return (
-    <Layout>
-      <Header>
-        <span>Travel Todo</span>
-      </Header>
-      <Content>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/map" element={<Map />}>
-            <Route index element={<Korea />} />
-            <Route path=":region" element={<MapDetail />} />
-          </Route>
-          <Route path="/calendar" element={<Calendar originData={originData} />} />
-          <Route path="/todo" element={<Todo setData={setData} data={data} />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Content>
-    </Layout>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route element={<Main />}>
+        <Route path="map" element={<Map />}>
+          <Route index element={<Korea />} />
+          <Route path=":region" element={<MapDetail />} />
+        </Route>
+        <Route path="calendar" element={<Calendar originData={originData} />} />
+        <Route path="todo" element={<Todo setData={setData} data={data} />} />
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };
 export default App;

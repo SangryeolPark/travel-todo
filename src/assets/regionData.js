@@ -5,7 +5,6 @@ import Incheon from '../components/map/Incheon';
 import Gwangju from '../components/map/Gwangju';
 import Daejeon from '../components/map/Daejeon';
 import Ulsan from '../components/map/Ulsan';
-import Sejong from '../components/map/Sejong';
 import Gyeonggi from '../components/map/Gyeonggi';
 import Gangwon from '../components/map/Gangwon';
 import Chungbuk from '../components/map/Chungbuk';
@@ -24,7 +23,6 @@ const regionData = {
   29: <Gwangju />,
   30: <Daejeon />,
   31: <Ulsan />,
-  36: <Sejong />,
   41: <Gyeonggi />,
   42: <Gangwon />,
   43: <Chungbuk />,
