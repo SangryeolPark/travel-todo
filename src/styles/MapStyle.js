@@ -20,7 +20,8 @@ const MapImage = styled.div`
   overflow: auto;
   display: grid;
   place-items: center;
-  flex-basis: 750px;
+  /* flex-basis: 750px; */
+  flex-basis: 40%;
   flex-shrink: 0;
   ${commonStyle};
   padding: 30px;
@@ -28,7 +29,7 @@ const MapImage = styled.div`
 
 const TravelList = styled.div`
   ${commonStyle};
-  flex-basis: 100%;
+  flex-basis: 60%;
 `;
 
 const GyeongbukContainer = styled.div`
@@ -39,10 +40,12 @@ const GyeongbukContainer = styled.div`
 
 const UlreungSVG = styled.svg`
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 10%;
   right: 0;
-  display: block;
+  max-width: 70px;
+  max-height: 70px;
+  width: 100%;
+  height: 100%;
   border: 1.5px solid #000;
   padding-left: 16px;
   padding-top: 18px;

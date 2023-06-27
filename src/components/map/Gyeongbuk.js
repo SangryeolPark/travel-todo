@@ -5,15 +5,12 @@ const Gyeongbuk = () => {
   return (
     <GyeongbukContainer>
       <UlreungSVG
-        style={{}}
         xmlns="http://www.w3.org/2000/svg"
         fill="#fff"
         stroke="#000"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="1.25"
-        width="70"
-        height="70"
       >
         <g id="47940">
           <path

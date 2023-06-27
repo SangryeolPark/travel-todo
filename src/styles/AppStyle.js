@@ -2,10 +2,8 @@ import styled from '@emotion/styled';
 import { Layout } from 'antd';
 
 const Header = styled(Layout.Header)`
-  position: fixed;
   width: 100%;
   height: 70px;
-  z-index: 9999;
   padding: 0;
   display: flex;
   align-items: center;
@@ -21,7 +19,6 @@ const Header = styled(Layout.Header)`
 
 const Content = styled(Layout.Content)`
   height: calc(100vh - 70px);
-  margin-top: 70px;
   padding: 15px;
 `;
 
