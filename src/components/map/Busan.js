@@ -9,7 +9,8 @@ const Busan = () => {
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="1.5"
-      width="700"
+      width="100%"
+      height="100%"
       viewBox="0 0 800 750"
     >
       <g id="26">

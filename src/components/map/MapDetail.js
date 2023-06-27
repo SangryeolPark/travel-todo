@@ -3,7 +3,7 @@ import { useNavigate, useOutletContext } from 'react-router-dom';
 import regionData from '../../assets/regionData';
 
 const MapDetail = () => {
-  const { region, mapData, setMapData } = useOutletContext();
+  const { region, setMapData } = useOutletContext();
   const navigate = useNavigate();
   const [regionComponent, setRegionComponent] = useState(null);
 

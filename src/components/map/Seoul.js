@@ -9,7 +9,8 @@ const Seoul = () => {
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="1.5"
-      width="700"
+      width="100%"
+      height="100%"
       viewBox="0 0 800 655"
     >
       <g id="11">
