@@ -15,9 +15,9 @@ const Map = () => {
     mapData.forEach(item => {
       item.onclick = e => {
         if (!region) {
-          e.target.id === '36' ? console.log(e.target.id) : navigate(e.target.id); // 세종시는 상세 지도 X
+          e.target.id === '36' ? alert(e.target.id) : navigate(e.target.id); // 세종시는 상세 지도 X
         } else {
-          console.log(e.target.id);
+          alert(e.target.id);
         }
       };
     });
@@ -29,7 +29,7 @@ const Map = () => {
         <Outlet context={{ region, setMapData }} />
       </MapImage>
       <TravelList>
-        <h1>Test</h1>
+        <h1>List</h1>
       </TravelList>
     </MapContainer>
   );
