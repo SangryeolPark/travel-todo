@@ -1,8 +1,8 @@
 import React from 'react';
 import TodoInput from '../components/todo/TodoInput';
-import TodoItem from '../components/todo/TodoItem';
 import CreateTravel from './../components/todo/CreateTravel';
 import { Input } from 'antd';
+import TodoList from '../components/todo/TodoList';
 
 const { TextArea } = Input;
 
@@ -12,13 +12,13 @@ const Todo = ({ data, setData }) => {
       <CreateTravel data={data} setData={setData} />
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <div style={{ textAlign: 'start' }}>
-          <div>Travel Plan</div>
-          <TodoItem data={data} setData={setData} />
+          <h2>Travel Plan</h2>
+          <TodoList data={data} setData={setData} />
           <TodoInput data={data} setData={setData} />
         </div>
 
         <div style={{ width: '50%', textAlign: 'start', paddingLeft: 15 }}>
-          <div>Travel Review</div>
+          <h2>Travel Review</h2>
           <TextArea rows={4} style={{ marginTop: 10 }} />
         </div>
       </div>
