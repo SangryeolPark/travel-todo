@@ -22,7 +22,6 @@ const Header = styled(Layout.Header)`
 const Content = styled(Layout.Content)`
   height: calc(100vh - 70px);
   margin-top: 70px;
-  display: flex;
   padding: 15px;
 `;
 
