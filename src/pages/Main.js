@@ -1,16 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { Content, Header, PageSwitch } from '../styles/AppStyle';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { AddButton, Content, Header, PageSwitch } from '../styles/AppStyle';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEarthAsia, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
-import { faEarthAsia } from '@fortawesome/free-solid-svg-icons';
 
 const Main = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [switchBool, setSwitchBool] = useState(true);
+  const [mapPath, setMapPath] = useState(null);
 
   useEffect(() => {
-    // switchBool ? navigate('/map') : navigate('/calendar');
+    if (pathname.includes('map')) {
+      setSwitchBool(true);
+      setMapPath(pathname);
+    } else if (pathname.includes('calendar')) {
+      if (!mapPath) {
+        setMapPath('/map');
+      }
+      setSwitchBool(false);
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    switchBool ? navigate(mapPath) : navigate('/calendar');
   }, [switchBool]);
 
   return (
@@ -19,14 +33,17 @@ const Main = () => {
         <span>Travel Todo</span>
         <PageSwitch
           onChange={() => setSwitchBool(!switchBool)}
-          checkedChildren={<FontAwesomeIcon icon={faEarthAsia} />}
-          unCheckedChildren={<FontAwesomeIcon icon={faCalendarDays} />}
           checked={switchBool}
+          checkedChildren={<FontAwesomeIcon icon={faCalendarDays} />}
+          unCheckedChildren={<FontAwesomeIcon icon={faEarthAsia} />}
         />
       </Header>
       <Content>
         <Outlet />
       </Content>
+      <AddButton to="/todo">
+        <FontAwesomeIcon icon={faPlus} />
+      </AddButton>
     </>
   );
 };
