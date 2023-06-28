@@ -4,8 +4,8 @@ import Home from './pages/Home';
 import Map from './pages/Map';
 import Calendar from './pages/Calendar';
 import NotFound from './pages/NotFound';
-import Korea from './components/map/Korea';
 import MapDetail from './components/map/MapDetail';
+import Korea from './components/map/map_data/Korea';
 import Todo from './pages/Todo';
 import Main from './pages/Main';
 
@@ -100,18 +100,20 @@ const App = () => {
   // },
 
   const [data, setData] = useState(originData);
+  const [switchBool, setSwitchBool] = useState(true);
 
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route element={<Main />}>
+      <Route element={<Main switchBool={switchBool} setSwitchBool={setSwitchBool} />}>
         <Route path="map" element={<Map />}>
           <Route index element={<Korea />} />
           <Route path=":region" element={<MapDetail />} />
         </Route>
         <Route path="calendar" element={<Calendar originData={originData} />} />
       </Route>
-      <Route path="todo" element={<Todo setData={setData} data={data} />} />
+      <Route path="/todo" element={<Todo setData={setData} data={data} />} />
+      <Route path="/todo/:id" element={<Todo />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import regionData from '../../assets/regionData';
+import { BackButton } from '../../styles/MapStyle';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 const MapDetail = () => {
   const { region, setMapData } = useOutletContext();
@@ -17,10 +20,17 @@ const MapDetail = () => {
   }, []);
 
   useEffect(() => {
-    setMapData(document.querySelectorAll('path'));
+    setMapData(document.querySelectorAll('g > path'));
   }, [regionComponent]);
 
-  return <>{regionComponent}</>;
+  return (
+    <>
+      {/* <BackButton>
+        <FontAwesomeIcon icon={faChevronLeft} />
+      </BackButton> */}
+      {regionComponent}
+    </>
+  );
 };
 
 export default MapDetail;

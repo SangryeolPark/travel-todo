@@ -1,4 +1,3 @@
-import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Layout, Switch } from 'antd';
 import { Link } from 'react-router-dom';
@@ -93,8 +92,10 @@ const AddButton = styled(Link)`
   height: 75px;
   background: #ff1744;
   border-radius: 40px;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
   color: ${white};
   font-size: 35px;
+  z-index: 999;
   &:hover {
     background: #d50000;
   }

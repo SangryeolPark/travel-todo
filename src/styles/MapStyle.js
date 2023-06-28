@@ -1,5 +1,6 @@
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 
 const commonStyle = `
   height: 100%;
@@ -20,6 +21,15 @@ const fromLeft = keyframes`
   }
 `;
 
+const mapAni = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
 const MapContainer = styled.div`
   display: flex;
   position: relative;
@@ -30,6 +40,7 @@ const MapContainer = styled.div`
 `;
 
 const MapImage = styled.div`
+  position: relative;
   overflow: auto;
   display: grid;
   place-items: center;
@@ -38,8 +49,26 @@ const MapImage = styled.div`
   flex-shrink: 0;
   ${commonStyle};
   padding: 30px;
-  background: skyblue;
+  > svg,
+  div {
+    animation: ${mapAni} 0.5s ease-in-out;
+  }
 `;
+
+// const BackButton = styled(Link)`
+//   position: absolute;
+//   top: 30px;
+//   left: 30px;
+//   border: none;
+//   background: none;
+//   font-size: 30px;
+//   color: #1e88e5;
+//   transition: all 0.2s ease-in-out;
+//   &:hover {
+//     color: #1e88e5;
+//     filter: brightness(0.5);
+//   }
+// `;
 
 const TravelList = styled.div`
   ${commonStyle};
@@ -65,4 +94,13 @@ const UlreungSVG = styled.svg`
   padding-top: 18px;
 `;
 
-export { commonStyle, MapContainer, MapImage, TravelList, GyeongbukContainer, UlreungSVG };
+export {
+  commonStyle,
+  fromLeft,
+  mapAni,
+  MapContainer,
+  MapImage,
+  TravelList,
+  GyeongbukContainer,
+  UlreungSVG,
+};

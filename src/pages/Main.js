@@ -5,10 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEarthAsia, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
 
-const Main = () => {
+const Main = ({ switchBool, setSwitchBool }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [switchBool, setSwitchBool] = useState(true);
   const [mapPath, setMapPath] = useState(null);
 
   useEffect(() => {

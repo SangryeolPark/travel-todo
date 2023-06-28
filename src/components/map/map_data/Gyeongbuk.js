@@ -1,5 +1,5 @@
 import React from 'react';
-import { GyeongbukContainer, UlreungSVG } from '../../styles/MapStyle';
+import { GyeongbukContainer, UlreungSVG } from '../../../styles/MapStyle';
 
 const Gyeongbuk = () => {
   return (
