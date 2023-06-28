@@ -7,22 +7,22 @@ import styled from '@emotion/styled';
 
 const Calendar = ({ originData }) => {
   let travelList = [];
-  originData.forEach(item => {
-    // 기존 종료일 + 1
-    const defualtEndDate = item.endDate;
-    const date = new Date(defualtEndDate);
-    const addOneDay = 86400000;
-    const newDate = Number(date) + addOneDay;
-    const newEndDate = moment(newDate).format('YYYY-MM-DD');
-    const eventData = {
-      borderColor: item.color,
-      backgroundColor: item.color,
-      title: `${item.city} ${item.detailCity}`,
-      start: item.startDate,
-      end: newEndDate,
-    };
-    travelList = [...travelList, eventData];
-  });
+
+  // 기존 종료일 + 1
+  const defualtEndDate = originData.endDate;
+  const date = new Date(defualtEndDate);
+  const addOneDay = 86400000;
+  const newDate = Number(date) + addOneDay;
+  const newEndDate = moment(newDate).format('YYYY-MM-DD');
+  const eventData = {
+    borderColor: originData.color,
+    backgroundColor: originData.color,
+    title: `${originData.city} ${originData.detailCity}`,
+    start: originData.startDate,
+    end: newEndDate,
+  };
+  travelList = [...travelList, eventData];
+
   // const test = moment('June 2023').format(`'YYYY년 M월'`);
 
   useEffect(() => {
