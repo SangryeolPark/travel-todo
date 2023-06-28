@@ -14,7 +14,7 @@ const App = () => {
     id: 1,
     city: '경상북도',
     detailCity: '안동시',
-    color: 'pink',
+    color: 'rgb(0, 55, 173)',
     startDate: '2023-06-30',
     endDate: '2023-07-01',
     visitList: [
