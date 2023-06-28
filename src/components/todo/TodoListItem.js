@@ -2,10 +2,6 @@ import React, { useState } from 'react';
 import TodoCheckList from './TodoCheckList';
 
 const TodoListItem = ({ item, data, setData }) => {
-  console.log(item.checkList);
-  item.checkList.forEach(item => {
-    console.log(item);
-  });
   const checkList = item.checkList;
 
   const addCheckList = _id => {
@@ -15,16 +11,15 @@ const TodoListItem = ({ item, data, setData }) => {
       complete: false,
     };
     const checkList = [...item.checkList, newCheckList];
-    const newVisitList = [{ ...item, checkList: checkList }];
-    console.log(newVisitList);
-    const newTodoData = data.map(item => {
-      if (item.id === _id) {
-        console.log(item.visitList);
+    const newVisitList = { ...item, checkList: checkList };
+    const newVisitListData = data.visitList.map(item => {
+      if (item.id === newVisitList.id) {
+        item = newVisitList;
       }
+      return item;
     });
-    const newTodo = [{ ...data[0], visitList: newVisitList }];
-    console.log(newTodo);
-    setData(newTodo);
+    const newData = { ...data, visitList: newVisitListData };
+    setData(newData);
   };
 
   const [inputValue, setInputValue] = useState(item.title);

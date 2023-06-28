@@ -2,7 +2,7 @@ import React from 'react';
 import TodoListItem from './TodoListItem';
 
 const TodoList = ({ data, setData }) => {
-  const visitList = data[0].visitList;
+  const visitList = data.visitList;
   return (
     <div>
       {visitList.map((item, index) => (

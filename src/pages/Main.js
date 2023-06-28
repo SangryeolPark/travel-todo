@@ -10,7 +10,7 @@ const Main = () => {
   const [switchBool, setSwitchBool] = useState(true);
 
   useEffect(() => {
-    switchBool ? navigate('/map') : navigate('/calendar');
+    // switchBool ? navigate('/map') : navigate('/calendar');
   }, [switchBool]);
 
   return (

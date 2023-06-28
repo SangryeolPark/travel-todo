@@ -6,9 +6,10 @@ const TodoInput = ({ data, setData }) => {
       id: Date.now(),
       title: '',
       complete: false,
+      checkList: [],
     };
-    const visitList = [...data[0].visitList, newVisitList];
-    const newTodo = [{ ...data[0], visitList: visitList }];
+    const visitList = [...data.visitList, newVisitList];
+    const newTodo = { ...data, visitList: visitList };
     setData(newTodo);
   };
   return (
