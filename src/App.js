@@ -102,7 +102,6 @@ const App = () => {
   ];
 
   const [data, setData] = useState(originData);
-  console.log(data);
 
   return (
     <Routes>
@@ -113,8 +112,8 @@ const App = () => {
           <Route path=":region" element={<MapDetail />} />
         </Route>
         <Route path="calendar" element={<Calendar originData={originData} />} />
-        <Route path="todo" element={<Todo setData={setData} data={data} />} />
       </Route>
+      <Route path="todo" element={<Todo setData={setData} data={data} />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

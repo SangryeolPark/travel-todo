@@ -1,3 +1,4 @@
+import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
 const commonStyle = `
@@ -8,12 +9,24 @@ const commonStyle = `
   box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, 0.5);
 `;
 
+const fromLeft = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(-10%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`;
+
 const MapContainer = styled.div`
   display: flex;
   position: relative;
   width: 100%;
   height: 100%;
   gap: 15px;
+  animation: ${fromLeft} 0.5s ease-in-out;
 `;
 
 const MapImage = styled.div`
