@@ -43,8 +43,8 @@ const CreateTravel = ({ data, setData }) => {
 
   const { token } = theme.useToken();
   const [color, setColor] = useState(token.colorPrimary);
-  const [startDate, setStartDate] = useState(data[0].startDate);
-  const [endDate, setEndDate] = useState(data[0].endDate);
+  const [startDate, setStartDate] = useState(data.startDate);
+  const [endDate, setEndDate] = useState(data.endDate);
   const dateValue = [null, null];
   // const dateValue = [dayjs(startDate), dayjs(endDate)];
 
