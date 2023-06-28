@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import TodoCheckList from './TodoCheckList';
 
 const TodoListItem = ({ item, data, setData }) => {
-  console.log(item);
   const checkList = item.checkList;
 
   // checkList 추가
@@ -42,7 +41,7 @@ const TodoListItem = ({ item, data, setData }) => {
       <input type="checkbox" defaultChecked={item.complete} />
       <input
         type="text"
-        value={item.title}
+        defaultValue={item.title}
         // onChange={handleInput}
         style={{ border: 'none', background: 'transparent', fontSize: 16, fontWeight: 600 }}
       />
@@ -50,7 +49,15 @@ const TodoListItem = ({ item, data, setData }) => {
       <button onClick={() => deleteTodo(item.id)}>일정삭제</button>
       <div style={{ marginLeft: 15 }}>
         {checkList &&
-          checkList.map((item, index) => <TodoCheckList key={index} checkList={item} />)}
+          checkList.map((checkList, index) => (
+            <TodoCheckList
+              key={index}
+              checkList={checkList}
+              data={data}
+              setData={setData}
+              visitList={item}
+            />
+          ))}
       </div>
     </div>
   );
