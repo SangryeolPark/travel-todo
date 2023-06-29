@@ -6,8 +6,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import regionComponentData from '../../assets/regionComponentData';
 
 const MapDetail = () => {
-  const { region, regionDetail, /* getData, */ setMapData, breadcrumb, setBreadcrumb } =
-    useOutletContext();
+  const { region, regionDetail, /* getData, */ setMapData } = useOutletContext();
   const [regionComponent, setRegionComponent] = useState(null);
 
   useEffect(() => {

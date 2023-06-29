@@ -76,9 +76,7 @@ const Map = () => {
     <MapContainer>
       <MapImage>
         <Breadcrumb items={breadcrumb} />
-        <Outlet
-          context={{ region, regionDetail, /* getData, */ setMapData, breadcrumb, setBreadcrumb }}
-        />
+        <Outlet context={{ region, regionDetail, /* getData, */ setMapData }} />
       </MapImage>
       <TravelList>
         <h1>List</h1>
