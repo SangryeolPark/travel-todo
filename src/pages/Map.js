@@ -4,7 +4,7 @@ import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-// import axios from 'axios';
+import { tempRegionData } from '../assets/tempData';
 
 const Map = () => {
   const { region, regionDetail } = useParams();
@@ -17,7 +17,8 @@ const Map = () => {
 
   useEffect(() => {
     const getRegionData = async () => {
-      const { data } = await axios.get('/api/todo');
+      // const { data } = await axios.get('/api/todo'); // 백엔드 서버 있을 때만 작동
+      const data = tempRegionData;
       setRegionCodeData(data);
     };
     getRegionData();

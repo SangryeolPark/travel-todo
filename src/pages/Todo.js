@@ -4,6 +4,7 @@ import { TodoDiv } from '../styles/TodoStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faListCheck } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { tempRegionData } from '../assets/tempData';
 
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
@@ -39,8 +40,9 @@ const Todo = () => {
   useEffect(() => {
     const getRegion = async setRegionData => {
       try {
-        const res = await axios.get('/api/todo');
-        const result = res.data;
+        // const res = await axios.get('/api/todo');
+        // const result = res.data; // 백엔드 서버 있을 때만 작동
+        const result = tempRegionData;
         setRegionData(result);
         console.log(result);
 

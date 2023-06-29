@@ -89,6 +89,7 @@ const AddButton = styled(Button)`
   background: #ff1744;
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
   font-size: 30px;
+  z-index: 999;
   &:hover {
     background: #ff1744 !important;
     filter: brightness(1.1);
