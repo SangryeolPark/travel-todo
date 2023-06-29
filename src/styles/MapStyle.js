@@ -70,6 +70,11 @@ const MapInfo = styled(Breadcrumb)`
   }
   .ant-breadcrumb-link > a {
     height: 100%;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      color: #1e88e5;
+      background: rgba(30, 136, 229, 0.2);
+    }
   }
 `;
 
