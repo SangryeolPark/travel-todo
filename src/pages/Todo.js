@@ -22,7 +22,7 @@ const onFinish = fieldsValue => {
 
   const rangeValue = fieldsValue['date-picker'];
   const colorValue =
-    fieldsValue['color'] === '#1677FF' ? '#1677FF' : fieldsValue['color'].toHexString();
+    fieldsValue['color'] === '#1E88E5' ? '#1E88E5' : fieldsValue['color'].toHexString();
 
   const values = {
     ...fieldsValue,
@@ -33,7 +33,7 @@ const onFinish = fieldsValue => {
 };
 
 const Todo = () => {
-  const [color, setColor] = useState('#1677ff');
+  const [color, setColor] = useState('#1E88E5');
   const [regionData, setRegionData] = useState([]);
 
   useEffect(() => {
@@ -97,7 +97,7 @@ const Todo = () => {
         layout="horizontal"
         onFinish={onFinish}
         initialValues={{
-          color: '#1677FF',
+          color: '#1E88E5',
         }}
       >
         <h2>Travel Schedule</h2>
@@ -191,7 +191,11 @@ const Todo = () => {
             </Form.Item>
           </div>
           <div className="addTravelBtn">
-            <Button type="primary" htmlType="submit" style={{ marginRight: 10 }}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              style={{ marginRight: 10, background: '#1E88E5' }}
+            >
               저장
             </Button>
             <Button>취소</Button>
@@ -297,7 +301,7 @@ const Todo = () => {
                 </ul>
               </li>
               <li>
-                <Button type="primary" className="addPlanBtn">
+                <Button type="primary" className="addPlanBtn" style={{ background: '#1E88E5' }}>
                   일정 추가
                 </Button>
               </li>
