@@ -3,6 +3,7 @@ import { MapContainer, MapImage, MapInfo, TravelList } from '../styles/MapStyle'
 import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 // import axios from 'axios';
 
 const Map = () => {
@@ -11,7 +12,16 @@ const Map = () => {
   const navigate = useNavigate();
   const [mapData, setMapData] = useState([]);
   const [mapColor, setMapColor] = useState('yellow');
+  const [regionCodeData, setRegionCodeData] = useState({});
   const [regionInfo, setRegionInfo] = useState([]);
+
+  useEffect(() => {
+    const getRegionData = async () => {
+      const { data } = await axios.get('/api/todo');
+      setRegionCodeData(data);
+    };
+    getRegionData();
+  }, []);
 
   useEffect(() => {
     setMapData(document.querySelectorAll('g > path'));
@@ -24,13 +34,29 @@ const Map = () => {
         setRegionInfo([{ title: '대한민국' }]);
         break;
       case 3:
-        setRegionInfo([{ title: <Link to="/map">대한민국</Link> }, { title: pathData[2] }]);
+        setRegionInfo([
+          { title: <Link to="/map">대한민국</Link> },
+          {
+            title: regionCodeData.region.find(item => item.idRegion === parseInt(pathData[2]))
+              .region,
+          },
+        ]);
         break;
       case 4:
         setRegionInfo([
           { title: <Link to="/map">대한민국</Link> },
-          { title: <Link to={`${pathData[2]}`}>{pathData[2]}</Link> },
-          { title: pathData[3] },
+          {
+            title: (
+              <Link to={`${pathData[2]}`}>
+                {regionCodeData.region.find(item => item.idRegion === parseInt(pathData[2])).region}
+              </Link>
+            ),
+          },
+          {
+            title: regionCodeData.regionDetail.find(
+              item => item.idRegionDetail === parseInt(pathData[3])
+            ).regionDetail,
+          },
         ]);
     }
   }, [pathname]);
