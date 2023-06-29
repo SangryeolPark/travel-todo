@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Cascader, Form, Input, DatePicker, ColorPicker, Button, Checkbox } from 'antd';
 import { TodoDiv } from '../styles/TodoStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faListCheck } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
@@ -21,7 +22,7 @@ const onFinish = fieldsValue => {
 
   const rangeValue = fieldsValue['date-picker'];
   const colorValue =
-    fieldsValue['color'] === '#1677FF' ? '#1677FF' : fieldsValue['color'].toHexString();
+    fieldsValue['color'] === '#1E88E5' ? '#1E88E5' : fieldsValue['color'].toHexString();
 
   const values = {
     ...fieldsValue,
@@ -32,7 +33,62 @@ const onFinish = fieldsValue => {
 };
 
 const Todo = () => {
-  const [color, setColor] = useState('#1677ff');
+  const [color, setColor] = useState('#1E88E5');
+  const [regionData, setRegionData] = useState([]);
+
+  useEffect(() => {
+    const getRegion = async setRegionData => {
+      try {
+        const res = await axios.get('/api/todo');
+        const result = res.data;
+        setRegionData(result);
+        console.log(result);
+
+        const data = regionData.region;
+        console.log(data);
+
+        const newRegion = data.map(item => ({
+          value: item.idRegion,
+          label: item.region,
+        }));
+        console.log(newRegion);
+
+        const regionDetail = regionData.regionDetail;
+
+        console.log(regionDetail);
+        // console.log(regionDetail[0].idRegion);
+        // console.log(regionDetail[0].idRegionDetail);
+
+        const newRegionDetail = regionDetail.filter(item => item.idRegion === data[0].idRegion);
+        console.log(newRegionDetail);
+
+        // console.log(data.filter(item => item.idRegion === 48));
+
+        const newChildren = newRegionDetail.map(item => ({
+          value: item.idRegionDetail,
+          label: item.regionDetail,
+        }));
+        console.log(newChildren);
+
+        const newdata = newRegion[0];
+        const test = newRegion.map(item => ({ ...item, childeren: 'hello' }));
+        console.log(test);
+        const new1 = { ...newdata, childeren: 'hello' };
+        console.log(new1);
+
+        const test2 = test.forEach(region => {
+          const test3 = regionDetail.filter(item => item.idRegion === region.idRegion);
+          console.log(test3);
+        });
+
+        const test4 = regionDetail.filter(item => console.log(item));
+        console.log(test2);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getRegion(setRegionData);
+  }, []);
 
   return (
     <TodoDiv>
@@ -41,7 +97,7 @@ const Todo = () => {
         layout="horizontal"
         onFinish={onFinish}
         initialValues={{
-          color: '#1677FF',
+          color: '#1E88E5',
         }}
       >
         <h2>Travel Schedule</h2>
@@ -135,7 +191,11 @@ const Todo = () => {
             </Form.Item>
           </div>
           <div className="addTravelBtn">
-            <Button type="primary" htmlType="submit" style={{ marginRight: 10 }}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              style={{ marginRight: 10, background: '#1E88E5' }}
+            >
               저장
             </Button>
             <Button>취소</Button>
@@ -241,7 +301,7 @@ const Todo = () => {
                 </ul>
               </li>
               <li>
-                <Button type="primary" className="addPlanBtn">
+                <Button type="primary" className="addPlanBtn" style={{ background: '#1E88E5' }}>
                   일정 추가
                 </Button>
               </li>

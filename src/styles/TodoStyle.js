@@ -14,7 +14,7 @@ export const TodoDiv = styled.div`
   h2 {
     font-size: 24px;
     margin-bottom: 10px;
-    color: #1677ff;
+    color: #1e88e5;
   }
   .addTravelWrap {
     width: 100%;
