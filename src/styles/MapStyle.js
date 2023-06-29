@@ -48,10 +48,16 @@ const MapImage = styled.div`
   flex-basis: 40%;
   flex-shrink: 0;
   ${commonStyle};
-  padding: 30px;
+  padding: 20px;
+  padding-top: 60px;
   > svg,
   div {
     animation: ${mapAni} 0.5s ease-in-out;
+  }
+  h1 {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 `;
 

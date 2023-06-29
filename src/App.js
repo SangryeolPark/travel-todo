@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Map from './pages/Map';
@@ -8,6 +8,7 @@ import MapDetail from './components/map/MapDetail';
 import Korea from './components/map/map_data/Korea';
 import Todo from './pages/Todo';
 import Main from './pages/Main';
+import axios from 'axios';
 
 const App = () => {
   const originData = {
@@ -108,7 +109,9 @@ const App = () => {
       <Route element={<Main switchBool={switchBool} setSwitchBool={setSwitchBool} />}>
         <Route path="map" element={<Map />}>
           <Route index element={<Korea />} />
-          <Route path=":region" element={<MapDetail />} />
+          <Route path=":region" element={<MapDetail />}>
+            <Route path=":regionDetail" element={<MapDetail />} />
+          </Route>
         </Route>
         <Route path="calendar" element={<Calendar originData={originData} />} />
       </Route>

@@ -1,35 +1,71 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer, MapImage, TravelList } from '../styles/MapStyle';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Breadcrumb } from 'antd';
+// import axios from 'axios';
 
 const Map = () => {
-  const { region } = useParams();
+  const { region, regionDetail } = useParams();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const [mapData, setMapData] = useState([]);
   const [mapColor, setMapColor] = useState('yellow');
+  const [breadcrumb, setBreadcrumb] = useState([]);
 
   useEffect(() => {
     setMapData(document.querySelectorAll('g > path'));
   }, [region]);
 
+  useEffect(() => {
+    const pathData = pathname.split('/');
+    switch (pathData.length) {
+      case 2:
+        setBreadcrumb([{ title: <Link to="/map">대한민국</Link> }]);
+        break;
+      case 3:
+        setBreadcrumb([
+          { title: <Link to="/map">대한민국</Link> },
+          { title: <Link to={`${pathData[2]}`}>{pathData[2]}</Link> },
+        ]);
+        break;
+      case 4:
+        setBreadcrumb([
+          { title: <Link to="/map">대한민국</Link> },
+          { title: <Link to={`${pathData[2]}`}>{pathData[2]}</Link> },
+          { title: pathData[3] },
+        ]);
+    }
+  }, [pathname]);
+
   const hoverItem = item => {
-    item.onmouseenter = e => {
-      e.target.style.filter = 'brightness(0.9)';
+    item.onmouseenter = () => {
+      item.style.filter = 'brightness(0.9)';
     };
-    item.onmouseout = e => {
-      e.target.style.filter = 'none';
+    item.onmouseout = () => {
+      item.style.filter = 'none';
     };
   };
 
+  // const getData = async (region, regionDetail) => {
+  //   let res;
+  //   if (regionDetail) {
+  //     res = await axios.get(`/map/${region}/${regionDetail}`);
+  //     console.log(res.data);
+  //   } else {
+  //     res = await axios.get(`/map/${region}`);
+  //     console.log(res.data);
+  //   }
+  // };
+
   useEffect(() => {
     mapData.forEach(item => {
+      item.innerHTML = `<title>${item.id}</title>`;
       item.style.fill = mapColor;
-      item.onclick = e => {
+      item.onclick = () => {
         if (!region) {
-          // 상세 지역 아닐 때
-          e.target.id === '36' ? alert(e.target.id) : navigate(e.target.id); // 세종시는 상세 지도 X
+          navigate(item.id);
         } else {
-          alert(e.target.id);
+          region === '36' ? null : navigate(`${region}/${item.id}`);
         }
       };
       hoverItem(item);
@@ -39,7 +75,10 @@ const Map = () => {
   return (
     <MapContainer>
       <MapImage>
-        <Outlet context={{ region, setMapData }} />
+        <Breadcrumb items={breadcrumb} />
+        <Outlet
+          context={{ region, regionDetail, /* getData, */ setMapData, breadcrumb, setBreadcrumb }}
+        />
       </MapImage>
       <TravelList>
         <h1>List</h1>

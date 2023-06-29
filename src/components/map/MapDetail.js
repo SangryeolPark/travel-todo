@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useOutletContext } from 'react-router-dom';
-import regionData from '../../assets/regionData';
+import { Link, Navigate, useOutletContext } from 'react-router-dom';
 import { BackButton } from '../../styles/MapStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import regionComponentData from '../../assets/regionComponentData';
 
 const MapDetail = () => {
-  const { region, setMapData } = useOutletContext();
-  const navigate = useNavigate();
+  const { region, regionDetail, /* getData, */ setMapData, breadcrumb, setBreadcrumb } =
+    useOutletContext();
   const [regionComponent, setRegionComponent] = useState(null);
 
   useEffect(() => {
-    if (regionData[region]) {
-      setRegionComponent(regionData[region]);
+    if (regionComponentData[region]) {
+      setRegionComponent(regionComponentData[region]);
+      // getData(region, regionDetail);
     } else {
       alert('잘못된 접근입니다.');
-      navigate('/map');
+      setRegionComponent(<Navigate to="/map" />);
     }
-  }, []);
+  }, [region, regionDetail]);
 
   useEffect(() => {
     setMapData(document.querySelectorAll('g > path'));

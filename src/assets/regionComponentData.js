@@ -14,8 +14,9 @@ import Jeonnam from '../components/map/map_data/Jeonnam';
 import Gyeongbuk from '../components/map/map_data/Gyeongbuk';
 import Gyeongnam from '../components/map/map_data/Gyeongnam';
 import Jeju from '../components/map/map_data/Jeju';
+import Sejong from '../components/map/map_data/Sejong';
 
-const regionData = {
+const regionComponentData = {
   11: <Seoul />,
   26: <Busan />,
   27: <Daegu />,
@@ -23,6 +24,7 @@ const regionData = {
   29: <Gwangju />,
   30: <Daejeon />,
   31: <Ulsan />,
+  36: <Sejong />,
   41: <Gyeonggi />,
   42: <Gangwon />,
   43: <Chungbuk />,
@@ -34,4 +36,4 @@ const regionData = {
   50: <Jeju />,
 };
 
-export default regionData;
+export default regionComponentData;
