@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
-import { Layout, Switch } from 'antd';
-import { Link } from 'react-router-dom';
+import { Button, Layout, Switch } from 'antd';
 
 const white = '#fff';
 const primary = '#1e88e5';
@@ -81,23 +80,21 @@ const Content = styled(Layout.Content)`
   padding: 15px;
 `;
 
-const AddButton = styled(Link)`
+const AddButton = styled(Button)`
   position: absolute;
   right: 40px;
   bottom: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 75px;
-  height: 75px;
+  width: 70px !important;
+  height: 70px;
   background: #ff1744;
-  border-radius: 40px;
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
-  color: ${white};
-  font-size: 35px;
-  z-index: 999;
+  font-size: 30px;
   &:hover {
-    background: #d50000;
+    background: #ff1744 !important;
+    filter: brightness(1.1);
+  }
+  &:active {
+    filter: brightness(0.9);
   }
 `;
 

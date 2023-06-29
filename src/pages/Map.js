@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, MapImage, TravelList } from '../styles/MapStyle';
+import { MapContainer, MapImage, MapInfo, TravelList } from '../styles/MapStyle';
 import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Breadcrumb } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 // import axios from 'axios';
 
 const Map = () => {
@@ -10,7 +11,7 @@ const Map = () => {
   const navigate = useNavigate();
   const [mapData, setMapData] = useState([]);
   const [mapColor, setMapColor] = useState('yellow');
-  const [breadcrumb, setBreadcrumb] = useState([]);
+  const [regionInfo, setRegionInfo] = useState([]);
 
   useEffect(() => {
     setMapData(document.querySelectorAll('g > path'));
@@ -20,16 +21,13 @@ const Map = () => {
     const pathData = pathname.split('/');
     switch (pathData.length) {
       case 2:
-        setBreadcrumb([{ title: <Link to="/map">대한민국</Link> }]);
+        setRegionInfo([{ title: '대한민국' }]);
         break;
       case 3:
-        setBreadcrumb([
-          { title: <Link to="/map">대한민국</Link> },
-          { title: <Link to={`${pathData[2]}`}>{pathData[2]}</Link> },
-        ]);
+        setRegionInfo([{ title: <Link to="/map">대한민국</Link> }, { title: pathData[2] }]);
         break;
       case 4:
-        setBreadcrumb([
+        setRegionInfo([
           { title: <Link to="/map">대한민국</Link> },
           { title: <Link to={`${pathData[2]}`}>{pathData[2]}</Link> },
           { title: pathData[3] },
@@ -75,7 +73,7 @@ const Map = () => {
   return (
     <MapContainer>
       <MapImage>
-        <Breadcrumb items={breadcrumb} />
+        <MapInfo separator={<FontAwesomeIcon icon={faChevronRight} />} items={regionInfo} />
         <Outlet context={{ region, regionDetail, /* getData, */ setMapData }} />
       </MapImage>
       <TravelList>

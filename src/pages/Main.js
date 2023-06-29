@@ -40,9 +40,12 @@ const Main = ({ switchBool, setSwitchBool }) => {
       <Content>
         <Outlet />
       </Content>
-      <AddButton to="/todo">
-        <FontAwesomeIcon icon={faPlus} />
-      </AddButton>
+      <AddButton
+        onClick={() => navigate('/todo')}
+        icon={<FontAwesomeIcon icon={faPlus} />}
+        type="primary"
+        shape="circle"
+      />
     </>
   );
 };

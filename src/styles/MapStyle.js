@@ -1,11 +1,11 @@
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
+import { Breadcrumb } from 'antd';
 
 const commonStyle = `
   height: 100%;
   background: #fff;
-  padding: 15px;
+  padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, 0.5);
 `;
@@ -48,33 +48,30 @@ const MapImage = styled.div`
   flex-basis: 40%;
   flex-shrink: 0;
   ${commonStyle};
-  padding: 20px;
-  padding-top: 60px;
+  padding: 30px;
+  padding-top: 100px;
   > svg,
   div {
     animation: ${mapAni} 0.5s ease-in-out;
   }
-  h1 {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
 `;
 
-// const BackButton = styled(Link)`
-//   position: absolute;
-//   top: 30px;
-//   left: 30px;
-//   border: none;
-//   background: none;
-//   font-size: 30px;
-//   color: #1e88e5;
-//   transition: all 0.2s ease-in-out;
-//   &:hover {
-//     color: #1e88e5;
-//     filter: brightness(0.5);
-//   }
-// `;
+const MapInfo = styled(Breadcrumb)`
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 22px;
+  font-weight: bold;
+  ol {
+    align-items: center;
+  }
+  .ant-breadcrumb-separator {
+    font-size: 14px;
+  }
+  .ant-breadcrumb-link > a {
+    height: 100%;
+  }
+`;
 
 const TravelList = styled.div`
   ${commonStyle};
@@ -106,6 +103,7 @@ export {
   mapAni,
   MapContainer,
   MapImage,
+  MapInfo,
   TravelList,
   GyeongbukContainer,
   UlreungSVG,
