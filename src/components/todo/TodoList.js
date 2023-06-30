@@ -33,15 +33,16 @@ const TodoList = ({ index, visitList, data, setData }) => {
   return (
     <>
       <li style={{ marginBottom: 15 }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Form.Item name={`visit-complete${index}`} valuePropName="checked">
             <Checkbox style={{ marginRight: 10 }} defaultChecked={visitList.complete} />
           </Form.Item>
-          <Form.Item name={`visit-title${index}`}>
+          <Form.Item name={`visit-title${index}`} className="visitListInput">
             <Input
               placeholder="일정을 입력하세요."
               style={{ marginRight: 10 }}
               defaultValue={visitList.title}
+              className="visitListInput"
             />
           </Form.Item>
           <button
