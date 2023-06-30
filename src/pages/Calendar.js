@@ -6,7 +6,6 @@ import moment from 'moment';
 import styled from '@emotion/styled';
 
 const Calendar = ({ originData }) => {
-
   // 기존 종료일 + 1
   const defualtEndDate = originData.endDate;
   const date = new Date(defualtEndDate);
@@ -53,7 +52,7 @@ const Calendar = ({ originData }) => {
   return (
     <div className="wrap">
       <FullCalendar
-        height="calc(100vh - 140px)"
+        height="75vh"
         initialView="dayGridMonth"
         titleFormat={{
           month: '2-digit',
