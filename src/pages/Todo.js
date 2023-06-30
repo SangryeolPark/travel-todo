@@ -1,23 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Cascader, Form, Input, DatePicker, ColorPicker, Button, Checkbox } from 'antd';
 import { TodoDiv } from '../styles/TodoStyle';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark, faListCheck } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { tempRegionData } from '../assets/tempData';
 import { useNavigate } from 'react-router-dom';
-
-const { TextArea } = Input;
-const { RangePicker } = DatePicker;
-const rangeConfig = {
-  rules: [
-    {
-      type: 'array',
-      required: true,
-      message: '여행 기간을 선택해주세요.',
-    },
-  ],
-};
+import TodoList from '../components/todo/TodoList';
+import TravelReview from '../components/todo/TravelReview';
 
 // 저장 버튼
 const onFinish = fieldsValue => {
@@ -34,7 +22,8 @@ const onFinish = fieldsValue => {
 };
 
 const Todo = ({ data, setData }) => {
-  console.log(data);
+  const visitList = data.visitList;
+
   // 임시 데이터
   const origindata = {
     region: [
@@ -1259,6 +1248,7 @@ const Todo = ({ data, setData }) => {
   const [color, setColor] = useState('#1E88E5');
   const [regionData, setRegionData] = useState([]);
   const navigate = useNavigate();
+  const { RangePicker } = DatePicker;
 
   // DB 데이터 불러오기
   useEffect(() => {
@@ -1313,90 +1303,20 @@ const Todo = ({ data, setData }) => {
   };
 
   // 일정 추가 버튼
-  const handleAddPlan = () => {
+  const handleAddVisitList = () => {
     console.log('클릭됨');
-    const newTodo = {
+    const newVisitList = {
       id: Date.now(),
       title: '',
       complete: false,
+      checkList: [],
     };
-    const newVisitList = [...data.visitList, newTodo];
-    const newData = { ...data, visitList: newVisitList };
+    const newVisitListData = [...data.visitList, newVisitList];
+
+    const newData = { ...data, visitList: newVisitListData };
+    console.log(newData);
     setData(newData);
   };
-
-  // checkbox 변경
-  const [visitListCheck, setVisitListCheck] = useState(data.visitList[0].complete);
-  const [checkListCheck, setCheckListCheck] = useState(data.visitList[0].checkList[0].complete);
-  const handleVisitCheckbox = () => {
-    setVisitListCheck(!visitListCheck);
-  };
-  const handleListCheckbox = () => {
-    setCheckListCheck(!checkListCheck);
-  };
-
-  // const checkListData = data.visitList.map((item, index) => item.checkList);
-  // console.log(checkListData);
-  // const checkList = checkListData.map((item, index) => (
-  //   <li key={index} style={{ display: 'flex', margin: '10px 0 0 20px' }}>
-  //     <Checkbox style={{ marginRight: 10 }} checked={item.complete} onChange={handleListCheckbox} />
-  //     <Input placeholder="준비물을 입력해주세요." style={{ marginRight: 10 }} value={item.title} />
-  //     <button style={{ border: 'none', background: 'none' }}>
-  //       <FontAwesomeIcon icon={faXmark} style={{ fontSize: 18, color: '#575757' }} />
-  //     </button>
-  //   </li>
-  // ));
-
-  const [visitListData, setVisitListData] = useState(data.visitList);
-
-  const visitList = useState(
-    visitListData.map((item, index) => {
-      console.log(item);
-      const checkList = item.checkList.map((list, index) => (
-        <li key={index} style={{ display: 'flex', margin: '10px 0 0 20px' }}>
-          <Checkbox
-            style={{ marginRight: 10 }}
-            checked={list.complete}
-            onChange={handleListCheckbox}
-          />
-          <Input
-            placeholder="준비물을 입력해주세요."
-            style={{ marginRight: 10 }}
-            value={list.title}
-          />
-          <button style={{ border: 'none', background: 'none' }}>
-            <FontAwesomeIcon icon={faXmark} style={{ fontSize: 18, color: '#575757' }} />
-          </button>
-        </li>
-      ));
-      return (
-        <li key={index} style={{ marginBottom: 15 }}>
-          <div style={{ display: 'flex' }}>
-            <Checkbox
-              style={{ marginRight: 10 }}
-              checked={item.complete}
-              onChange={handleVisitCheckbox}
-            />
-            <Input
-              placeholder="일정을 입력하세요."
-              style={{ marginRight: 10 }}
-              value={item.title}
-            />
-            <button style={{ border: 'none', background: 'none', marginRight: 10 }}>
-              <FontAwesomeIcon icon={faListCheck} style={{ fontSize: 15, color: '#575757' }} />
-            </button>
-            <button style={{ border: 'none', background: 'none' }}>
-              <FontAwesomeIcon icon={faXmark} style={{ fontSize: 18, color: '#575757' }} />
-            </button>
-          </div>
-          <ul>{checkList}</ul>
-        </li>
-      );
-    })
-  );
-  console.log(visitList);
-
-  const [todoList, setTodoList] = useState(visitList);
 
   return (
     <TodoDiv>
@@ -1406,6 +1326,7 @@ const Todo = ({ data, setData }) => {
         onFinish={onFinish}
         initialValues={{
           color: '#1E88E5',
+          'visit-complete': false,
         }}
       >
         <h2>Travel Schedule</h2>
@@ -1426,7 +1347,16 @@ const Todo = ({ data, setData }) => {
                 placeholder="여행 지역 선택"
               />
             </Form.Item>
-            <Form.Item name="date-picker" {...rangeConfig}>
+            <Form.Item
+              name="date-picker"
+              rules={[
+                {
+                  type: 'array',
+                  required: true,
+                  message: '여행 기간을 선택해주세요.',
+                },
+              ]}
+            >
               <RangePicker placeholder={['시작일', '종료일']} style={{ marginRight: 10 }} />
             </Form.Item>
             <Form.Item name="color">
@@ -1448,14 +1378,22 @@ const Todo = ({ data, setData }) => {
           <div className="travelPlan">
             <div style={{ textAlign: 'start', width: '100%' }}>
               <h2>Travel Plan</h2>
-              <ul style={{ height: 480 }}>
-                {todoList}
+              <ul style={{ height: 480 }} className="todoListWrap">
+                {visitList.map((item, index) => (
+                  <TodoList
+                    key={index}
+                    index={index}
+                    visitList={item}
+                    data={data}
+                    setData={setData}
+                  />
+                ))}
                 <li>
                   <Button
                     type="primary"
                     className="addPlanBtn"
                     style={{ background: '#1E88E5' }}
-                    onClick={handleAddPlan}
+                    onClick={handleAddVisitList}
                   >
                     일정 추가
                   </Button>
@@ -1465,14 +1403,7 @@ const Todo = ({ data, setData }) => {
           </div>
           <div className="travelReview">
             <h2>Travel Review</h2>
-            <Form.Item name="travel-review">
-              <TextArea
-                maxLength={100}
-                style={{ height: 480, resize: 'none' }}
-                // onChange={onChange}
-                placeholder="여행에 대한 리뷰를 남겨주세요."
-              />
-            </Form.Item>
+            <TravelReview />
           </div>
         </div>
       </Form>

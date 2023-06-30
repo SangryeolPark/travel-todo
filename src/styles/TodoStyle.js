@@ -5,8 +5,8 @@ export const TodoDiv = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 60%;
-  height: 800px;
+  width: 80%;
+  height: 80%;
   background: #fff;
   border-radius: 10px;
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
