@@ -6,63 +6,74 @@ import {
   MapInfo,
   TravelList,
 } from '../styles/MapStyle';
-import { Link, Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Link, Outlet, useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBorderTopLeft, faChevronRight, faDroplet } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
-import { tempRegionData } from '../assets/tempData';
 import { ColorPicker } from 'antd';
+import { render } from '@fullcalendar/core/preact';
 
 const Map = () => {
-  const { region, regionDetail } = useParams();
   const navigate = useNavigate();
+  const { region, regionDetail } = useParams();
+  const { regionCode } = useOutletContext();
   const [mapData, setMapData] = useState([]);
   const [mapColor, setMapColor] = useState(['#fff', '#000']);
-  const [fetchData, setFetchData] = useState({});
   const [regionInfo, setRegionInfo] = useState([]);
 
-  // Map hover 효과
-  const hoverItem = item => {
-    item.onmouseenter = () => {
-      item.style.filter = 'brightness(0.9)';
-    };
-    item.onmouseout = () => {
-      item.style.filter = 'none';
-    };
-  };
-
-  // 지명 tooltip
-  const findRegionName = item => {
-    if (!region) {
-      return fetchData.region.find(data => data.idRegion == item.id).region;
-    } else {
-      if (region === '36') {
-        return '세종시';
+  // MapContainer 세팅
+  const renderMapContainer = () => {
+    // 지명 Tooltip
+    const findRegionName = item => {
+      if (!region) {
+        return regionCode.region.find(data => data.idRegion == item.id).region;
       } else {
-        return fetchData.regionDetail.find(data => data.idRegionDetail == item.id).regionDetail;
+        if (region === '36') {
+          return '세종시';
+        } else {
+          return regionCode.regionDetail.find(data => data.idRegionDetail == item.id).regionDetail;
+        }
       }
-    }
-  };
+    };
 
-  // GET 지역 코드 데이터 & Breadcrumb 세팅
-  const getRegionCode = async () => {
-    // const { data } = await axios.get('/api/todo'); // 백엔드 서버 있을 때만 작동
-    const data = tempRegionData;
+    // Map hover 효과
+    const hoverItem = item => {
+      item.onmouseenter = () => {
+        item.style.filter = 'brightness(0.9)';
+      };
+      item.onmouseout = () => {
+        item.style.filter = 'none';
+      };
+    };
 
-    // breadcrumb 세팅
+    mapData.forEach(item => {
+      item.innerHTML = `<title>${findRegionName(item)}</title>`;
+      item.style.fill = mapColor[0];
+      item.style.stroke = mapColor[1];
+      item.style.transition = 'all 0.2s ease-in-out';
+      item.onclick = () => {
+        if (!region) {
+          navigate(item.id);
+        } else {
+          region === '36' ? null : navigate(`${region}/${item.id}`);
+        }
+      };
+      hoverItem(item);
+    });
+
     if (regionDetail) {
       setRegionInfo([
         { title: <Link to="/map">대한민국</Link> },
         {
           title: (
             <Link to={region}>
-              {data.region.find(item => item.idRegion === parseInt(region)).region}
+              {regionCode.region.find(item => item.idRegion === parseInt(region)).region}
             </Link>
           ),
         },
         {
-          title: data.regionDetail.find(item => item.idRegionDetail === parseInt(regionDetail))
-            .regionDetail,
+          title: regionCode.regionDetail.find(
+            item => item.idRegionDetail === parseInt(regionDetail)
+          ).regionDetail,
         },
       ]);
     } else {
@@ -72,13 +83,11 @@ const Map = () => {
         setRegionInfo([
           { title: <Link to="/map">대한민국</Link> },
           {
-            title: data.region.find(item => item.idRegion === parseInt(region)).region,
+            title: regionCode.region.find(item => item.idRegion === parseInt(region)).region,
           },
         ]);
       }
     }
-
-    setFetchData(data);
   };
 
   // GET 여행 일정 데이터
@@ -94,33 +103,17 @@ const Map = () => {
   //     }
   //   }
   //   const { data } = await axios.get(`/api/map${url}`);
-  //   const { data2 } await
   // };
 
-  useEffect(() => {}, [mapColor]);
-
   useEffect(() => {
-    // getData();
-
-    getRegionCode();
     setMapData(document.querySelectorAll('g > path'));
   }, [region, regionDetail]);
 
   useEffect(() => {
-    mapData.forEach(item => {
-      item.innerHTML = `<title>${findRegionName(item)}</title>`;
-      item.style.fill = mapColor[0];
-      item.style.stroke = mapColor[1];
-      item.onclick = () => {
-        if (!region) {
-          navigate(item.id);
-        } else {
-          region === '36' ? null : navigate(`${region}/${item.id}`);
-        }
-      };
-      hoverItem(item);
-    });
-  }, [mapData, mapColor]);
+    if (regionCode) {
+      renderMapContainer();
+    }
+  }, [mapData, mapColor, regionCode]);
 
   return (
     <MapContainer>
@@ -148,7 +141,7 @@ const Map = () => {
             />
           </div>
         </ColorPickerContainer>
-        <Outlet context={{ region, regionDetail, setMapData }} />
+        <Outlet context={{ regionCode, region, regionDetail, setMapData }} />
       </MapImage>
       <TravelList>List</TravelList>
     </MapContainer>

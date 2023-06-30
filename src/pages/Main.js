@@ -4,11 +4,23 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEarthAsia, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
+import axios from 'axios';
 
 const Main = ({ switchBool, setSwitchBool }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [mapPath, setMapPath] = useState(null);
+  const [regionCode, setRegionCode] = useState(null);
+
+  const getRegionCode = async () => {
+    try {
+      // const { data } = await axios.get('/api/todo');
+      const { data } = await axios.get('http://localhost:5000/data');
+      setRegionCode(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (pathname.includes('map')) {
@@ -23,6 +35,7 @@ const Main = ({ switchBool, setSwitchBool }) => {
   }, [pathname]);
 
   useEffect(() => {
+    getRegionCode();
     switchBool ? navigate(mapPath) : navigate('/calendar');
   }, [switchBool]);
 
@@ -38,7 +51,7 @@ const Main = ({ switchBool, setSwitchBool }) => {
         />
       </Header>
       <Content>
-        <Outlet />
+        <Outlet context={{ regionCode }} />
       </Content>
       <AddButton
         onClick={() => navigate('/todo')}
