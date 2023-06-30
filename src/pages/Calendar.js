@@ -3,7 +3,6 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import './../styles/calendar.css';
 import moment from 'moment';
-import styled from '@emotion/styled';
 
 const Calendar = ({ originData }) => {
   // 기존 종료일 + 1

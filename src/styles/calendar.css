@@ -123,9 +123,6 @@ fc-toolbar-chunk > button.fc-button-primary:hover {
   border: 1px solid #5e5e5e !important;
   background: #5e5e5e !important;
 }
-*/ .fc-button-group button:focus {
-  box-shadow: none;
-}
 
 .fc-direction-ltr .fc-button-group > .fc-button:not(:last-child) {
   position: absolute;

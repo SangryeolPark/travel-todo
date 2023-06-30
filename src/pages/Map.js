@@ -10,7 +10,6 @@ import { Link, Outlet, useNavigate, useOutletContext, useParams } from 'react-ro
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBorderTopLeft, faChevronRight, faDroplet } from '@fortawesome/free-solid-svg-icons';
 import { ColorPicker } from 'antd';
-import { render } from '@fullcalendar/core/preact';
 
 const Map = () => {
   const navigate = useNavigate();
