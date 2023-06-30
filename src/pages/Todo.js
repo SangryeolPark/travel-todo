@@ -10,22 +10,21 @@ import { useNavigate } from 'react-router-dom';
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
 const rangeConfig = {
-  // rules: [
-  //   {
-  //     type: 'array',
-  //     required: true,
-  //     message: 'Please select time!',
-  //   },
-  // ],
+  rules: [
+    {
+      type: 'array',
+      required: true,
+      message: '여행 기간을 선택해주세요.',
+    },
+  ],
 };
 
+// 저장 버튼
 const onFinish = fieldsValue => {
   console.log(fieldsValue);
-
   const rangeValue = fieldsValue['date-picker'];
   const colorValue =
     fieldsValue['color'] === '#1E88E5' ? '#1E88E5' : fieldsValue['color'].toHexString();
-
   const values = {
     ...fieldsValue,
     'date-picker': [rangeValue[0].format('YYYY-MM-DD'), rangeValue[1].format('YYYY-MM-DD')],
@@ -34,7 +33,9 @@ const onFinish = fieldsValue => {
   console.log('Received values of form: ', values);
 };
 
-const Todo = () => {
+const Todo = ({ data, setData }) => {
+  console.log(data);
+  // 임시 데이터
   const origindata = {
     region: [
       {
@@ -1254,9 +1255,42 @@ const Todo = () => {
       },
     ],
   };
+
   const [color, setColor] = useState('#1E88E5');
   const [regionData, setRegionData] = useState([]);
   const navigate = useNavigate();
+
+  // DB 데이터 불러오기
+  useEffect(() => {
+    const getRegion = async setRegionData => {
+      try {
+        // const res = await axios.get('/api/todo');
+        // const result = res.data; // 백엔드 서버 있을 때만 작동
+        const result = tempRegionData;
+        setRegionData(result);
+
+        // 지역 데이터 필터링
+        // const region = regionData.region;
+        // const regionDetail = regionData.regionDetail;
+        // const newRegion = region.map(item => ({
+        //   value: item.idRegion,
+        //   label: item.region,
+        // }));
+        // const newRegionData = newRegion.map((newRegionItem, index) => {
+        //   const newregionDetail = regionDetail.filter(
+        //     item => item.idRegion === region[index].idRegion
+        //   );
+        //   const newChildren = newregionDetail.map(item => {
+        //     return { value: item.idRegionDetail, label: item.regionDetail };
+        //   });
+        //   return { ...newRegionItem, children: newChildren };
+        // });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getRegion(setRegionData);
+  }, []);
 
   // 지역 데이터 필터링
   const region = origindata.region;
@@ -1278,20 +1312,91 @@ const Todo = () => {
     navigate(-1);
   };
 
-  useEffect(() => {
-    const getRegion = async setRegionData => {
-      try {
-        // const res = await axios.get('/api/todo');
-        // const result = res.data; // 백엔드 서버 있을 때만 작동
-        const result = tempRegionData;
-        setRegionData(result);
-        console.log(result);
-      } catch (err) {
-        console.log(err);
-      }
+  // 일정 추가 버튼
+  const handleAddPlan = () => {
+    console.log('클릭됨');
+    const newTodo = {
+      id: Date.now(),
+      title: '',
+      complete: false,
     };
-    getRegion(setRegionData);
-  }, []);
+    const newVisitList = [...data.visitList, newTodo];
+    const newData = { ...data, visitList: newVisitList };
+    setData(newData);
+  };
+
+  // checkbox 변경
+  const [visitListCheck, setVisitListCheck] = useState(data.visitList[0].complete);
+  const [checkListCheck, setCheckListCheck] = useState(data.visitList[0].checkList[0].complete);
+  const handleVisitCheckbox = () => {
+    setVisitListCheck(!visitListCheck);
+  };
+  const handleListCheckbox = () => {
+    setCheckListCheck(!checkListCheck);
+  };
+
+  // const checkListData = data.visitList.map((item, index) => item.checkList);
+  // console.log(checkListData);
+  // const checkList = checkListData.map((item, index) => (
+  //   <li key={index} style={{ display: 'flex', margin: '10px 0 0 20px' }}>
+  //     <Checkbox style={{ marginRight: 10 }} checked={item.complete} onChange={handleListCheckbox} />
+  //     <Input placeholder="준비물을 입력해주세요." style={{ marginRight: 10 }} value={item.title} />
+  //     <button style={{ border: 'none', background: 'none' }}>
+  //       <FontAwesomeIcon icon={faXmark} style={{ fontSize: 18, color: '#575757' }} />
+  //     </button>
+  //   </li>
+  // ));
+
+  const [visitListData, setVisitListData] = useState(data.visitList);
+
+  const visitList = useState(
+    visitListData.map((item, index) => {
+      console.log(item);
+      const checkList = item.checkList.map((list, index) => (
+        <li key={index} style={{ display: 'flex', margin: '10px 0 0 20px' }}>
+          <Checkbox
+            style={{ marginRight: 10 }}
+            checked={list.complete}
+            onChange={handleListCheckbox}
+          />
+          <Input
+            placeholder="준비물을 입력해주세요."
+            style={{ marginRight: 10 }}
+            value={list.title}
+          />
+          <button style={{ border: 'none', background: 'none' }}>
+            <FontAwesomeIcon icon={faXmark} style={{ fontSize: 18, color: '#575757' }} />
+          </button>
+        </li>
+      ));
+      return (
+        <li key={index} style={{ marginBottom: 15 }}>
+          <div style={{ display: 'flex' }}>
+            <Checkbox
+              style={{ marginRight: 10 }}
+              checked={item.complete}
+              onChange={handleVisitCheckbox}
+            />
+            <Input
+              placeholder="일정을 입력하세요."
+              style={{ marginRight: 10 }}
+              value={item.title}
+            />
+            <button style={{ border: 'none', background: 'none', marginRight: 10 }}>
+              <FontAwesomeIcon icon={faListCheck} style={{ fontSize: 15, color: '#575757' }} />
+            </button>
+            <button style={{ border: 'none', background: 'none' }}>
+              <FontAwesomeIcon icon={faXmark} style={{ fontSize: 18, color: '#575757' }} />
+            </button>
+          </div>
+          <ul>{checkList}</ul>
+        </li>
+      );
+    })
+  );
+  console.log(visitList);
+
+  const [todoList, setTodoList] = useState(visitList);
 
   return (
     <TodoDiv>
@@ -1304,9 +1409,17 @@ const Todo = () => {
         }}
       >
         <h2>Travel Schedule</h2>
-        <div className="addTravelWrap">
+        <div className="travelScheduleWrap">
           <div className="inputTravel">
-            <Form.Item name="city">
+            <Form.Item
+              name="city"
+              rules={[
+                {
+                  required: true,
+                  message: '여행 지역을 선택해주세요.',
+                },
+              ]}
+            >
               <Cascader
                 options={newRegionData}
                 style={{ width: '200px', marginRight: 10 }}
@@ -1331,123 +1444,38 @@ const Todo = () => {
             <Button onClick={handleCancel}>취소</Button>
           </div>
         </div>
-      </Form>
-      <div className="detailPlanWrap">
-        <div className="travelPlan">
-          <div style={{ textAlign: 'start', width: '100%' }}>
-            <h2>Travel Plan</h2>
-            <ul style={{ height: 480 }}>
-              <li style={{ marginBottom: 15 }}>
-                <ul>
-                  <li style={{ display: 'flex' }}>
-                    <Checkbox style={{ marginRight: 10 }} />
-                    <Input placeholder="일정을 입력하세요." style={{ marginRight: 10 }} />
-                    <button style={{ border: 'none', background: 'none', marginRight: 10 }}>
-                      <FontAwesomeIcon
-                        icon={faListCheck}
-                        style={{ fontSize: 15, color: '#575757' }}
-                      />
-                    </button>
-                    <button style={{ border: 'none', background: 'none' }}>
-                      <FontAwesomeIcon icon={faXmark} style={{ fontSize: 18, color: '#575757' }} />
-                    </button>
-                  </li>
-                  <li style={{ display: 'flex', margin: '10px 0 0 20px' }}>
-                    <Checkbox style={{ marginRight: 10 }} />
-                    <Input placeholder="준비물을 입력하세요." style={{ marginRight: 10 }} />
-                    <button style={{ border: 'none', background: 'none' }}>
-                      <FontAwesomeIcon icon={faXmark} style={{ fontSize: 18, color: '#575757' }} />
-                    </button>
-                  </li>
-                  <li style={{ display: 'flex', margin: '10px 0 0 20px' }}>
-                    <Checkbox style={{ marginRight: 10 }} />
-                    <Input placeholder="준비물을 입력하세요." style={{ marginRight: 10 }} />
-                    <button style={{ border: 'none', background: 'none' }}>
-                      <FontAwesomeIcon icon={faXmark} style={{ fontSize: 18, color: '#575757' }} />
-                    </button>
-                  </li>
-                </ul>
-              </li>
-              <li style={{ marginBottom: 15 }}>
-                <ul>
-                  <li style={{ display: 'flex' }}>
-                    <Checkbox style={{ marginRight: 10 }} />
-                    <Input placeholder="일정을 입력하세요." style={{ marginRight: 10 }} />
-                    <button style={{ border: 'none', background: 'none', marginRight: 10 }}>
-                      <FontAwesomeIcon
-                        icon={faListCheck}
-                        style={{ fontSize: 15, color: '#575757' }}
-                      />
-                    </button>
-                    <button style={{ border: 'none', background: 'none' }}>
-                      <FontAwesomeIcon icon={faXmark} style={{ fontSize: 18, color: '#575757' }} />
-                    </button>
-                  </li>
-                  <li style={{ display: 'flex', margin: '10px 0 0 20px' }}>
-                    <Checkbox style={{ marginRight: 10 }} />
-                    <Input placeholder="준비물을 입력하세요." style={{ marginRight: 10 }} />
-                    <button style={{ border: 'none', background: 'none' }}>
-                      <FontAwesomeIcon icon={faXmark} style={{ fontSize: 18, color: '#575757' }} />
-                    </button>
-                  </li>
-                  <li style={{ display: 'flex', margin: '10px 0 0 20px' }}>
-                    <Checkbox style={{ marginRight: 10 }} />
-                    <Input placeholder="준비물을 입력하세요." style={{ marginRight: 10 }} />
-                    <button style={{ border: 'none', background: 'none' }}>
-                      <FontAwesomeIcon icon={faXmark} style={{ fontSize: 18, color: '#575757' }} />
-                    </button>
-                  </li>
-                </ul>
-              </li>
-              <li style={{ marginBottom: 15 }}>
-                <ul>
-                  <li style={{ display: 'flex' }}>
-                    <Checkbox style={{ marginRight: 10 }} />
-                    <Input placeholder="일정을 입력하세요." style={{ marginRight: 10 }} />
-                    <button style={{ border: 'none', background: 'none', marginRight: 10 }}>
-                      <FontAwesomeIcon
-                        icon={faListCheck}
-                        style={{ fontSize: 15, color: '#575757' }}
-                      />
-                    </button>
-                    <button style={{ border: 'none', background: 'none' }}>
-                      <FontAwesomeIcon icon={faXmark} style={{ fontSize: 18, color: '#575757' }} />
-                    </button>
-                  </li>
-                  <li style={{ display: 'flex', margin: '10px 0 0 20px' }}>
-                    <Checkbox style={{ marginRight: 10 }} />
-                    <Input placeholder="준비물을 입력하세요." style={{ marginRight: 10 }} />
-                    <button style={{ border: 'none', background: 'none' }}>
-                      <FontAwesomeIcon icon={faXmark} style={{ fontSize: 18, color: '#575757' }} />
-                    </button>
-                  </li>
-                  <li style={{ display: 'flex', margin: '10px 0 0 20px' }}>
-                    <Checkbox style={{ marginRight: 10 }} />
-                    <Input placeholder="준비물을 입력하세요." style={{ marginRight: 10 }} />
-                    <button style={{ border: 'none', background: 'none' }}>
-                      <FontAwesomeIcon icon={faXmark} style={{ fontSize: 18, color: '#575757' }} />
-                    </button>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <Button type="primary" className="addPlanBtn" style={{ background: '#1E88E5' }}>
-                  일정 추가
-                </Button>
-              </li>
-            </ul>
+        <div className="detailPlanWrap">
+          <div className="travelPlan">
+            <div style={{ textAlign: 'start', width: '100%' }}>
+              <h2>Travel Plan</h2>
+              <ul style={{ height: 480 }}>
+                {todoList}
+                <li>
+                  <Button
+                    type="primary"
+                    className="addPlanBtn"
+                    style={{ background: '#1E88E5' }}
+                    onClick={handleAddPlan}
+                  >
+                    일정 추가
+                  </Button>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="travelReview">
+            <h2>Travel Review</h2>
+            <Form.Item name="travel-review">
+              <TextArea
+                maxLength={100}
+                style={{ height: 480, resize: 'none' }}
+                // onChange={onChange}
+                placeholder="여행에 대한 리뷰를 남겨주세요."
+              />
+            </Form.Item>
           </div>
         </div>
-        <div className="travelReview">
-          <h2>Travel Review</h2>
-          <TextArea
-            maxLength={100}
-            style={{ height: 480, resize: 'none' }}
-            // onChange={onChange}
-            placeholder="여행에 대한 리뷰를 남겨주세요"
-          />
-        </div>
-      </div>
+      </Form>
     </TodoDiv>
   );
 };

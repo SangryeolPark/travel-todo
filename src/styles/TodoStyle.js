@@ -16,7 +16,7 @@ export const TodoDiv = styled.div`
     margin-bottom: 10px;
     color: #1e88e5;
   }
-  .addTravelWrap {
+  .travelScheduleWrap {
     width: 100%;
     display: flex;
     justify-content: space-between;
