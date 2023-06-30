@@ -26,8 +26,23 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 14px;
   color: #000;
-  background: #f5f5f5;
   line-height: 1.4;
   letter-spacing: -0.3px;
   word-break: keep-all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: white;
+}
+
+#root {
+  position: relative;
+  width: 75vw;
+  height: calc(80vh + 74px);
+  border: 2px solid #1e88e5;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f5f5f5;
+  box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, 0.5);
 }

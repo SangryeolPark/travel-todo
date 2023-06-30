@@ -7,7 +7,7 @@ const commonStyle = `
   background: #fff;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 2px 5px -2px rgba(0, 0, 0, 0.5);
 `;
 
 const fromLeft = keyframes`
@@ -78,6 +78,35 @@ const MapInfo = styled(Breadcrumb)`
   }
 `;
 
+const ColorPickerContainer = styled.div`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 20px;
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 18px;
+    .ant-color-picker-clear {
+      &::after {
+        display: none;
+      }
+    }
+    &:nth-of-type(1) {
+      .ant-color-picker-clear {
+        background: #fff;
+      }
+    }
+    &:nth-of-type(2) {
+      .ant-color-picker-clear {
+        background: #000;
+      }
+    }
+  }
+`;
+
 const TravelList = styled.div`
   ${commonStyle};
   flex-basis: 60%;
@@ -109,6 +138,7 @@ export {
   MapContainer,
   MapImage,
   MapInfo,
+  ColorPickerContainer,
   TravelList,
   GyeongbukContainer,
   UlreungSVG,

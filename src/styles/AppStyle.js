@@ -76,18 +76,18 @@ const PageSwitch = styled(Switch)`
 `;
 
 const Content = styled(Layout.Content)`
-  height: calc(100vh - 70px);
+  height: 80vh;
   padding: 15px;
 `;
 
 const AddButton = styled(Button)`
   position: absolute;
-  right: 40px;
-  bottom: 40px;
-  width: 70px !important;
-  height: 70px;
+  right: 30px;
+  bottom: 30px;
+  width: 60px !important;
+  height: 60px;
   background: #ff1744;
-  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, 0.5);
   font-size: 30px;
   z-index: 999;
   &:hover {
