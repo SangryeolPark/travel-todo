@@ -26,7 +26,7 @@ const CheckList = ({ index, checkList, visitList, data, visitListId, setData }) 
         <Form.Item name={`${checkList.title}-${index}`}>
           <Checkbox style={{ marginRight: 10 }} checked={checkList.complete} />
         </Form.Item>
-        <Form.Item name={`${checkList.title}-${index}-title`}>
+        <Form.Item name={`${checkList.title}-${index}-title`} className="checkListInput">
           <Input
             placeholder="준비물을 입력해주세요."
             style={{ marginRight: 10 }}

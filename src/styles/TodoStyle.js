@@ -37,6 +37,14 @@ export const TodoDiv = styled.div`
       padding-right: 25px;
       border-right: 1px solid #ccc;
       position: relative;
+      .visitListInput {
+        width: 100%;
+        margin-right: 10px;
+      }
+      .checkListInput {
+        width: 100%;
+        margin-right: 10px;
+      }
       .addPlanBtn {
         position: absolute;
         right: 25px;
@@ -47,6 +55,9 @@ export const TodoDiv = styled.div`
       width: 100%;
       text-align: start;
       padding-left: 25px;
+    }
+    .ant-form-item {
+      margin-bottom: 0;
     }
   }
 `;
