@@ -25,7 +25,9 @@ const TodoList = ({ index, visitList, data, setData }) => {
 
   // 일정 삭제
   const deleteVisitList = _id => {
-    console.log(_id);
+    const newVisitList = data.visitList.filter(item => item.id !== _id);
+    const newData = { ...data, visitList: newVisitList };
+    setData(newData);
   };
 
   return (
@@ -33,13 +35,13 @@ const TodoList = ({ index, visitList, data, setData }) => {
       <li style={{ marginBottom: 15 }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <Form.Item name={`visit-complete${index}`} valuePropName="checked">
-            <Checkbox style={{ marginRight: 10 }} />
+            <Checkbox style={{ marginRight: 10 }} defaultChecked={visitList.complete} />
           </Form.Item>
           <Form.Item name={`visit-title${index}`}>
             <Input
               placeholder="일정을 입력하세요."
               style={{ marginRight: 10 }}
-              // defaultValue={item.title}
+              defaultValue={visitList.title}
             />
           </Form.Item>
           <button
@@ -57,7 +59,17 @@ const TodoList = ({ index, visitList, data, setData }) => {
         </div>
         <ul>
           {visitList.checkList.map((item, index) => {
-            return <CheckList key={index} index={index} checkList={item} />;
+            return (
+              <CheckList
+                key={index}
+                index={index}
+                checkList={item}
+                visitList={visitList}
+                data={data}
+                setData={setData}
+                visitListId={item.id}
+              />
+            );
           })}
         </ul>
       </li>
