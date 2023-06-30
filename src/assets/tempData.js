@@ -451,9 +451,44 @@ const tempRegionData = {
       regionDetail: '수원시',
     },
     {
+      idRegionDetail: 41111,
+      idRegion: 41,
+      regionDetail: '수원시 장안구',
+    },
+    {
+      idRegionDetail: 41113,
+      idRegion: 41,
+      regionDetail: '수원시 권선구',
+    },
+    {
+      idRegionDetail: 41115,
+      idRegion: 41,
+      regionDetail: '수원시 팔달구',
+    },
+    {
+      idRegionDetail: 41117,
+      idRegion: 41,
+      regionDetail: '수원시 영통구',
+    },
+    {
       idRegionDetail: 41130,
       idRegion: 41,
       regionDetail: '성남시',
+    },
+    {
+      idRegionDetail: 41131,
+      idRegion: 41,
+      regionDetail: '성남시 수정구',
+    },
+    {
+      idRegionDetail: 41133,
+      idRegion: 41,
+      regionDetail: '성남시 중원구',
+    },
+    {
+      idRegionDetail: 41135,
+      idRegion: 41,
+      regionDetail: '성남시 분당구',
     },
     {
       idRegionDetail: 41150,
@@ -464,6 +499,16 @@ const tempRegionData = {
       idRegionDetail: 41170,
       idRegion: 41,
       regionDetail: '안양시',
+    },
+    {
+      idRegionDetail: 41171,
+      idRegion: 41,
+      regionDetail: '안양시 만안구',
+    },
+    {
+      idRegionDetail: 41173,
+      idRegion: 41,
+      regionDetail: '안양시 동안구',
     },
     {
       idRegionDetail: 41190,
@@ -491,9 +536,34 @@ const tempRegionData = {
       regionDetail: '안산시',
     },
     {
+      idRegionDetail: 41271,
+      idRegion: 41,
+      regionDetail: '안산시 상록구',
+    },
+    {
+      idRegionDetail: 41273,
+      idRegion: 41,
+      regionDetail: '안산시 단원구',
+    },
+    {
       idRegionDetail: 41280,
       idRegion: 41,
       regionDetail: '고양시',
+    },
+    {
+      idRegionDetail: 41281,
+      idRegion: 41,
+      regionDetail: '고양시 덕양구',
+    },
+    {
+      idRegionDetail: 41285,
+      idRegion: 41,
+      regionDetail: '고양시 일산동구',
+    },
+    {
+      idRegionDetail: 41287,
+      idRegion: 41,
+      regionDetail: '고양시 일산서구',
     },
     {
       idRegionDetail: 41290,
@@ -539,6 +609,21 @@ const tempRegionData = {
       idRegionDetail: 41460,
       idRegion: 41,
       regionDetail: '용인시',
+    },
+    {
+      idRegionDetail: 41461,
+      idRegion: 41,
+      regionDetail: '용인시 처인구',
+    },
+    {
+      idRegionDetail: 41463,
+      idRegion: 41,
+      regionDetail: '용인시 기흥구',
+    },
+    {
+      idRegionDetail: 41465,
+      idRegion: 41,
+      regionDetail: '용인시 수지구',
     },
     {
       idRegionDetail: 41480,
@@ -696,6 +781,26 @@ const tempRegionData = {
       regionDetail: '청주시',
     },
     {
+      idRegionDetail: 43111,
+      idRegion: 43,
+      regionDetail: '청주시 상당구',
+    },
+    {
+      idRegionDetail: 43112,
+      idRegion: 43,
+      regionDetail: '청주시 서원구',
+    },
+    {
+      idRegionDetail: 43113,
+      idRegion: 43,
+      regionDetail: '청주시 흥덕구',
+    },
+    {
+      idRegionDetail: 43114,
+      idRegion: 43,
+      regionDetail: '청주시 청원구',
+    },
+    {
       idRegionDetail: 43130,
       idRegion: 43,
       regionDetail: '충주시',
@@ -749,6 +854,16 @@ const tempRegionData = {
       idRegionDetail: 44130,
       idRegion: 44,
       regionDetail: '천안시',
+    },
+    {
+      idRegionDetail: 44131,
+      idRegion: 44,
+      regionDetail: '천안시 동남구',
+    },
+    {
+      idRegionDetail: 44133,
+      idRegion: 44,
+      regionDetail: '천안시 서북구',
     },
     {
       idRegionDetail: 44150,
@@ -824,6 +939,16 @@ const tempRegionData = {
       idRegionDetail: 45110,
       idRegion: 45,
       regionDetail: '전주시',
+    },
+    {
+      idRegionDetail: 45111,
+      idRegion: 45,
+      regionDetail: '전주시 완산구',
+    },
+    {
+      idRegionDetail: 45113,
+      idRegion: 45,
+      regionDetail: '전주시 덕진구',
     },
     {
       idRegionDetail: 45130,
@@ -1006,6 +1131,16 @@ const tempRegionData = {
       regionDetail: '포항시',
     },
     {
+      idRegionDetail: 47111,
+      idRegion: 47,
+      regionDetail: '포항시 남구',
+    },
+    {
+      idRegionDetail: 47113,
+      idRegion: 47,
+      regionDetail: '포항시 북구',
+    },
+    {
       idRegionDetail: 47130,
       idRegion: 47,
       regionDetail: '경주시',
@@ -1119,6 +1254,31 @@ const tempRegionData = {
       idRegionDetail: 48120,
       idRegion: 48,
       regionDetail: '창원시',
+    },
+    {
+      idRegionDetail: 48121,
+      idRegion: 48,
+      regionDetail: '창원시 의창구',
+    },
+    {
+      idRegionDetail: 48123,
+      idRegion: 48,
+      regionDetail: '창원시 성산구',
+    },
+    {
+      idRegionDetail: 48125,
+      idRegion: 48,
+      regionDetail: '창원시 마산합포구',
+    },
+    {
+      idRegionDetail: 48127,
+      idRegion: 48,
+      regionDetail: '창원시 마산회원구',
+    },
+    {
+      idRegionDetail: 48129,
+      idRegion: 48,
+      regionDetail: '창원시 진해구',
     },
     {
       idRegionDetail: 48170,

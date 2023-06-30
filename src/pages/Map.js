@@ -18,8 +18,10 @@ const Map = () => {
   const navigate = useNavigate();
   const [mapData, setMapData] = useState([]);
   const [mapColor, setMapColor] = useState(['#fff', '#000']);
+  const [fetchData, setFetchData] = useState({});
   const [regionInfo, setRegionInfo] = useState([]);
 
+  // Map hover 효과
   const hoverItem = item => {
     item.onmouseenter = () => {
       item.style.filter = 'brightness(0.9)';
@@ -29,6 +31,57 @@ const Map = () => {
     };
   };
 
+  // 지명 tooltip
+  const findRegionName = item => {
+    if (!region) {
+      return fetchData.region.find(data => data.idRegion == item.id).region;
+    } else {
+      if (region === '36') {
+        return '세종시';
+      } else {
+        return fetchData.regionDetail.find(data => data.idRegionDetail == item.id).regionDetail;
+      }
+    }
+  };
+
+  // GET 지역 코드 데이터 & Breadcrumb 세팅
+  const getRegionCode = async () => {
+    // const { data } = await axios.get('/api/todo'); // 백엔드 서버 있을 때만 작동
+    const data = tempRegionData;
+
+    // breadcrumb 세팅
+    if (regionDetail) {
+      setRegionInfo([
+        { title: <Link to="/map">대한민국</Link> },
+        {
+          title: (
+            <Link to={region}>
+              {data.region.find(item => item.idRegion === parseInt(region)).region}
+            </Link>
+          ),
+        },
+        {
+          title: data.regionDetail.find(item => item.idRegionDetail === parseInt(regionDetail))
+            .regionDetail,
+        },
+      ]);
+    } else {
+      if (!region) {
+        setRegionInfo([{ title: '대한민국' }]);
+      } else {
+        setRegionInfo([
+          { title: <Link to="/map">대한민국</Link> },
+          {
+            title: data.region.find(item => item.idRegion === parseInt(region)).region,
+          },
+        ]);
+      }
+    }
+
+    setFetchData(data);
+  };
+
+  // GET 여행 일정 데이터
   // const getData = async () => {
   //   let url;
   //   if (regionDetail) {
@@ -41,6 +94,7 @@ const Map = () => {
   //     }
   //   }
   //   const { data } = await axios.get(`/api/map${url}`);
+  //   const { data2 } await
   // };
 
   useEffect(() => {}, [mapColor]);
@@ -48,46 +102,13 @@ const Map = () => {
   useEffect(() => {
     // getData();
 
-    const getRegionCode = async () => {
-      // const { data } = await axios.get('/api/todo'); // 백엔드 서버 있을 때만 작동
-      const data = tempRegionData;
-
-      if (regionDetail) {
-        setRegionInfo([
-          { title: <Link to="/map">대한민국</Link> },
-          {
-            title: (
-              <Link to={region}>
-                {data.region.find(item => item.idRegion === parseInt(region)).region}
-              </Link>
-            ),
-          },
-          {
-            title: data.regionDetail.find(item => item.idRegionDetail === parseInt(regionDetail))
-              .regionDetail,
-          },
-        ]);
-      } else {
-        if (!region) {
-          setRegionInfo([{ title: '대한민국' }]);
-        } else {
-          setRegionInfo([
-            { title: <Link to="/map">대한민국</Link> },
-            {
-              title: data.region.find(item => item.idRegion === parseInt(region)).region,
-            },
-          ]);
-        }
-      }
-    };
-
     getRegionCode();
     setMapData(document.querySelectorAll('g > path'));
   }, [region, regionDetail]);
 
   useEffect(() => {
     mapData.forEach(item => {
-      item.innerHTML = `<title>${item.id}</title>`;
+      item.innerHTML = `<title>${findRegionName(item)}</title>`;
       item.style.fill = mapColor[0];
       item.style.stroke = mapColor[1];
       item.onclick = () => {
@@ -129,9 +150,7 @@ const Map = () => {
         </ColorPickerContainer>
         <Outlet context={{ region, regionDetail, setMapData }} />
       </MapImage>
-      <TravelList>
-        <h1>List</h1>
-      </TravelList>
+      <TravelList>List</TravelList>
     </MapContainer>
   );
 };

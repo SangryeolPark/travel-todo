@@ -48,8 +48,7 @@ const MapImage = styled.div`
   flex-basis: 40%;
   flex-shrink: 0;
   ${commonStyle};
-  padding: 30px;
-  padding-top: 100px;
+  padding: 90px 30px;
   > svg,
   div {
     animation: ${mapAni} 0.5s ease-in-out;
@@ -80,14 +79,14 @@ const MapInfo = styled(Breadcrumb)`
 
 const ColorPickerContainer = styled.div`
   position: absolute;
-  top: 20px;
+  bottom: 20px;
   right: 20px;
   display: flex;
-  gap: 20px;
+  gap: 30px;
   > div {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
     font-size: 18px;
     .ant-color-picker-clear {
       &::after {
@@ -120,7 +119,7 @@ const GyeongbukContainer = styled.div`
 
 const UlreungSVG = styled.svg`
   position: absolute;
-  top: 10%;
+  top: 5%;
   right: 0;
   max-width: 70px;
   max-height: 70px;
