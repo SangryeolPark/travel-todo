@@ -23,7 +23,7 @@ const CheckList = ({ index, checkList, visitList, data, visitListId, setData }) 
   return (
     <>
       <li style={{ display: 'flex', margin: '10px 0 0 20px' }}>
-        <Form.Item name={`${checkList.title}-${index}`}>
+        <Form.Item name={`${checkList.title}-${index}`} valuePropName="checked">
           <Checkbox style={{ marginRight: 10 }} checked={checkList.complete} />
         </Form.Item>
         <Form.Item name={`${checkList.title}-${index}-title`} className="checkListInput">

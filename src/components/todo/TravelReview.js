@@ -4,11 +4,11 @@ import React from 'react';
 
 const TravelReview = () => {
   return (
-    <div>
-      <Form.Item name="travel-review" style={{ height: 480, resize: 'none' }}>
+    <div style={{ height: '100%' }}>
+      <Form.Item name="travel-review" style={{ height: '100%', resize: 'none' }}>
         <TextArea
           placeholder="여행에 대한 리뷰를 남겨주세요."
-          style={{ height: 480, resize: 'none' }}
+          style={{ height: '35vh', resize: 'none' }}
         />
       </Form.Item>
     </div>
