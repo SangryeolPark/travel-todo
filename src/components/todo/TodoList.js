@@ -1,10 +1,12 @@
 import { Checkbox, Form, Input } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faListCheck } from '@fortawesome/free-solid-svg-icons';
 import CheckList from './CheckList';
+import { TodoListLi } from '../../styles/TodoStyle';
 
 const TodoList = ({ index, visitList, data, setData }) => {
+  const [visitValue, setVisitValue] = useState(visitList.title);
   // 체크리스트 추가
   const handleAddCheckList = _id => {
     const newCheckList = {
@@ -26,36 +28,27 @@ const TodoList = ({ index, visitList, data, setData }) => {
   // 일정 삭제
   const deleteVisitList = _id => {
     const newVisitList = data.visitList.filter(item => item.id !== _id);
+    console.log(newVisitList);
+    setVisitValue(newVisitList.title);
     const newData = { ...data, visitList: newVisitList };
     setData(newData);
   };
 
   return (
     <>
-      <li style={{ marginBottom: 15 }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Form.Item name={`visit-complete${index}`} valuePropName="checked">
-            <Checkbox style={{ marginRight: 10 }} defaultChecked={visitList.complete} />
+      <TodoListLi>
+        <div>
+          <Form.Item className="checkbox" name={`visit-complete${index}`} valuePropName="checked">
+            <Checkbox defaultChecked={visitList.complete} />
           </Form.Item>
-          <Form.Item name={`visit-title${index}`} className="visitListInput">
-            <Input
-              placeholder="일정을 입력하세요."
-              style={{ marginRight: 10 }}
-              defaultValue={visitList.title}
-              className="visitListInput"
-            />
+          <Form.Item name={`visit-title${index}`} className="visitList-input">
+            <Input placeholder="일정을 입력하세요." value={visitValue} />
           </Form.Item>
-          <button
-            style={{ border: 'none', background: 'none', marginRight: 10, cursor: 'pointer' }}
-            onClick={() => handleAddCheckList(visitList.id)}
-          >
-            <FontAwesomeIcon icon={faListCheck} style={{ fontSize: 15, color: '#575757' }} />
+          <button onClick={() => handleAddCheckList(visitList.id)}>
+            <FontAwesomeIcon icon={faListCheck} className="bt-addcheck" />
           </button>
-          <button
-            style={{ border: 'none', background: 'none', cursor: 'pointer' }}
-            onClick={() => deleteVisitList(visitList.id)}
-          >
-            <FontAwesomeIcon icon={faXmark} style={{ fontSize: 18, color: '#575757' }} />
+          <button onClick={() => deleteVisitList(visitList.id)}>
+            <FontAwesomeIcon icon={faXmark} className="bt-x" />
           </button>
         </div>
         <ul>
@@ -73,7 +66,7 @@ const TodoList = ({ index, visitList, data, setData }) => {
             );
           })}
         </ul>
-      </li>
+      </TodoListLi>
     </>
   );
 };

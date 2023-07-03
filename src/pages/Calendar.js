@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import './../styles/calendar.css';
+import './../styles/fullCalendar.css';
 import moment from 'moment';
-import styled from '@emotion/styled';
 import { Drawer } from 'antd';
 import Schedule from '../components/calendar/Schedule';
+import { CalendarDiv } from './../styles/CalendarStyle';
 
 const Calendar = ({ originData }) => {
-  let wrap;
-
   // (캘린더 표시) 기존 종료일 + 1
   const defualtEndDate = originData.endDate;
   const date = new Date(defualtEndDate);
@@ -39,11 +37,9 @@ const Calendar = ({ originData }) => {
     setSelectStartDate(eventStartDate);
     setSelectEndDate(eventEndDate);
     setOpen(true);
-
-    wrap.classList.add('wrap-active');
   };
 
-  // event list
+  // 임시 event list
   let travelList = [
     {
       id: 1,
@@ -67,6 +63,7 @@ const Calendar = ({ originData }) => {
       title: '전라남도 여수시',
     },
   ];
+
   const eventData = {
     id: originData.id,
     borderColor: originData.color,
@@ -81,43 +78,44 @@ const Calendar = ({ originData }) => {
     const headerCell = document.querySelectorAll('.fc-col-header-cell-cushion');
     const day = ['일', '월', '화', '수', '목', '금', '토'];
     headerCell.forEach((item, index) => (item.innerHTML = day[index]));
-
-    wrap = document.querySelector('.wrap');
   });
 
   return (
-    <div>
+    <CalendarDiv>
       <div className="wrap">
         <FullCalendar
-          height="74vh"
+          height="74.4vh"
           initialView="dayGridMonth"
           titleFormat={{
-            month: '2-digit',
             year: 'numeric',
+            month: '2-digit',
           }}
+          // titleFormat: function (date) {
+          //   year = date.date.year;
+          //   month = date.date.month + 1;
+
+          //   return year + "년 " + month + "월";
+          // },
           plugins={[dayGridPlugin]}
           events={travelList}
           eventClick={showDrawer}
         />
-        <div>
-          <Drawer
-            placement="right"
-            closable={false}
-            // onClose={onClose}
-            open={open}
-            getContainer={false}
-          >
-            <Schedule
-              wrap={wrap}
-              setOpen={setOpen}
-              selectTitle={selectTitle}
-              selectStartDate={selectStartDate}
-              selectEndDate={selectEndDate}
-            />
-          </Drawer>
-        </div>
       </div>
-    </div>
+      <Drawer
+        placement="right"
+        closable={false}
+        // onClose={onClose}
+        open={open}
+        getContainer={false}
+      >
+        <Schedule
+          setOpen={setOpen}
+          selectTitle={selectTitle}
+          selectStartDate={selectStartDate}
+          selectEndDate={selectEndDate}
+        />
+      </Drawer>
+    </CalendarDiv>
   );
 };
 export default Calendar;
