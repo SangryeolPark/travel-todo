@@ -9,8 +9,8 @@ const Gangwon = () => {
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="1.5"
-      width="100%"
-      height="100%"
+      width="85%"
+      height="85%"
       viewBox="0 0 800 699"
     >
       <g id="42">

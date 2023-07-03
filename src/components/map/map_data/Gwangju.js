@@ -9,8 +9,8 @@ const Gwangju = () => {
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="1.5"
-      width="90%"
-      height="90%"
+      width="85%"
+      height="85%"
       viewBox="0 0 800 537"
     >
       <g id="29">

@@ -9,8 +9,8 @@ const Jeonbuk = () => {
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="1.25"
-      width="100%"
-      height="100%"
+      width="90%"
+      height="90%"
       viewBox="100 0 700 436"
     >
       <g id="45">

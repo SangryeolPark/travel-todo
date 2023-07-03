@@ -9,8 +9,8 @@ const Daejeon = () => {
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="2"
-      width="90%"
-      height="90%"
+      width="85%"
+      height="85%"
       viewBox="0 0 800 1001"
     >
       <g id="30">

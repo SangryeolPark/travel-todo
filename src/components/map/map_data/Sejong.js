@@ -8,9 +8,9 @@ const Sejong = () => {
       stroke="#000"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth="1.5"
-      width="90%"
-      height="90%"
+      strokeWidth="2"
+      width="85%"
+      height="85%"
       viewBox="0 0 800 1149"
     >
       <g>

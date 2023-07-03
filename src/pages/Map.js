@@ -4,6 +4,7 @@ import {
   MapContainer,
   MapImage,
   MapInfo,
+  TranvelListFilter,
   TravelList,
 } from '../styles/MapStyle';
 import { Link, Outlet, useNavigate, useOutletContext, useParams } from 'react-router-dom';
@@ -165,7 +166,18 @@ const Map = () => {
           </>
         )}
       </MapImage>
-      <TravelList>List</TravelList>
+      <TravelList>
+        {region && (
+          <TranvelListFilter
+            separator=" "
+            items={[
+              { title: <Link to={'?filter=plan'}>예정</Link> },
+              { title: <Link to={'?filter=complete'}>완료</Link> },
+            ]}
+          />
+        )}
+        <div>List</div>
+      </TravelList>
     </MapContainer>
   );
 };

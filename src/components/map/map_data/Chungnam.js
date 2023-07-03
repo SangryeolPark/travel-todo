@@ -9,8 +9,8 @@ const Chungnam = () => {
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="1"
-      width="100%"
-      height="100%"
+      width="85%"
+      height="85%"
       viewBox="150 0 650 516"
     >
       <g id="44">

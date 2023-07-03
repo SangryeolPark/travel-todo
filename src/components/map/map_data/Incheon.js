@@ -9,8 +9,8 @@ const Incheon = () => {
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="0.75"
-      width="100%"
-      height="100%"
+      width="95%"
+      height="95%"
       viewBox="465 84 340 380"
       // viewBox="389 84 411 420"
     >
