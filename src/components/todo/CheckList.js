@@ -27,11 +27,7 @@ const CheckList = ({ index, checkList, visitList, data, visitListId, setData }) 
           <Checkbox className="checkbox" checked={checkList.complete} />
         </Form.Item>
         <Form.Item name={`${checkList.title}-${index}-title`} className="checkListInput">
-          <Input
-            placeholder="준비물을 입력해주세요."
-            className="input"
-            defaultValue={checkList.title}
-          />
+          <Input placeholder="준비물을 입력해주세요." className="input" value={checkList.title} />
         </Form.Item>
         <button onClick={() => deleteCheckList(checkList.id)}>
           <FontAwesomeIcon icon={faXmark} className="bt-x" />

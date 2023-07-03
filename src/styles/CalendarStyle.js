@@ -52,6 +52,9 @@ export const DetailScheduleDiv = styled.div`
     }
     .bt-x {
       font-size: 27px;
+      :hover {
+        fill: #1e88e5;
+      }
     }
   }
   h2 {
@@ -83,6 +86,7 @@ export const DetailScheduleDiv = styled.div`
         align-items: center;
         .checkbox {
           background: none;
+          cursor: default;
         }
         .input {
           border: none;
@@ -90,6 +94,7 @@ export const DetailScheduleDiv = styled.div`
           color: #000;
           font-size: 20px;
           font-weight: 600;
+          cursor: default;
         }
       }
       .check-list {
@@ -101,12 +106,14 @@ export const DetailScheduleDiv = styled.div`
         }
         .checkbox {
           background: none;
+          cursor: default;
         }
         .input {
           border: none;
           background: none;
           color: #000;
           font-size: 17px;
+          cursor: default;
         }
       }
     }
@@ -116,6 +123,7 @@ export const DetailScheduleDiv = styled.div`
       resize: none;
       background: none;
       color: #000;
+      cursor: default;
     }
   }
 `;

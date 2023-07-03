@@ -25,9 +25,6 @@ const onFinish = fieldsValue => {
 
 const Todo = ({ data, setData }) => {
   const visitList = data.visitList;
-  console.log(data);
-  console.log(data.startDate);
-  console.log(data.endDate);
 
   // 임시 데이터
   // const origindata = {
@@ -1294,7 +1291,7 @@ const Todo = ({ data, setData }) => {
     }
   }, [regionData]);
 
-  // 지역 데이터 필터링
+  // 지역 데이터 필터링(임시데이터)
   // const region = origindata.region;
   // const regionDetail = origindata.regionDetail;
   // const newRegion = region.map(item => ({

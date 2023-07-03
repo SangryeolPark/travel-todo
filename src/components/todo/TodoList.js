@@ -1,11 +1,12 @@
 import { Checkbox, Form, Input } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faListCheck } from '@fortawesome/free-solid-svg-icons';
 import CheckList from './CheckList';
 import { TodoListLi } from '../../styles/TodoStyle';
 
 const TodoList = ({ index, visitList, data, setData }) => {
+  const [visitValue, setVisitValue] = useState(visitList.title);
   // 체크리스트 추가
   const handleAddCheckList = _id => {
     const newCheckList = {
@@ -27,6 +28,8 @@ const TodoList = ({ index, visitList, data, setData }) => {
   // 일정 삭제
   const deleteVisitList = _id => {
     const newVisitList = data.visitList.filter(item => item.id !== _id);
+    console.log(newVisitList);
+    setVisitValue(newVisitList.title);
     const newData = { ...data, visitList: newVisitList };
     setData(newData);
   };
@@ -39,7 +42,7 @@ const TodoList = ({ index, visitList, data, setData }) => {
             <Checkbox defaultChecked={visitList.complete} />
           </Form.Item>
           <Form.Item name={`visit-title${index}`} className="visitList-input">
-            <Input placeholder="일정을 입력하세요." defaultValue={visitList.title} />
+            <Input placeholder="일정을 입력하세요." value={visitValue} />
           </Form.Item>
           <button onClick={() => handleAddCheckList(visitList.id)}>
             <FontAwesomeIcon icon={faListCheck} className="bt-addcheck" />

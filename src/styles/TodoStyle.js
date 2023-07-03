@@ -54,10 +54,11 @@ export const TodoDiv = styled.div`
         ul.todoList-wrap {
           width: 100%;
           height: 35vh;
+          overflow: auto;
           .add-plan-btn {
             position: absolute;
-            right: 25px;
-            bottom: 0;
+            right: 0px;
+            top: 3px;
           }
         }
         button {
