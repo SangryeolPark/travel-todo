@@ -53,6 +53,7 @@ export const TodoDiv = styled.div`
     }
     .travelReview {
       width: 100%;
+      height: 100%;
       text-align: start;
       padding-left: 25px;
     }

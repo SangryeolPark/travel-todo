@@ -1378,7 +1378,7 @@ const Todo = ({ data, setData }) => {
           <div className="travelPlan">
             <div style={{ textAlign: 'start', width: '100%' }}>
               <h2>Travel Plan</h2>
-              <ul style={{ height: 480 }} className="todoListWrap">
+              <ul style={{ height: '35vh' }} className="todoListWrap">
                 {visitList.map((item, index) => (
                   <TodoList
                     key={index}
