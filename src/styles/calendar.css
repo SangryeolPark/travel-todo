@@ -12,19 +12,16 @@
 }
 
 .wrap {
-  width: 70%;
+  width: 75%;
+  height: 100%;
   background: #fff;
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, 0.5);
   max-width: 1200px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   animation: fromRight 0.5s ease-in-out;
   transition: all 1.5s;
-}
-
-.wrap-active {
-  margin-right: 21vw;
 }
 
 :root {
@@ -152,6 +149,10 @@ fc-toolbar-chunk > button.fc-button-primary:hover {
   border: 1px solid #151e27 !important;
 }
 
+.fc-direction-ltr {
+  width: 100%;
+}
+
 .fc-col-header-cell {
   background: rgb(234, 241, 255);
   font-family: 'Orbit', sans-serif;
@@ -190,16 +191,30 @@ fc-toolbar-chunk > button.fc-button-primary:hover {
   letter-spacing: 0.8px;
 }
 
+:where(.css-dev-only-do-not-override-1wazalj).ant-drawer-inline {
+  position: initial;
+  height: 100%;
+}
+
+:where(.css-dev-only-do-not-override-1wazalj).ant-drawer .ant-drawer-mask {
+  position: initial;
+}
+
+:where(.css-dev-only-do-not-override-1wazalj).ant-drawer .ant-drawer-mask {
+  position: initial !important;
+}
 .ant-drawer-mask {
   display: none;
 }
 
 .ant-drawer-right > .ant-drawer-content-wrapper {
-  top: 84px;
+  top: 85px;
   right: 30px;
-  height: 77vh;
+  width: 100% !important;
+  height: 100%;
   border-radius: 10px;
   box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, 0.5);
+  position: initial;
 }
 
 .ant-drawer-content {

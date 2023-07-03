@@ -5,26 +5,17 @@ import TextArea from 'antd/es/input/TextArea';
 import { Link } from 'react-router-dom';
 
 const Schedule = ({ setOpen, selectTitle, selectStartDate, selectEndDate }) => {
-  const wrap = document.querySelector('.wrap');
-
   // 닫기 버튼
   const onClose = () => {
     setOpen(false);
-    wrap.classList.remove('wrap-active');
   };
 
   return (
     <div>
       <div
         style={{
-          // display: 'flex',
-          // justifyContent: 'space-between',
-          // alignItems: 'center',
-          // marginBottom: 15,
           paddingTop: 30,
-          // paddingBottom: 6,
           position: 'relative',
-          // borderBottom: '1px solid #ccc',
         }}
       >
         <div
@@ -62,7 +53,7 @@ const Schedule = ({ setOpen, selectTitle, selectStartDate, selectEndDate }) => {
         <h2 style={{ color: '#1e88e5', fontSize: 18 }}>Travel Plan</h2>
         <div style={{ marginBottom: 10 }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Checkbox style={{ background: 'none' }} disabled="true" defaultChecked="true" />
+            <Checkbox style={{ background: 'none' }} disabled={true} defaultChecked="true" />
             <Input
               style={{
                 border: 'none',
@@ -71,13 +62,13 @@ const Schedule = ({ setOpen, selectTitle, selectStartDate, selectEndDate }) => {
                 fontSize: 20,
                 fontWeight: 600,
               }}
-              disabled="true"
+              disabled={true}
               value="월영교 산책"
             />
           </div>
           <div style={{ marginLeft: 10 }}>
             <div style={{ display: 'flex', alignItems: 'center', height: 27 }}>
-              <Checkbox style={{ background: 'none' }} disabled="true" defaultChecked="true" />
+              <Checkbox style={{ background: 'none' }} disabled={true} defaultChecked="true" />
               <Input
                 style={{
                   border: 'none',
@@ -86,12 +77,12 @@ const Schedule = ({ setOpen, selectTitle, selectStartDate, selectEndDate }) => {
                   fontSize: 17,
                   padding: 'none',
                 }}
-                disabled="true"
+                disabled={true}
                 value="카메라 챙기기"
               />
             </div>
             <div style={{ display: 'flex', alignItems: 'center', height: 27 }}>
-              <Checkbox style={{ background: 'none' }} disabled="true" defaultChecked="true" />
+              <Checkbox style={{ background: 'none' }} disabled={true} defaultChecked="true" />
               <Input
                 style={{
                   border: 'none',
@@ -99,7 +90,7 @@ const Schedule = ({ setOpen, selectTitle, selectStartDate, selectEndDate }) => {
                   color: '#000',
                   fontSize: 17,
                 }}
-                disabled="true"
+                disabled={true}
                 value="근처 맛집 찾아보기"
               />
             </div>
@@ -107,7 +98,7 @@ const Schedule = ({ setOpen, selectTitle, selectStartDate, selectEndDate }) => {
         </div>
         <div style={{ marginBottom: 10 }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Checkbox style={{ background: 'none' }} disabled="true" defaultChecked="true" />
+            <Checkbox style={{ background: 'none' }} disabled={true} defaultChecked="true" />
             <Input
               style={{
                 border: 'none',
@@ -116,13 +107,13 @@ const Schedule = ({ setOpen, selectTitle, selectStartDate, selectEndDate }) => {
                 fontSize: 20,
                 fontWeight: 600,
               }}
-              disabled="true"
+              disabled={true}
               value="안동 시장 구경"
             />
           </div>
           <div style={{ marginLeft: 10 }}>
             <div style={{ display: 'flex', alignItems: 'center', height: 27 }}>
-              <Checkbox style={{ background: 'none' }} disabled="true" defaultChecked="true" />
+              <Checkbox style={{ background: 'none' }} disabled={true} defaultChecked="true" />
               <Input
                 style={{
                   border: 'none',
@@ -131,12 +122,12 @@ const Schedule = ({ setOpen, selectTitle, selectStartDate, selectEndDate }) => {
                   fontSize: 17,
                   padding: 'none',
                 }}
-                disabled="true"
+                disabled={true}
                 value="인근 주차장 검색"
               />
             </div>
             <div style={{ display: 'flex', alignItems: 'center', height: 27 }}>
-              <Checkbox style={{ background: 'none' }} disabled="true" defaultChecked="true" />
+              <Checkbox style={{ background: 'none' }} disabled={true} defaultChecked="true" />
               <Input
                 style={{
                   border: 'none',
@@ -144,7 +135,7 @@ const Schedule = ({ setOpen, selectTitle, selectStartDate, selectEndDate }) => {
                   color: '#000',
                   fontSize: 17,
                 }}
-                disabled="true"
+                disabled={true}
                 value="시장 맛집 찾아보기"
               />
             </div>
@@ -156,7 +147,7 @@ const Schedule = ({ setOpen, selectTitle, selectStartDate, selectEndDate }) => {
         <TextArea
           style={{ resize: 'none', background: 'none', color: '#000' }}
           value="참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. "
-          disabled="true"
+          disabled={true}
           rows={5}
         />
       </div>
