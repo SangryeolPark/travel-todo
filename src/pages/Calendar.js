@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import './../styles/calendar.css';
+import './../styles/fullCalendar.css';
 import moment from 'moment';
-import styled from '@emotion/styled';
 import { Drawer } from 'antd';
 import Schedule from '../components/calendar/Schedule';
+import { CalendarDiv } from './../styles/CalendarStyle';
 
 const Calendar = ({ originData }) => {
   // (캘린더 표시) 기존 종료일 + 1
@@ -81,23 +81,21 @@ const Calendar = ({ originData }) => {
   });
 
   return (
-    <div
-      style={{
-        height: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        gap: '0 15px',
-        margin: '0 auto',
-      }}
-    >
+    <CalendarDiv>
       <div className="wrap">
         <FullCalendar
           height="74.4vh"
           initialView="dayGridMonth"
           titleFormat={{
-            month: '2-digit',
             year: 'numeric',
+            month: '2-digit',
           }}
+          // titleFormat: function (date) {
+          //   year = date.date.year;
+          //   month = date.date.month + 1;
+
+          //   return year + "년 " + month + "월";
+          // },
           plugins={[dayGridPlugin]}
           events={travelList}
           eventClick={showDrawer}
@@ -117,7 +115,7 @@ const Calendar = ({ originData }) => {
           selectEndDate={selectEndDate}
         />
       </Drawer>
-    </div>
+    </CalendarDiv>
   );
 };
 export default Calendar;

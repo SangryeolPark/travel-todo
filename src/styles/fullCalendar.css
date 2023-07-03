@@ -1,28 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Jua&family=Orbit&family=Single+Day&display=swap');
-
-@keyframes fromRight {
-  from {
-    opacity: 0;
-    transform: translateX(10%);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.wrap {
-  width: 75%;
-  height: 100%;
-  background: #fff;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, 0.5);
-  max-width: 1200px;
-  /* margin: 0 auto; */
-  animation: fromRight 0.5s ease-in-out;
-  transition: all 1.5s;
-}
+/* @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Jua&family=Orbit&family=Single+Day&display=swap'); */
 
 :root {
   --fc-border-color: #e0e0e0;
@@ -58,7 +34,7 @@
 
 .fc .fc-toolbar-title {
   text-align: center;
-  font-family: 'Do Hyeon', sans-serif;
+  /* font-family: 'Do Hyeon', sans-serif; */
   font-size: 40px;
   color: #303030;
 }
@@ -134,13 +110,13 @@ fc-toolbar-chunk > button.fc-button-primary:hover {
 
 .fc-direction-ltr .fc-button-group > .fc-button:not(:last-child) {
   position: absolute;
-  top: 5px;
+  top: 9px;
   left: 35%;
 }
 
 .fc-direction-ltr .fc-button-group > .fc-button:not(:first-child) {
   position: absolute;
-  top: 5px;
+  top: 9px;
   right: 35%;
 }
 
@@ -155,7 +131,7 @@ fc-toolbar-chunk > button.fc-button-primary:hover {
 
 .fc-col-header-cell {
   background: rgb(234, 241, 255);
-  font-family: 'Orbit', sans-serif;
+  /* font-family: 'Orbit', sans-serif; */
   font-weight: 600;
 }
 
@@ -182,12 +158,14 @@ fc-toolbar-chunk > button.fc-button-primary:hover {
 .fc-daygrid-day-number {
   font-size: 16px;
   font-weight: 500;
-  font-family: 'Jua', sans-serif;
+  /* font-family: 'Jua', sans-serif; */
 }
 
 .fc-event-title {
   margin: 1px 0 0 5px;
-  font-family: 'Jua', sans-serif;
+  /* font-family: 'Jua', sans-serif; */
+  font-size: 15px;
+  font-weight: 600;
   letter-spacing: 0.8px;
 }
 

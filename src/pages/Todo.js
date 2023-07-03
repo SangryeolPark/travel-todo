@@ -1341,11 +1341,7 @@ const Todo = ({ data, setData }) => {
                 },
               ]}
             >
-              <Cascader
-                options={newRegionData}
-                style={{ width: '200px', marginRight: 10 }}
-                placeholder="여행 지역 선택"
-              />
+              <Cascader options={newRegionData} className="cascader" placeholder="여행 지역 선택" />
             </Form.Item>
             <Form.Item
               name="date-picker"
@@ -1357,18 +1353,14 @@ const Todo = ({ data, setData }) => {
                 },
               ]}
             >
-              <RangePicker placeholder={['시작일', '종료일']} style={{ marginRight: 10 }} />
+              <RangePicker className="range-picker" placeholder={['시작일', '종료일']} />
             </Form.Item>
             <Form.Item name="color">
               <ColorPicker value={color} />
             </Form.Item>
           </div>
           <div className="addTravelBtn">
-            <Button
-              type="primary"
-              htmlType="submit"
-              style={{ marginRight: 10, background: '#1E88E5' }}
-            >
+            <Button type="primary" htmlType="submit">
               저장
             </Button>
             <Button onClick={handleCancel}>취소</Button>
@@ -1376,9 +1368,9 @@ const Todo = ({ data, setData }) => {
         </div>
         <div className="detailPlanWrap">
           <div className="travelPlan">
-            <div style={{ textAlign: 'start', width: '100%' }}>
+            <div>
               <h2>Travel Plan</h2>
-              <ul style={{ height: '35vh' }} className="todoListWrap">
+              <ul className="todoListWrap">
                 {visitList.map((item, index) => (
                   <TodoList
                     key={index}

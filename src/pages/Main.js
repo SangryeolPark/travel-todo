@@ -14,8 +14,8 @@ const Main = ({ switchBool, setSwitchBool }) => {
 
   const getRegionCode = async () => {
     try {
-      // const { data } = await axios.get('/api/todo');
-      const { data } = await axios.get('http://localhost:5000/data');
+      const { data } = await axios.get('/api/todo');
+      // const { data } = await axios.get('http://localhost:5000/data');
       setRegionCode(data);
     } catch (error) {
       console.log(error);

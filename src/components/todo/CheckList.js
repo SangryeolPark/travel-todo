@@ -3,9 +3,9 @@ import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { CheckListLi } from '../../styles/TodoStyle';
 
 const CheckList = ({ index, checkList, visitList, data, visitListId, setData }) => {
-  console.log(checkList.title);
   // checklist 삭제
   const deleteCheckList = _id => {
     const newCheckList = visitList.checkList.filter(item => item.id !== _id);
@@ -22,24 +22,21 @@ const CheckList = ({ index, checkList, visitList, data, visitListId, setData }) 
 
   return (
     <>
-      <li style={{ display: 'flex', margin: '10px 0 0 20px' }}>
+      <CheckListLi>
         <Form.Item name={`${checkList.title}-${index}`} valuePropName="checked">
-          <Checkbox style={{ marginRight: 10 }} checked={checkList.complete} />
+          <Checkbox className="checkbox" checked={checkList.complete} />
         </Form.Item>
         <Form.Item name={`${checkList.title}-${index}-title`} className="checkListInput">
           <Input
             placeholder="준비물을 입력해주세요."
-            style={{ marginRight: 10 }}
+            className="input"
             defaultValue={checkList.title}
           />
         </Form.Item>
-        <button
-          style={{ border: 'none', background: 'none', cursor: 'pointer' }}
-          onClick={() => deleteCheckList(checkList.id)}
-        >
-          <FontAwesomeIcon icon={faXmark} style={{ fontSize: 18, color: '#575757' }} />
+        <button onClick={() => deleteCheckList(checkList.id)}>
+          <FontAwesomeIcon icon={faXmark} className="bt-x" />
         </button>
-      </li>
+      </CheckListLi>
     </>
   );
 };
