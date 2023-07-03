@@ -6,11 +6,13 @@ import { tempRegionData } from '../assets/tempData';
 import { useNavigate } from 'react-router-dom';
 import TodoList from '../components/todo/TodoList';
 import TravelReview from '../components/todo/TravelReview';
+import dayjs from 'dayjs';
 
 // 저장 버튼
 const onFinish = fieldsValue => {
   console.log(fieldsValue);
   const rangeValue = fieldsValue['date-picker'];
+  console.log(rangeValue);
   const colorValue =
     fieldsValue['color'] === '#1E88E5' ? '#1E88E5' : fieldsValue['color'].toHexString();
   const values = {
@@ -23,6 +25,9 @@ const onFinish = fieldsValue => {
 
 const Todo = ({ data, setData }) => {
   const visitList = data.visitList;
+  console.log(data);
+  console.log(data.startDate);
+  console.log(data.endDate);
 
   // 임시 데이터
   // const origindata = {
@@ -1334,11 +1339,13 @@ const Todo = ({ data, setData }) => {
         initialValues={{
           color: '#1E88E5',
           'visit-complete': false,
+          // city: [11, 11110],
+          // 'date-picker': ['2023-07-02', '2023-07-05'],
         }}
       >
         <h2>Travel Schedule</h2>
-        <div className="travelScheduleWrap">
-          <div className="inputTravel">
+        <div className="travel-schedule-wrap">
+          <div className="input-travel">
             <Form.Item
               name="city"
               rules={[
@@ -1366,18 +1373,18 @@ const Todo = ({ data, setData }) => {
               <ColorPicker value={color} />
             </Form.Item>
           </div>
-          <div className="addTravelBtn">
+          <div className="add-travel-btn">
             <Button type="primary" htmlType="submit">
               저장
             </Button>
             <Button onClick={handleCancel}>취소</Button>
           </div>
         </div>
-        <div className="detailPlanWrap">
-          <div className="travelPlan">
+        <div className="detail-plan-wrap">
+          <div className="travel-plan">
             <div>
               <h2>Travel Plan</h2>
-              <ul className="todoListWrap">
+              <ul className="todoList-wrap">
                 {visitList.map((item, index) => (
                   <TodoList
                     key={index}
@@ -1390,7 +1397,7 @@ const Todo = ({ data, setData }) => {
                 <li>
                   <Button
                     type="primary"
-                    className="addPlanBtn"
+                    className="add-plan-btn"
                     style={{ background: '#1E88E5' }}
                     onClick={handleAddVisitList}
                   >
@@ -1400,7 +1407,7 @@ const Todo = ({ data, setData }) => {
               </ul>
             </div>
           </div>
-          <div className="travelReview">
+          <div className="travel-review">
             <h2>Travel Review</h2>
             <TravelReview />
           </div>

@@ -38,12 +38,8 @@ const TodoList = ({ index, visitList, data, setData }) => {
           <Form.Item className="checkbox" name={`visit-complete${index}`} valuePropName="checked">
             <Checkbox defaultChecked={visitList.complete} />
           </Form.Item>
-          <Form.Item name={`visit-title${index}`} className="visitListInput">
-            <Input
-              placeholder="일정을 입력하세요."
-              defaultValue={visitList.title}
-              className="visitListInput"
-            />
+          <Form.Item name={`visit-title${index}`} className="visitList-input">
+            <Input placeholder="일정을 입력하세요." defaultValue={visitList.title} />
           </Form.Item>
           <button onClick={() => handleAddCheckList(visitList.id)}>
             <FontAwesomeIcon icon={faListCheck} className="bt-addcheck" />

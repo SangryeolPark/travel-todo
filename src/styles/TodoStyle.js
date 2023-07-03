@@ -16,31 +16,31 @@ export const TodoDiv = styled.div`
     margin-bottom: 10px;
     color: #1e88e5;
   }
-  .travelScheduleWrap {
+  .travel-schedule-wrap {
     width: 100%;
     display: flex;
     justify-content: space-between;
     margin-bottom: 30px;
-    .inputTravel {
+    .input-travel {
       display: flex;
       .cascader {
         width: 200px;
         margin-right: 10px;
       }
       .range-picker {
-        margin-right: 10;
+        margin-right: 10px;
       }
     }
-    .addTravelBtn {
+    .add-travel-btn {
       button:first-of-type {
         margin-right: 10px;
         background: #1e88e5;
       }
     }
   }
-  .detailPlanWrap {
+  .detail-plan-wrap {
     display: flex;
-    .travelPlan {
+    .travel-plan {
       display: flex;
       justify-content: start;
       width: 100%;
@@ -51,10 +51,10 @@ export const TodoDiv = styled.div`
       > div {
         text-align: start;
         width: 100%;
-        ul.todoListWrap {
+        ul.todoList-wrap {
           width: 100%;
           height: 35vh;
-          .addPlanBtn {
+          .add-plan-btn {
             position: absolute;
             right: 25px;
             bottom: 0;
@@ -68,7 +68,7 @@ export const TodoDiv = styled.div`
         }
       }
     }
-    .travelReview {
+    .travel-review {
       width: 100%;
       height: 100%;
       text-align: start;
@@ -89,7 +89,7 @@ export const TodoListLi = styled.li`
     .checkbox {
       margin-right: 10px;
     }
-    .visitListInput {
+    .visitList-input {
       width: 100%;
       margin-right: 10px;
     }
