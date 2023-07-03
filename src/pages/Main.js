@@ -12,16 +12,6 @@ const Main = ({ switchBool, setSwitchBool }) => {
   const [mapPath, setMapPath] = useState(null);
   const [regionCode, setRegionCode] = useState(null);
 
-  const getRegionCode = async () => {
-    try {
-      // const { data } = await axios.get('/api/todo');
-      const { data } = await axios.get('http://localhost:5000/data');
-      setRegionCode(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     if (pathname.includes('map')) {
       setSwitchBool(true);
@@ -35,6 +25,15 @@ const Main = ({ switchBool, setSwitchBool }) => {
   }, [pathname]);
 
   useEffect(() => {
+    const getRegionCode = async () => {
+      try {
+        const { data } = await axios.get('/api/todo');
+        setRegionCode(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     getRegionCode();
     switchBool ? navigate(mapPath) : navigate('/calendar');
   }, [switchBool]);
