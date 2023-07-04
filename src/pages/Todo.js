@@ -6,6 +6,7 @@ import { tempRegionData } from '../assets/tempData';
 import { useNavigate } from 'react-router-dom';
 import TodoList from '../components/todo/TodoList';
 import TravelReview from '../components/todo/TravelReview';
+import dayjs from 'dayjs';
 
 // 저장 버튼
 
@@ -37,7 +38,17 @@ const Todo = ({ data, setData }) => {
       endDate: values['date-picker'][1],
       calColor: values.color,
     };
-    console.log(postTitleData);
+    postTitle(postTitleData);
+  };
+
+  const postTitle = async postTitleData => {
+    try {
+      const res = await axios.post('/api/todo', postTitleData);
+      const result = res.data;
+      console.log(result);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // 취소 버튼 클릭시
@@ -108,8 +119,8 @@ const Todo = ({ data, setData }) => {
         initialValues={{
           color: '#1E88E5',
           'visit-complete': false,
-          // city: [11, 11110],
-          // 'date-picker': ['2023-07-02', '2023-07-05'],
+          city: [11, 11110],
+          'date-picker': [dayjs('2023-07-04', 'YYYY-MM-DD'), dayjs('2023-07-05', 'YYYY-MM-DD')],
         }}
       >
         <h2>Travel Schedule</h2>

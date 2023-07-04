@@ -50,8 +50,8 @@ export const DetailScheduleDiv = styled.div`
         color: #1e88e5;
       }
     }
-    .bt-x {
-      font-size: 27px;
+    .bt-trash {
+      font-size: 21px;
       :hover {
         fill: #1e88e5;
       }
