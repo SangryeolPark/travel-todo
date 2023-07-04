@@ -1,4 +1,16 @@
+import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
+
+const fromBottom = keyframes`
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+`;
 
 export const TodoDiv = styled.div`
   position: absolute;
@@ -11,6 +23,7 @@ export const TodoDiv = styled.div`
   border-radius: 10px;
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
   padding: 70px 50px;
+  animation: ${fromBottom} 0.5s ease-in-out;
   h2 {
     font-size: 24px;
     margin-bottom: 10px;
