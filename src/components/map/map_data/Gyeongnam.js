@@ -9,8 +9,8 @@ const Gyeongnam = () => {
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="1.5"
-      width="100%"
-      height="100%"
+      width="95%"
+      height="95%"
       viewBox="0 0 800 837"
     >
       <g id="48">

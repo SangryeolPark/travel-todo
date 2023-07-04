@@ -101,12 +101,11 @@ const App = () => {
   // },
 
   const [data, setData] = useState(originData);
-  const [switchBool, setSwitchBool] = useState(true);
 
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route element={<Main switchBool={switchBool} setSwitchBool={setSwitchBool} />}>
+      <Route element={<Main />}>
         <Route path="map" element={<Map />}>
           <Route index element={<Korea />} />
           <Route path=":region" element={<MapDetail />}>

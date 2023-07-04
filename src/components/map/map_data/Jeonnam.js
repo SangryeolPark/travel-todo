@@ -9,8 +9,8 @@ const Jeonnam = () => {
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="1"
-      width="100%"
-      height="100%"
+      width="90%"
+      height="90%"
       viewBox="200 0 600 518"
     >
       <g id="46">
