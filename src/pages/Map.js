@@ -6,10 +6,18 @@ import {
   MapInfo,
   TravelListFilter,
   TravelListContainer,
+  TravelItemCollapse,
 } from '../styles/MapStyle';
 import { Link, Outlet, useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBorderTopLeft, faChevronRight, faDroplet } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBorderTopLeft,
+  faChevronDown,
+  faChevronRight,
+  faDroplet,
+  faPencil,
+  faTrashCan,
+} from '@fortawesome/free-solid-svg-icons';
 import { Collapse, ColorPicker } from 'antd';
 import axios from 'axios';
 
@@ -41,7 +49,7 @@ const Map = () => {
         setTravelList(loading);
 
         // 로딩 완료
-        const { data } = await axios.get(`/api/map/sub?idTitle=${idTitle}`);
+        const { data } = await axios.get(`/api/map/sub/${idTitle}`);
         const newData = data.map(item => {
           return {
             key: item.idSub,
@@ -104,7 +112,15 @@ const Map = () => {
           return {
             key: item.idTitle,
             label: item.title,
-            extra: <span>{`${item.startDate} ~ ${item.endDate}`}</span>,
+            extra: (
+              <>
+                <span>{`${item.startDate} ~ ${item.endDate}`}</span>
+                <div>
+                  <FontAwesomeIcon icon={faPencil} />
+                  <FontAwesomeIcon icon={faTrashCan} />
+                </div>
+              </>
+            ),
           };
         });
         setTravelList(result);
@@ -248,18 +264,20 @@ const Map = () => {
         )}
         {travelList ? (
           travelList.length !== 0 ? (
-            <Collapse
+            <TravelItemCollapse
               accordion
+              expandIcon={({ isActive }) => (
+                <FontAwesomeIcon icon={faChevronDown} rotation={isActive ? 180 : 0} />
+              )}
+              collapsible="icon"
               onChange={idTitle => handleTodoList(idTitle[0])}
               items={travelList}
             />
           ) : (
-            <span>등록된 할 일이 없습니다.</span>
+            <span className="loading-msg">등록된 할 일이 없습니다.</span>
           )
         ) : (
-          <span style={{ display: 'block', height: '100%', justifyContent: 'center' }}>
-            {travelListLoading}
-          </span>
+          <span className="loading-msg">{travelListLoading}</span>
         )}
       </TravelListContainer>
     </MapContainer>

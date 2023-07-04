@@ -7,7 +7,6 @@ import { STATUS_LOADING, STATUS_SERVER_ERROR } from '../../App';
 
 const TravelTodo = ({ items }) => {
   const [todoList, setTodoList] = useState(items);
-  const [checkListLoading, setCheckListLoading] = useState(STATUS_LOADING);
 
   const handleCheckList = idSub => {
     const getCheckList = async () => {
@@ -22,7 +21,7 @@ const TravelTodo = ({ items }) => {
         setTodoList(loading);
 
         // 로딩 완료
-        const { data } = await axios.get(`/api/map/check?idSub=${idSub[0]}`);
+        const { data } = await axios.get(`/api/map/check/${idSub[0]}`);
         const result = todoList.map(todo => {
           if (todo.key == idSub) {
             return {
@@ -56,7 +55,9 @@ const TravelTodo = ({ items }) => {
     }
   };
 
-  return <Collapse accordion items={todoList} onChange={handleCheckList} />;
+  return (
+    <Collapse accordion onChange={handleCheckList} items={todoList} expandIconPosition="end" />
+  );
 };
 
 export default TravelTodo;

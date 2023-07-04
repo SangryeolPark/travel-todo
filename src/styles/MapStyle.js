@@ -1,6 +1,6 @@
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Breadcrumb } from 'antd';
+import { Breadcrumb, Collapse } from 'antd';
 
 const fromLeft = keyframes`
   from {
@@ -100,10 +100,9 @@ const ColorPickerContainer = styled.div`
 const TravelListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  overflow: auto;
   height: 100%;
   background: #fff;
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
   box-shadow: 0px 1px 5px -1px rgba(0, 0, 0, 0.5);
   flex-basis: 40%;
@@ -112,7 +111,8 @@ const TravelListContainer = styled.div`
 const TravelListFilter = styled(Breadcrumb)`
   font-size: 22px;
   font-weight: bold;
-  margin-bottom: 15px;
+  padding: 10px;
+  /* padding-bottom: 5px; */
   ol {
     align-items: center;
   }
@@ -129,43 +129,83 @@ const TravelListFilter = styled(Breadcrumb)`
   }
 `;
 
-const TravelItemContainer = styled.div`
-  margin-top: 15px;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+const TravelItemCollapse = styled(Collapse)`
   background: #fff;
-  padding: 15px;
-  padding-bottom: 5px;
-  border-radius: 5px;
-  box-shadow: 0px 1px 5px -1px rgba(0, 0, 0, 0.3);
-  font-size: 18px;
-  gap: 5px;
-  transition: all 1s ease-in-out;
-  .title-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-right: 5px;
-    .travel-title {
-      font-weight: bold;
+  overflow: auto;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  padding: 5px 10px 10px;
+  > .ant-collapse-item {
+    margin-bottom: 15px;
+    position: relative;
+    padding: 15px;
+    padding-bottom: 10px;
+    border-bottom: none;
+    border-radius: 5px;
+    box-shadow: 0px 1px 5px -1px rgba(0, 0, 0, 0.3);
+    &:last-child {
+      border-radius: 5px;
+      margin-bottom: 0;
     }
-  }
-  .travel-date {
-    font-size: 14px;
-  }
-  .expand-btn {
-    padding-top: 5px;
-    text-align: center;
+    > .ant-collapse-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      padding: 0;
+      position: static;
+      padding-inline-start: 0;
+      line-height: normal;
+      > .ant-collapse-header-text {
+        color: #000;
+        font-size: 18px;
+        font-weight: bold;
+      }
+      > .ant-collapse-expand-icon {
+        order: 1;
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-inline-end: 0;
+        margin-inline-start: 0;
+        margin-top: 5px;
+        > svg {
+          transition: all 0.2s ease-in-out;
+          font-size: 18px;
+        }
+      }
+      > .ant-collapse-extra {
+        width: 100%;
+        > div {
+          display: flex;
+          gap: 10px;
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          font-size: 18px;
+        }
+      }
+    }
+    > .ant-collapse-content {
+      border-top: none;
+      padding: 10px 0 5px;
+      > .ant-collapse-content-box {
+        padding: 0;
+      }
+    }
   }
 `;
 
 export {
+  fromLeft,
+  mapAni,
   MapContainer,
   MapImage,
   MapInfo,
   ColorPickerContainer,
   TravelListContainer,
   TravelListFilter,
-  TravelItemContainer,
+  TravelItemCollapse,
 };
