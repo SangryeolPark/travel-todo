@@ -6,6 +6,7 @@ import moment from 'moment';
 import { Drawer } from 'antd';
 import Schedule from '../components/calendar/Schedule';
 import { CalendarDiv } from './../styles/CalendarStyle';
+import axios from 'axios';
 
 const Calendar = ({ originData }) => {
   // (캘린더 표시) 기존 종료일 + 1
@@ -42,10 +43,10 @@ const Calendar = ({ originData }) => {
   // 임시 event list
   let travelList = [
     {
-      id: 1,
+      id: 6,
       color: 'rgb(0, 177, 94)',
-      end: '2023-07-08',
-      start: '2023-07-05',
+      end: '2023-07-09',
+      start: '2023-07-06',
       title: '경상북도 안동시',
     },
     {
@@ -80,6 +81,42 @@ const Calendar = ({ originData }) => {
     headerCell.forEach((item, index) => (item.innerHTML = day[index]));
   });
 
+  let year;
+  let month;
+
+  const handleDatesSet = arg => {
+    const startDate = arg.start; // 변경된 날짜 범위의 시작 날짜
+    const endDate = arg.end; // 변경된 날짜 범위의 종료 날짜
+
+    const currentYear = startDate.getFullYear();
+    year = currentYear;
+
+    const startMonth = startDate.getMonth() + 1; // 시작 날짜의 월 (0부터 시작)
+    const endMonth = endDate.getMonth() + 1; // 종료 날짜의 월 (0부터 시작)
+    const currentMonth = endDate.getMonth();
+    month = currentMonth;
+
+    console.log('시작 월:', startMonth);
+    console.log('종료 월:', endMonth);
+    console.log('현재 월:', currentMonth);
+
+    // 원하는 동작을 수행하거나 상태를 업데이트할 수 있습니다.
+    // 예: API 호출, 데이터 로딩 등
+  };
+
+  useEffect(() => {
+    const getCalendarData = async () => {
+      try {
+        const res = await axios.get(`/api/calender?year=${year}&month=${month}`);
+        const result = res.data;
+        console.log(result);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getCalendarData();
+  }, []);
+
   return (
     <CalendarDiv>
       <div className="wrap">
@@ -99,6 +136,7 @@ const Calendar = ({ originData }) => {
           plugins={[dayGridPlugin]}
           events={travelList}
           eventClick={showDrawer}
+          datesSet={handleDatesSet}
         />
       </div>
       <Drawer

@@ -98,12 +98,12 @@
   box-shadow: none !important;
 }
 
-fc-toolbar-chunk > button.fc-button-primary:hover {
+.fc-toolbar-chunk > button.fc-button-primary:hover {
   border: 1px solid #5e5e5e !important;
   background: #5e5e5e !important;
 }
 
-*/ .fc-button-group button:focus {
+.fc-button-group button:focus {
   box-shadow: none;
   background: 'none' !important;
 }
@@ -123,6 +123,17 @@ fc-toolbar-chunk > button.fc-button-primary:hover {
 .fc .fc-today-button:active {
   background: #1a252f !important;
   border: 1px solid #151e27 !important;
+}
+
+.fc-col-header {
+  width: 100% !important;
+}
+.fc .fc-daygrid-body {
+  width: 100% !important;
+}
+
+.fc-scrollgrid-sync-table {
+  width: 100% !important;
 }
 
 .fc-direction-ltr {
@@ -159,6 +170,16 @@ fc-toolbar-chunk > button.fc-button-primary:hover {
   font-size: 16px;
   font-weight: 500;
   /* font-family: 'Jua', sans-serif; */
+}
+
+.fc .fc-event::before {
+  content: none !important;
+  background: none !important;
+}
+
+.fc .fc-event::after {
+  content: none !important;
+  background: none !important;
 }
 
 .fc-event-title {

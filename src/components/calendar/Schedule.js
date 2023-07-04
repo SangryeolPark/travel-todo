@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark, faPencil } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faPencil } from '@fortawesome/free-solid-svg-icons';
 import { Checkbox, Input } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { Link } from 'react-router-dom';
@@ -17,7 +17,7 @@ const Schedule = ({ setOpen, selectTitle, selectStartDate, selectEndDate }) => {
         <Link to="/todo">
           <FontAwesomeIcon icon={faPencil} className="bt-pencil" />
         </Link>
-        <FontAwesomeIcon icon={faXmark} className="bt-x" onClick={onClose} />
+        <FontAwesomeIcon icon={faTrashCan} className="bt-trash" /*onClick={onClose}*/ />
       </div>
       <div className="travel-schedule">
         <h2>Travel Schedule</h2>
