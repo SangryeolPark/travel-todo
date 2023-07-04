@@ -153,9 +153,9 @@ const TravelItemContainer = styled.div`
   }
   .travel-date {
     font-size: 14px;
-    padding-bottom: 10px;
   }
   .expand-btn {
+    padding-top: 5px;
     text-align: center;
   }
 `;

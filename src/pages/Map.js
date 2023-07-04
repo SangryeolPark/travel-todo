@@ -10,24 +10,83 @@ import {
 import { Link, Outlet, useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBorderTopLeft, faChevronRight, faDroplet } from '@fortawesome/free-solid-svg-icons';
-import { ColorPicker } from 'antd';
-// import axios from 'axios';
-import TravelItem from '../components/map/TravelItem';
+import { Collapse, ColorPicker } from 'antd';
 import axios from 'axios';
+
+import { STATUS_LOADING, STATUS_SERVER_ERROR } from '../App';
+
+import TravelTodo from '../components/map/TravelTodo';
 
 const Map = () => {
   const navigate = useNavigate();
   const { region, regionDetail } = useParams();
-  const { regionCode } = useOutletContext();
+  const { regionData, regionDataLoading } = useOutletContext();
   const [mapData, setMapData] = useState([]);
   const colorData = JSON.parse(localStorage.getItem('map-color'));
   const [mapColor, setMapColor] = useState(colorData ? colorData : ['#fff', '#000']);
   const [regionInfo, setRegionInfo] = useState([]);
-  const [visitData, setVisitData] = useState(null);
+  const [travelList, setTravelList] = useState(null);
+  const [travelListLoading, setTravelListLoading] = useState(STATUS_LOADING);
+
+  const handleTodoList = idTitle => {
+    const getTodoList = async () => {
+      try {
+        // 로딩 중 상태
+        const loading = travelList.map(travel => {
+          return {
+            ...travel,
+            children: <span>{STATUS_LOADING}</span>,
+          };
+        });
+        setTravelList(loading);
+
+        // 로딩 완료
+        const { data } = await axios.get(`/api/map/sub?idTitle=${idTitle}`);
+        const newData = data.map(item => {
+          return {
+            key: item.idSub,
+            label: item.subTitle,
+            complete: JSON.stringify(item.finishYn),
+          };
+        });
+
+        const result = travelList.map(travel => {
+          if (travel.key == idTitle) {
+            return {
+              ...travel,
+              children:
+                newData.length !== 0 ? (
+                  <TravelTodo items={newData} />
+                ) : (
+                  <span>등록된 할 일이 없습니다.</span>
+                ),
+            };
+          }
+          return travel;
+        });
+        setTravelList(result);
+      } catch (error) {
+        // 서버 에러
+        console.log(error);
+        const result = travelList.map(travel => {
+          return {
+            ...travel,
+            children: <span>{STATUS_SERVER_ERROR}</span>,
+          };
+        });
+        setTravelList(result);
+      }
+    };
+
+    if (idTitle) {
+      getTodoList();
+    }
+  };
 
   useEffect(() => {
     // GET 여행 일정 데이터
     const getData = async () => {
+      setTravelList(null);
       let url;
       if (regionDetail) {
         url = `/${region}/${regionDetail}`;
@@ -38,11 +97,20 @@ const Map = () => {
           url = `/${region}`;
         }
       }
+
       try {
         const { data } = await axios.get(`/api/map${url}`);
-        setVisitData(data);
+        const result = data.map(item => {
+          return {
+            key: item.idTitle,
+            label: item.title,
+            extra: <span>{`${item.startDate} ~ ${item.endDate}`}</span>,
+          };
+        });
+        setTravelList(result);
       } catch (error) {
         console.log(error);
+        setTravelListLoading(STATUS_SERVER_ERROR);
       }
     };
 
@@ -55,7 +123,7 @@ const Map = () => {
 
   useEffect(() => {
     setMapData(document.querySelectorAll('g > path'));
-  }, [region, regionDetail, regionCode]);
+  }, [region, regionDetail, regionData]);
 
   useEffect(() => {
     // MapContainer 세팅
@@ -63,12 +131,12 @@ const Map = () => {
       // 지명 Tooltip
       const findRegionName = item => {
         if (!region) {
-          return regionCode.region.find(data => data.idRegion == item.id).region;
+          return regionData.region.find(data => data.idRegion == item.id).region;
         } else {
           if (region === '36') {
             return '세종시';
           } else {
-            return regionCode.regionDetail.find(data => data.idRegionDetail == item.id)
+            return regionData.regionDetail.find(data => data.idRegionDetail == item.id)
               .regionDetail;
           }
         }
@@ -106,12 +174,12 @@ const Map = () => {
           {
             title: (
               <Link to={region}>
-                {regionCode.region.find(item => item.idRegion === parseInt(region)).region}
+                {regionData.region.find(item => item.idRegion === parseInt(region)).region}
               </Link>
             ),
           },
           {
-            title: regionCode.regionDetail.find(
+            title: regionData.regionDetail.find(
               item => item.idRegionDetail === parseInt(regionDetail)
             ).regionDetail,
           },
@@ -123,24 +191,22 @@ const Map = () => {
           setRegionInfo([
             { title: <Link to="/map">대한민국</Link> },
             {
-              title: regionCode.region.find(item => item.idRegion === parseInt(region)).region,
+              title: regionData.region.find(item => item.idRegion === parseInt(region)).region,
             },
           ]);
         }
       }
     };
 
-    if (regionCode) {
+    if (regionData) {
       renderMapContainer();
     }
-  }, [mapData, mapColor, regionCode]);
+  }, [mapData, mapColor, regionData]);
 
   return (
     <MapContainer>
       <MapImage>
-        {!regionCode ? (
-          <span>Cannot connect to server.</span>
-        ) : (
+        {regionData ? (
           <>
             <MapInfo separator={<FontAwesomeIcon icon={faChevronRight} />} items={regionInfo} />
             <ColorPickerContainer>
@@ -167,6 +233,8 @@ const Map = () => {
             </ColorPickerContainer>
             <Outlet context={{ region, regionDetail, setMapData }} />
           </>
+        ) : (
+          <span>{regionDataLoading}</span>
         )}
       </MapImage>
       <TravelListContainer>
@@ -178,12 +246,21 @@ const Map = () => {
         ) : (
           <TravelListFilter separator=" " items={[{ title: <Link>예정</Link> }]} />
         )}
-        {visitData ? (
-          visitData.map(info => <TravelItem key={info.idTitle} info={info} />)
+        {travelList ? (
+          travelList.length !== 0 ? (
+            <Collapse
+              accordion
+              onChange={idTitle => handleTodoList(idTitle[0])}
+              items={travelList}
+            />
+          ) : (
+            <span>등록된 할 일이 없습니다.</span>
+          )
         ) : (
-          <span>할 일이 없습니다.</span>
+          <span style={{ display: 'block', height: '100%', justifyContent: 'center' }}>
+            {travelListLoading}
+          </span>
         )}
-        <TravelItem />
       </TravelListContainer>
     </MapContainer>
   );

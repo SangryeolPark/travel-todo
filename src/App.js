@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Map from './pages/Map';
@@ -8,7 +8,11 @@ import MapDetail from './components/map/MapDetail';
 import Korea from './components/map/map_data/Korea';
 import Todo from './pages/Todo';
 import Main from './pages/Main';
-import axios from 'axios';
+
+const STATUS_SERVER_ERROR = '서버와의 연결이 원활하지 않습니다.';
+const STATUS_LOADING = '로딩 중...';
+
+export { STATUS_LOADING, STATUS_SERVER_ERROR };
 
 const App = () => {
   const originData = {

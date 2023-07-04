@@ -6,24 +6,28 @@ import { faEarthAsia, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
 import axios from 'axios';
 
+import { STATUS_LOADING, STATUS_SERVER_ERROR } from '../App';
+
 const Main = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [mapPath, setMapPath] = useState(null);
-  const [regionCode, setRegionCode] = useState(null);
   const [switchBool, setSwitchBool] = useState(pathname.includes('map'));
+  const [regionData, setRegionData] = useState(null);
+  const [regionDataLoading, setRegionDataLoading] = useState(STATUS_LOADING);
 
   useEffect(() => {
-    const getRegionCode = async () => {
+    const getRegionData = async () => {
       try {
         const { data } = await axios.get('/api/todo');
-        setRegionCode(data);
+        setRegionData(data);
       } catch (error) {
         console.log(error);
+        setRegionDataLoading(STATUS_SERVER_ERROR);
       }
     };
 
-    getRegionCode();
+    getRegionData();
   }, []);
 
   useEffect(() => {
@@ -62,7 +66,7 @@ const Main = () => {
         />
       </Header>
       <Content>
-        <Outlet context={{ regionCode }} />
+        <Outlet context={{ regionData, regionDataLoading }} />
       </Content>
       <AddButton
         onClick={handleAddClick}
