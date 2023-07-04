@@ -4,14 +4,16 @@ import {
   MapContainer,
   MapImage,
   MapInfo,
-  TranvelListFilter,
-  TravelList,
+  TravelListFilter,
+  TravelListContainer,
 } from '../styles/MapStyle';
 import { Link, Outlet, useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBorderTopLeft, faChevronRight, faDroplet } from '@fortawesome/free-solid-svg-icons';
 import { ColorPicker } from 'antd';
 // import axios from 'axios';
+import TravelItem from '../components/map/TravelItem';
+import axios from 'axios';
 
 const Map = () => {
   const navigate = useNavigate();
@@ -21,30 +23,35 @@ const Map = () => {
   const colorData = JSON.parse(localStorage.getItem('map-color'));
   const [mapColor, setMapColor] = useState(colorData ? colorData : ['#fff', '#000']);
   const [regionInfo, setRegionInfo] = useState([]);
+  const [visitData, setVisitData] = useState(null);
 
-  // GET 여행 일정 데이터
-  // const getData = async () => {
-  //   let url;
-  //   if (regionDetail) {
-  //     url = `/${region}/${regionDetail}`;
-  //   } else {
-  //     if (!region) {
-  //       url = '';
-  //     } else {
-  //       url = `/${region}`;
-  //     }
-  //   }
-  //   try {
-  //     const { data } = await axios.get(`/api/map${url}`);
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  useEffect(() => {
+    // GET 여행 일정 데이터
+    const getData = async () => {
+      let url;
+      if (regionDetail) {
+        url = `/${region}/${regionDetail}`;
+      } else {
+        if (!region) {
+          url = '';
+        } else {
+          url = `/${region}`;
+        }
+      }
+      try {
+        const { data } = await axios.get(`/api/map${url}`);
+        setVisitData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  // useEffect(() => {
-  //   getData();
-  // }, [region, regionDetail]);
+    getData();
+  }, [region, regionDetail]);
+
+  useEffect(() => {
+    localStorage.setItem('map-color', JSON.stringify(mapColor));
+  }, [mapColor]);
 
   useEffect(() => {
     setMapData(document.querySelectorAll('g > path'));
@@ -128,15 +135,11 @@ const Map = () => {
     }
   }, [mapData, mapColor, regionCode]);
 
-  useEffect(() => {
-    localStorage.setItem('map-color', JSON.stringify(mapColor));
-  }, [mapColor]);
-
   return (
     <MapContainer>
       <MapImage>
         {!regionCode ? (
-          <div>Cannot connect to server.</div>
+          <span>Cannot connect to server.</span>
         ) : (
           <>
             <MapInfo separator={<FontAwesomeIcon icon={faChevronRight} />} items={regionInfo} />
@@ -166,18 +169,22 @@ const Map = () => {
           </>
         )}
       </MapImage>
-      <TravelList>
-        {region && (
-          <TranvelListFilter
+      <TravelListContainer>
+        {region ? (
+          <TravelListFilter
             separator=" "
-            items={[
-              { title: <Link to={'?filter=plan'}>예정</Link> },
-              { title: <Link to={'?filter=complete'}>완료</Link> },
-            ]}
+            items={[{ title: <Link>예정</Link> }, { title: <Link>완료</Link> }]}
           />
+        ) : (
+          <TravelListFilter separator=" " items={[{ title: <Link>예정</Link> }]} />
         )}
-        <div>List</div>
-      </TravelList>
+        {visitData ? (
+          visitData.map(info => <TravelItem key={info.idTitle} info={info} />)
+        ) : (
+          <span>할 일이 없습니다.</span>
+        )}
+        <TravelItem />
+      </TravelListContainer>
     </MapContainer>
   );
 };

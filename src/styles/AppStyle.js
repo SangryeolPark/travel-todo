@@ -85,7 +85,7 @@ const AddButton = styled(Button)`
   width: 60px !important;
   height: 60px;
   background: #ff1744;
-  box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
   font-size: 30px;
   z-index: 999;
   &:hover {

@@ -97,18 +97,22 @@ const ColorPickerContainer = styled.div`
   }
 `;
 
-const TravelList = styled.div`
+const TravelListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
   height: 100%;
   background: #fff;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0px 2px 5px -2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 5px -1px rgba(0, 0, 0, 0.5);
   flex-basis: 40%;
 `;
 
-const TranvelListFilter = styled(Breadcrumb)`
+const TravelListFilter = styled(Breadcrumb)`
   font-size: 22px;
   font-weight: bold;
+  margin-bottom: 15px;
   ol {
     align-items: center;
   }
@@ -125,4 +129,43 @@ const TranvelListFilter = styled(Breadcrumb)`
   }
 `;
 
-export { MapContainer, MapImage, MapInfo, ColorPickerContainer, TravelList, TranvelListFilter };
+const TravelItemContainer = styled.div`
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: #fff;
+  padding: 15px;
+  padding-bottom: 5px;
+  border-radius: 5px;
+  box-shadow: 0px 1px 5px -1px rgba(0, 0, 0, 0.3);
+  font-size: 18px;
+  gap: 5px;
+  transition: all 1s ease-in-out;
+  .title-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 5px;
+    .travel-title {
+      font-weight: bold;
+    }
+  }
+  .travel-date {
+    font-size: 14px;
+    padding-bottom: 10px;
+  }
+  .expand-btn {
+    text-align: center;
+  }
+`;
+
+export {
+  MapContainer,
+  MapImage,
+  MapInfo,
+  ColorPickerContainer,
+  TravelListContainer,
+  TravelListFilter,
+  TravelItemContainer,
+};
