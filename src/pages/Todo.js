@@ -41,6 +41,7 @@ const Todo = ({ data, setData }) => {
     postTitle(postTitleData);
   };
 
+  // title 보내기
   const postTitle = async postTitleData => {
     try {
       const res = await axios.post('/api/todo', postTitleData);

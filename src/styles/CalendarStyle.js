@@ -42,18 +42,20 @@ export const DetailScheduleDiv = styled.div`
     display: flex;
     align-items: center;
     cursor: pointer;
-    .bt-pencil {
-      font-size: 20px;
-      margin-right: 15px;
-      cursor: pointer;
+    a {
       :hover {
         color: #1e88e5;
       }
     }
+    .bt-pencil {
+      font-size: 20px;
+      margin-right: 15px;
+      cursor: pointer;
+    }
     .bt-trash {
       font-size: 21px;
       :hover {
-        fill: #1e88e5;
+        color: #1e88e5;
       }
     }
   }
@@ -83,6 +85,7 @@ export const DetailScheduleDiv = styled.div`
       margin-bottom: 10px;
       .visit-list {
         display: flex;
+        /* flex-direction: c; */
         align-items: center;
         .checkbox {
           background: none;
@@ -98,6 +101,7 @@ export const DetailScheduleDiv = styled.div`
         }
       }
       .check-list {
+        display: flex;
         margin-left: 10px;
         div {
           display: flex;

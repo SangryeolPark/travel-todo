@@ -4,12 +4,20 @@ import { Checkbox, Input } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { Link } from 'react-router-dom';
 import { DetailScheduleDiv } from '../../styles/CalendarStyle';
+import axios from 'axios';
 
-const Schedule = ({ setOpen, selectTitle, selectStartDate, selectEndDate }) => {
+const Schedule = ({
+  setOpen,
+  selectTitle,
+  selectStartDate,
+  selectEndDate,
+  selectReview,
+  todoData,
+}) => {
   // 닫기 버튼
-  const onClose = () => {
-    setOpen(false);
-  };
+  // const onClose = () => {
+  //   setOpen(false);
+  // };
 
   return (
     <DetailScheduleDiv>
@@ -27,46 +35,25 @@ const Schedule = ({ setOpen, selectTitle, selectStartDate, selectEndDate }) => {
       <div className="travel-plan">
         <h2>Travel Plan</h2>
         <div className="detail-plan">
-          <div className="visit-list">
-            <Checkbox className="checkbox" disabled={true} defaultChecked="true" />
-            <Input className="input" disabled={true} value="월영교 산책" />
-          </div>
-          <div className="check-list">
-            <div>
-              <Checkbox className="checkbox" disabled={true} defaultChecked="true" />
-              <Input className="input" disabled={true} value="카메라 챙기기" />
+          {todoData.map(item => (
+            <div key={item.idSub}>
+              <div className="visit-list">
+                <Checkbox className="checkbox" disabled={true} defaultChecked={item.finishYn} />
+                <Input className="input" disabled={true} value={item.subTitle} />
+              </div>
+              {item.checkList.map(item => (
+                <div key={item.idCheck} className="check-list">
+                  <Checkbox className="checkbox" disabled={true} defaultChecked={item.finishYn} />
+                  <Input className="input" disabled={true} value={item.checkList} />
+                </div>
+              ))}
             </div>
-            <div>
-              <Checkbox className="checkbox" disabled={true} defaultChecked="true" />
-              <Input className="input" disabled={true} value="근처 맛집 찾아보기" />
-            </div>
-          </div>
-        </div>
-        <div className="detail-plan">
-          <div className="visit-list">
-            <Checkbox className="checkbox" disabled={true} defaultChecked="true" />
-            <Input className="input" disabled={true} value="안동 시장 구경" />
-          </div>
-          <div className="check-list">
-            <div>
-              <Checkbox className="checkbox" disabled={true} defaultChecked="true" />
-              <Input className="input" disabled={true} value="인근 주차장 검색" />
-            </div>
-            <div>
-              <Checkbox className="checkbox" disabled={true} defaultChecked="true" />
-              <Input className="input" disabled={true} value="시장 맛집 찾아보기" />
-            </div>
-          </div>
+          ))}
         </div>
       </div>
       <div className="travel-review">
         <h2>Travel Review</h2>
-        <TextArea
-          className="text-area"
-          value="참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. 참 재미있었다. "
-          disabled={true}
-          rows={5}
-        />
+        <TextArea className="text-area" value={selectReview} disabled={true} rows={5} />
       </div>
     </DetailScheduleDiv>
   );
