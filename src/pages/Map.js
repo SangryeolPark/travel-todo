@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Outlet, useNavigate, useOutletContext, useParams } from 'react-router-dom';
+import {
+  Link,
+  Outlet,
+  useNavigate,
+  useOutletContext,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -28,10 +35,13 @@ import {
 } from '../styles/MapStyle';
 
 import TravelTodo from '../components/map/TravelTodo';
+import moment from 'moment';
 
 const Map = () => {
   const navigate = useNavigate();
   const { region, regionDetail } = useParams();
+  const [searchParam, setSearchParam] = useSearchParams();
+  const filter = searchParam.get('filter');
   const { regionData, regionDataLoading } = useOutletContext();
   const [mapData, setMapData] = useState([]);
   const colorData = JSON.parse(localStorage.getItem('map-color'));
@@ -108,7 +118,16 @@ const Map = () => {
     }
   };
 
+  // data.map(item => {
+  //   console.log(item.title, moment(Date.now()).format('YYYY-MM-DD') < item.startDate);
+  // });
+
   useEffect(() => {
+    if (region && !filter) {
+      searchParam.set('filter', 'plan');
+      setSearchParam(searchParam);
+    }
+
     // GET 여행 일정 데이터
     const getData = async () => {
       setTravelList(null);
@@ -125,22 +144,49 @@ const Map = () => {
 
       try {
         const { data } = await axios.get(`/api/map${url}`);
-        const result = data.map(item => {
-          return {
-            key: item.idTitle,
-            label: item.title,
-            extra: (
-              <>
-                <span>{`${item.startDate} ~ ${item.endDate}`}</span>
-                <div>
-                  <FontAwesomeIcon icon={faPencil} />
-                  <FontAwesomeIcon icon={faTrashCan} />
-                </div>
-              </>
-            ),
-          };
-        });
-        setTravelList(result);
+        if (filter === 'plan' || !region) {
+          const filteredData = data.filter(
+            item =>
+              item.startDate >= moment(Date.now()).format('YYYY-MM-DD') ||
+              item.endDate >= moment(Date.now()).format('YYYY-MM-DD')
+          );
+          const result = filteredData.map(item => {
+            return {
+              key: item.idTitle,
+              label: item.title,
+              extra: (
+                <>
+                  <span>{`${item.startDate} ~ ${item.endDate}`}</span>
+                  <div>
+                    <FontAwesomeIcon icon={faPencil} />
+                    <FontAwesomeIcon icon={faTrashCan} />
+                  </div>
+                </>
+              ),
+            };
+          });
+          setTravelList(result);
+        } else if (filter == 'finish') {
+          const filteredData = data.filter(
+            item => item.endDate < moment(Date.now()).format('YYYY-MM-DD')
+          );
+          const result = filteredData.map(item => {
+            return {
+              key: item.idTitle,
+              label: item.title,
+              extra: (
+                <>
+                  <span>{`${item.startDate} ~ ${item.endDate}`}</span>
+                  <div>
+                    <FontAwesomeIcon icon={faPencil} />
+                    <FontAwesomeIcon icon={faTrashCan} />
+                  </div>
+                </>
+              ),
+            };
+          });
+          setTravelList(result);
+        }
       } catch (error) {
         console.log(error);
         setTravelListLoading(STATUS_SERVER_ERROR);
@@ -148,7 +194,7 @@ const Map = () => {
     };
 
     getData();
-  }, [region, regionDetail]);
+  }, [region, regionDetail, filter]);
 
   useEffect(() => {
     localStorage.setItem('map-color', JSON.stringify(mapColor));
@@ -175,6 +221,21 @@ const Map = () => {
         }
       };
 
+      const findRegionCount = item => {
+        if (!region) {
+          return regionData.region.find(data => data.idRegion == item.id).count;
+        } else {
+          return regionData.regionDetail.find(data => data.idRegionDetail == item.id).count;
+        }
+      };
+
+      const findRegionTotalCount = () => {
+        if (!region) {
+          return regionData.totalCount;
+        } else {
+          return regionData.region.find(data => data.idRegion == region).count;
+        }
+      };
       // Map hover 효과
       const hoverItem = item => {
         item.onmouseenter = () => {
@@ -187,9 +248,13 @@ const Map = () => {
 
       mapData.forEach(item => {
         item.innerHTML = `<title>${findRegionName(item)}</title>`;
+        // 방문 비율
+        const visitRate = findRegionCount(item) / findRegionTotalCount();
         item.style.fill = mapColor[0];
         item.style.stroke = mapColor[1];
+        // 방문 비율에 따른 Opacity 값. 추후 수정 필요
         item.style.transition = 'all 0.2s ease-in-out';
+        item.style.fillOpacity = visitRate ? visitRate : 0;
         item.onclick = () => {
           if (!region) {
             navigate(item.id);
@@ -197,7 +262,7 @@ const Map = () => {
             region === '36' ? null : navigate(`${region}/${item.id}`);
           }
         };
-        hoverItem(item);
+        // hoverItem(item);
       });
 
       // Breadcrumb
@@ -274,10 +339,23 @@ const Map = () => {
         {region ? (
           <TravelListFilter
             separator=" "
-            items={[{ title: <Link>예정</Link> }, { title: <Link>완료</Link> }]}
+            items={[
+              {
+                title:
+                  filter === 'plan' ? '예정된 일정' : <Link to="?filter=plan">예정된 일정</Link>,
+              },
+              {
+                title:
+                  filter === 'finish' ? (
+                    '완료된 일정'
+                  ) : (
+                    <Link to="?filter=finish">완료된 일정</Link>
+                  ),
+              },
+            ]}
           />
         ) : (
-          <TravelListFilter separator=" " items={[{ title: <Link>예정</Link> }]} />
+          <span className="list-filter-title">예정된 일정</span>
         )}
         {travelList ? (
           travelList.length !== 0 ? (

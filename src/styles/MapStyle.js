@@ -115,17 +115,26 @@ const TravelListContainer = styled.div`
   border-radius: 10px;
   box-shadow: 0px 1px 5px -1px rgba(0, 0, 0, 0.5);
   flex-basis: 40%;
+  .list-filter-title {
+    font-size: 22px;
+    font-weight: bold;
+    padding: 10px;
+  }
 `;
 
 const TravelListFilter = styled(Breadcrumb)`
   font-size: 22px;
   font-weight: bold;
   padding: 10px;
+  line-height: inherit;
   ol {
     align-items: center;
   }
   .ant-breadcrumb-separator {
     font-size: 14px;
+  }
+  .ant-breadcrumb-link {
+    color: #000;
   }
   .ant-breadcrumb-link > a {
     height: 100%;
