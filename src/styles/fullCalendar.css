@@ -204,3 +204,7 @@ a {
 .ant-drawer-content {
   border-radius: 10px;
 }
+
+.ant-drawer-body {
+  padding: 30px 15px !important;
+}

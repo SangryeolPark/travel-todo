@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faPencil } from '@fortawesome/free-solid-svg-icons';
-import { Checkbox, Input } from 'antd';
+import { faTrashCan, faPencil, faSquareCheck } from '@fortawesome/free-solid-svg-icons';
+import { faSquare } from '@fortawesome/free-regular-svg-icons';
+import { Input } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { Link } from 'react-router-dom';
 import { DetailScheduleDiv } from '../../styles/CalendarStyle';
-import axios from 'axios';
 
 const Schedule = ({
   setOpen,
@@ -19,6 +19,13 @@ const Schedule = ({
   //   setOpen(false);
   // };
 
+  const textBlue = {
+    color: '#1e88e5',
+  };
+
+  const textBlack = {
+    color: '#666',
+  };
   return (
     <DetailScheduleDiv>
       <div className="btns">
@@ -38,15 +45,23 @@ const Schedule = ({
           {todoData.map(item => (
             <div key={item.idSub}>
               <div className="visit-list">
-                <Checkbox className="checkbox" disabled={true} defaultChecked={item.finishYn} />
+                <FontAwesomeIcon
+                  icon={item.finishYn ? faSquareCheck : faSquare}
+                  className="checkbox"
+                />
                 <Input className="input" disabled={true} value={item.subTitle} />
               </div>
-              {item.checkList.map(item => (
-                <div key={item.idCheck} className="check-list">
-                  <Checkbox className="checkbox" disabled={true} defaultChecked={item.finishYn} />
-                  <Input className="input" disabled={true} value={item.checkList} />
-                </div>
-              ))}
+              <div className="checkList-wrap">
+                {item.checkList.map(item => (
+                  <div key={item.idCheck} className="check-list">
+                    <FontAwesomeIcon
+                      icon={item.finishYn ? faSquareCheck : faSquare}
+                      className="checkbox"
+                    />
+                    <Input className="input" disabled={true} value={item.checkList} />
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
