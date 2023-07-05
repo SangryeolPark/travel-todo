@@ -37,83 +37,110 @@ export const DetailScheduleDiv = styled.div`
   .btns {
     color: #575757;
     position: absolute;
-    right: -5px;
+    right: 0px;
     top: -10px;
     display: flex;
     align-items: center;
     cursor: pointer;
-    .bt-pencil {
-      font-size: 20px;
-      margin-right: 15px;
-      cursor: pointer;
+    a {
       :hover {
         color: #1e88e5;
       }
     }
+    .bt-pencil {
+      font-size: 20px;
+      margin-right: 15px;
+      cursor: pointer;
+    }
     .bt-trash {
       font-size: 21px;
       :hover {
-        fill: #1e88e5;
+        color: #1e88e5;
       }
     }
   }
   h2 {
     color: #1e88e5;
-    font-size: 18px;
+    font-size: 20px;
     margin-bottom: 6px;
   }
   .travel-schedule {
-    margin-bottom: 35px;
+    margin-bottom: 50px;
     h2 {
       color: #1e88e5;
-      font-size: 18px;
+      font-size: 20px;
       margin-bottom: 6px;
     }
     h3 {
-      font-size: 24px;
+      font-size: 20px;
       margin-bottom: 0;
+      color: #494949;
     }
     span {
-      font-size: 20px;
+      font-size: 16px;
     }
   }
   .travel-plan {
-    margin-bottom: 35px;
+    margin-bottom: 50px;
     .detail-plan {
+      border: 1px solid rgb(217, 217, 217);
+      border-radius: 6px;
       margin-bottom: 10px;
       .visit-list {
         display: flex;
         align-items: center;
+        border-top: 1px solid rgb(217, 217, 217);
+        border-bottom: 1px solid rgb(217, 217, 217);
+        background: rgb(250, 250, 250);
+        padding-left: 10px;
         .checkbox {
+          color: #555;
+          font-size: 15px;
           background: none;
           cursor: default;
         }
         .input {
           border: none;
           background: none;
-          color: #000;
-          font-size: 20px;
-          font-weight: 600;
+          color: #494949;
+          font-size: 16px;
+          font-weight: 800;
           cursor: default;
+          height: 42px;
         }
       }
-      .check-list {
-        margin-left: 10px;
-        div {
+      .checkList-wrap {
+        /* height: 65px;
+        padding: 5px; */
+        .check-list {
           display: flex;
           align-items: center;
-          height: 27px;
-        }
-        .checkbox {
-          background: none;
-          cursor: default;
-        }
-        .input {
-          border: none;
-          background: none;
-          color: #000;
-          font-size: 17px;
-          cursor: default;
+          margin-left: 20px;
+          :first-child {
+            margin-top: 5px;
+          }
+          :last-child {
+            margin-bottom: 5px;
+          }
+          div {
+            display: flex;
+            align-items: center;
+            height: 27px;
+          }
+          .checkbox {
+            color: #555;
+            background: none;
+            cursor: default;
+          }
+          .input {
+            border: none;
+            background: none;
+            color: #494949;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 0.8;
+            cursor: default;
+          }
         }
       }
     }
@@ -122,7 +149,7 @@ export const DetailScheduleDiv = styled.div`
     .text-area {
       resize: none;
       background: none;
-      color: #000;
+      color: #494949;
       cursor: default;
     }
   }

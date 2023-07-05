@@ -9,13 +9,17 @@ import { CalendarDiv } from './../styles/CalendarStyle';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
 
-const Calendar = ({ originData }) => {
-  // (캘린더 표시) 기존 종료일 + 1
-  const defualtEndDate = originData.endDate;
-  const date = new Date(defualtEndDate);
-  const addOneDay = 86400000;
-  const newDate = Number(date) + addOneDay;
-  const newEndDate = moment(newDate).format('YYYY-MM-DD');
+const Calendar = () => {
+  // 캘린더 이벤트 데이터
+  const [eventData, setEventData] = useState([]);
+  // 세부 여행 일정 열기
+  const [open, setOpen] = useState(false);
+  // 여행 일정 클릭시
+  const [selectTitle, setSelecTitle] = useState('');
+  const [selectStartDate, setSelectStartDate] = useState('');
+  const [selectEndDate, setSelectEndDate] = useState('');
+  const [selectReview, setSelectReview] = useState('');
+  const [todoData, setTodoData] = useState([]);
 
   // 주석
   const [searchParam, setSearchParam] = useSearchParams();
@@ -23,71 +27,16 @@ const Calendar = ({ originData }) => {
   const queryMonth = searchParam.get('month');
   const calRef = useRef(null);
 
-  // 여행 일정 클릭시
-  const [selectTitle, setSelecTitle] = useState('');
-  const [selectStartDate, setSelectStartDate] = useState('');
-  const [selectEndDate, setSelectEndDate] = useState('');
-
   // 세부 여행 일정
-  const [open, setOpen] = useState(false);
   const showDrawer = e => {
     console.log(e);
-    const eventTitle = e.event._def.title;
-    const eventStartDate = moment(e.event._instance.range.start).format('YYYY-MM-DD');
-
-    // (세부 일정 표시) 종료일 - 1
-    const defaultEndDate = e.event._instance.range.end;
-    const removeOneDay = 86400000;
-    const newDate = Number(defaultEndDate) - removeOneDay;
-    const eventEndDate = moment(newDate).format('YYYY-MM-DD');
-
-    setSelecTitle(eventTitle);
-    setSelectStartDate(eventStartDate);
-    setSelectEndDate(eventEndDate);
+    const idTitle = e.event._def.extendedProps.idTitle;
+    getTitle(idTitle);
+    getTodo(idTitle);
     setOpen(true);
   };
 
-  // 임시 event list
-  let travelList = [
-    {
-      id: 6,
-      color: 'rgb(0, 177, 94)',
-      end: '2023-07-09',
-      start: '2023-07-06',
-      title: '경상북도 안동시',
-    },
-    {
-      id: 2,
-      color: 'rgb(255, 209, 2)',
-      end: '2023-07-12',
-      start: '2023-07-10',
-      title: '대구광역시 북구',
-    },
-    {
-      id: 3,
-      color: 'rgb(184, 3, 3)',
-      end: '2023-07-24',
-      start: '2023-07-21',
-      title: '전라남도 여수시',
-    },
-  ];
-
-  const eventData = {
-    id: originData.id,
-    borderColor: originData.color,
-    backgroundColor: originData.color,
-    title: `${originData.city} ${originData.detailCity}`,
-    start: originData.startDate,
-    end: newEndDate,
-  };
-  travelList = [...travelList, eventData];
-
-  useEffect(() => {
-    const headerCell = document.querySelectorAll('.fc-col-header-cell-cushion');
-    const day = ['일', '월', '화', '수', '목', '금', '토'];
-    headerCell.forEach((item, index) => (item.innerHTML = day[index]));
-  });
-
+  // 캘린더 월 변경
   const handleDatesSet = () => {
     const currentDate = document.querySelector('.fc-toolbar-title').innerHTML;
     const currentYear = currentDate.split('/')[1];
@@ -96,6 +45,51 @@ const Calendar = ({ originData }) => {
     searchParam.set('month', currentMonth);
     setSearchParam(searchParam);
   };
+
+  // title 가져오기
+  const getTitle = async idTitle => {
+    try {
+      const res = await axios.get(`/api/calender/${idTitle}`);
+      const result = res.data;
+      setSelecTitle(result.title);
+      setSelectStartDate(result.startDate);
+      setSelectEndDate(result.endDate);
+      setSelectReview(result.travelReview);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // 할일 가져오기
+  const getTodo = async idTitle => {
+    try {
+      const res = await axios.get(`/api/calender/${idTitle}/sub`);
+      const result = res.data;
+      const promises = result.map(item => getCheckList(item));
+      const todoArray = await Promise.all(promises);
+      setTodoData(todoArray);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // 체크리스트 가져오기
+  const getCheckList = async item => {
+    try {
+      const res = await axios.get(`/api/calender/${item.idSub}/check`);
+      const result = res.data;
+      const newTodo = { ...item, checkList: result };
+      return newTodo;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    const headerCell = document.querySelectorAll('.fc-col-header-cell-cushion');
+    const day = ['일', '월', '화', '수', '목', '금', '토'];
+    headerCell.forEach((item, index) => (item.innerHTML = day[index]));
+  });
 
   useEffect(() => {
     const today = moment(Date.now()).format('YYYY-MM');
@@ -110,17 +104,33 @@ const Calendar = ({ originData }) => {
       searchParam.set('month', month);
       setSearchParam(searchParam);
     }
-
     if (calRef.current) {
       const calApi = calRef.current.getApi();
       calApi.gotoDate(isValidDate ? `${queryYear}${queryMonth}` : `${year}${month}`);
     }
 
+    // calendar event 데이터 가져오기
     const getCalendarData = async () => {
       try {
         const res = await axios.get(`/api/calender?year=${queryYear}&month=${queryMonth}`);
         const result = res.data;
-        console.log(result);
+        // calendar event 생성
+        const newEventData = result.map(item => {
+          // 새로운 종료 날짜 생성(기존 종료일 + 1)
+          const originEndDate = item.endDate;
+          const date = new Date(originEndDate);
+          const addOneDay = 86400000;
+          const newDate = Number(date) + addOneDay;
+          const newEndDate = moment(newDate).format('YYYY-MM-DD');
+          return {
+            idTitle: item.idTitle,
+            color: `#${item.calColor}`,
+            end: newEndDate,
+            start: item.startDate,
+            title: item.title,
+          };
+        });
+        setEventData(newEventData);
       } catch (err) {
         console.log(err);
       }
@@ -142,14 +152,8 @@ const Calendar = ({ originData }) => {
             year: 'numeric',
             month: '2-digit',
           }}
-          // titleFormat: function (date) {
-          //   year = date.date.year;
-          //   month = date.date.month + 1;
-
-          //   return year + "년 " + month + "월";
-          // },
           plugins={[dayGridPlugin]}
-          events={travelList}
+          events={eventData}
           eventClick={showDrawer}
           datesSet={handleDatesSet}
         />
@@ -166,6 +170,8 @@ const Calendar = ({ originData }) => {
           selectTitle={selectTitle}
           selectStartDate={selectStartDate}
           selectEndDate={selectEndDate}
+          selectReview={selectReview}
+          todoData={todoData}
         />
       </Drawer>
     </CalendarDiv>
