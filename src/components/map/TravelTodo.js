@@ -1,9 +1,9 @@
-import { Collapse } from 'antd';
 import React, { useState } from 'react';
-import CheckList from './CheckList';
+import TodoCheck from './TodoCheck';
 import axios from 'axios';
 
 import { STATUS_LOADING, STATUS_SERVER_ERROR } from '../../App';
+import { TodoItemCollapse } from '../../styles/MapStyle';
 
 const TravelTodo = ({ items }) => {
   const [todoList, setTodoList] = useState(items);
@@ -13,10 +13,14 @@ const TravelTodo = ({ items }) => {
       try {
         // 로딩 중 상태
         const loading = todoList.map(todo => {
-          return {
-            ...todo,
-            children: <span>{STATUS_LOADING}</span>,
-          };
+          if (todo.key == idSub) {
+            return {
+              ...todo,
+              children: <span>{STATUS_LOADING}</span>,
+            };
+          } else {
+            return { ...todo };
+          }
         });
         setTodoList(loading);
 
@@ -28,7 +32,7 @@ const TravelTodo = ({ items }) => {
               ...todo,
               children:
                 data.length !== 0 ? (
-                  <CheckList data={data} />
+                  <TodoCheck data={data} />
                 ) : (
                   <span>등록된 체크 리스트가 없습니다</span>
                 ),
@@ -56,7 +60,12 @@ const TravelTodo = ({ items }) => {
   };
 
   return (
-    <Collapse accordion onChange={handleCheckList} items={todoList} expandIconPosition="end" />
+    <TodoItemCollapse
+      accordion
+      onChange={handleCheckList}
+      items={todoList}
+      expandIconPosition="end"
+    />
   );
 };
 

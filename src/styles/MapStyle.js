@@ -121,7 +121,6 @@ const TravelListFilter = styled(Breadcrumb)`
   font-size: 22px;
   font-weight: bold;
   padding: 10px;
-  /* padding-bottom: 5px; */
   ol {
     align-items: center;
   }
@@ -152,7 +151,7 @@ const TravelItemCollapse = styled(Collapse)`
     padding-bottom: 10px;
     border-bottom: none;
     border-radius: 5px;
-    box-shadow: 0px 1px 5px -1px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
     &:last-child {
       border-radius: 5px;
       margin-bottom: 0;
@@ -207,26 +206,74 @@ const TravelItemCollapse = styled(Collapse)`
   }
 `;
 
-const TravelItemLoading = styled.div`
-  background: #fff;
-  height: 100%;
-  margin: 0px 5px 0px;
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0.06) 25%,
-    rgba(0, 0, 0, 0.15) 37%,
-    rgba(0, 0, 0, 0.06) 63%
-  );
-  background-size: 400% 100%;
-  animation-name: ${loading};
-  animation-duration: 1.4s;
-  animation-timing-function: ease;
-  animation-iteration-count: infinite;
+const TodoItemCollapse = styled(Collapse)`
+  background-color: rgba(0, 0, 0, 0.01);
+  border-radius: 5px;
+  > .ant-collapse-item {
+    &:last-child {
+      border-radius: 5px;
+    }
+    > .ant-collapse-header {
+      padding-inline-start: 0;
+      padding: 9px 13px;
+      > .ant-collapse-header-text {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #000;
+        font-size: 15px;
+        font-weight: bold;
+      }
+    }
+    > .ant-collapse-content {
+      > .ant-collapse-content-box {
+        padding: 10px 13px 10px 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+    }
+  }
 `;
+
+// const TravelItemLoading = styled.div`
+//   background: #fff;
+//   height: 100%;
+//   border: none;
+//   border-radius: 0;
+//   padding: 5px 10px 0px;
+//   > .item-loading {
+//     width: 100%;
+//     height: 97.5px;
+//     background: linear-gradient(
+//       90deg,
+//       rgba(0, 0, 0, 0.06) 25%,
+//       rgba(0, 0, 0, 0.15) 37%,
+//       rgba(0, 0, 0, 0.06) 63%
+//     );
+//     background-size: 400% 100%;
+//     animation-name: ${loading};
+//     animation-duration: 1.4s;
+//     animation-timing-function: ease;
+//     animation-iteration-count: infinite;
+//     margin-bottom: 15px;
+//     position: relative;
+//     padding: 15px;
+//     padding-bottom: 10px;
+//     border-bottom: none;
+//     border-radius: 5px;
+//     box-shadow: 0px 1px 5px -1px rgba(0, 0, 0, 0.3);
+//     &:last-child {
+//       border-radius: 5px;
+//       margin-bottom: 0;
+//     }
+//   }
+// `;
 
 export {
   fromLeft,
   mapAni,
+  loading,
   MapContainer,
   MapImage,
   MapInfo,
@@ -234,5 +281,5 @@ export {
   TravelListContainer,
   TravelListFilter,
   TravelItemCollapse,
-  TravelItemLoading,
+  TodoItemCollapse,
 };

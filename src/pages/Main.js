@@ -20,7 +20,7 @@ const Main = () => {
   useEffect(() => {
     const getRegionData = async () => {
       try {
-        const { data } = await axios.get('/api/todo');
+        const { data } = await axios.get('/api/map/count');
         setRegionData(data);
       } catch (error) {
         console.log(error);

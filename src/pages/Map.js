@@ -1,4 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import { Link, Outlet, useNavigate, useOutletContext, useParams } from 'react-router-dom';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faBorderTopLeft,
+  faChevronDown,
+  faChevronRight,
+  faDroplet,
+  faPencil,
+  faSquareCheck,
+  faTrashCan,
+} from '@fortawesome/free-solid-svg-icons';
+import { faSquare } from '@fortawesome/free-regular-svg-icons';
+
+import { ColorPicker } from 'antd';
+import axios from 'axios';
+
+import { STATUS_LOADING, STATUS_SERVER_ERROR } from '../App';
 import {
   ColorPickerContainer,
   MapContainer,
@@ -7,22 +25,7 @@ import {
   TravelListFilter,
   TravelListContainer,
   TravelItemCollapse,
-  TravelItemLoading,
 } from '../styles/MapStyle';
-import { Link, Outlet, useNavigate, useOutletContext, useParams } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faBorderTopLeft,
-  faChevronDown,
-  faChevronRight,
-  faDroplet,
-  faPencil,
-  faTrashCan,
-} from '@fortawesome/free-solid-svg-icons';
-import { Collapse, ColorPicker } from 'antd';
-import axios from 'axios';
-
-import { STATUS_LOADING, STATUS_SERVER_ERROR } from '../App';
 
 import TravelTodo from '../components/map/TravelTodo';
 
@@ -42,10 +45,14 @@ const Map = () => {
       try {
         // 로딩 중 상태
         const loading = travelList.map(travel => {
-          return {
-            ...travel,
-            children: <span>{STATUS_LOADING}</span>,
-          };
+          if (travel.key == idTitle) {
+            return {
+              ...travel,
+              children: <span>{STATUS_LOADING}</span>,
+            };
+          } else {
+            return { ...travel };
+          }
         });
         setTravelList(loading);
 
@@ -54,7 +61,16 @@ const Map = () => {
         const newData = data.map(item => {
           return {
             key: item.idSub,
-            label: item.subTitle,
+            label: (
+              <>
+                {item.finishYn ? (
+                  <FontAwesomeIcon icon={faSquareCheck} />
+                ) : (
+                  <FontAwesomeIcon icon={faSquare} />
+                )}
+                {item.subTitle}
+              </>
+            ),
             complete: JSON.stringify(item.finishYn),
           };
         });
@@ -278,7 +294,15 @@ const Map = () => {
             <span className="loading-msg">등록된 할 일이 없습니다.</span>
           )
         ) : (
-          <TravelItemLoading>{travelListLoading}</TravelItemLoading>
+          <span className="loading-msg">{travelListLoading}</span>
+          // <TravelItemLoading>
+          //   <div className="item-loading" />
+          //   <div className="item-loading" />
+          //   <div className="item-loading" />
+          //   <div className="item-loading" />
+          //   <div className="item-loading" />
+          //   <div className="item-loading" />
+          // </TravelItemLoading>
         )}
       </TravelListContainer>
     </MapContainer>
