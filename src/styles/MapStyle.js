@@ -22,6 +22,15 @@ const mapAni = keyframes`
   }
 `;
 
+const loading = keyframes`
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+`;
+
 const MapContainer = styled.div`
   display: flex;
   position: relative;
@@ -102,7 +111,7 @@ const TravelListContainer = styled.div`
   flex-direction: column;
   height: 100%;
   background: #fff;
-  padding: 10px;
+  padding: 10px 10px 15px;
   border-radius: 10px;
   box-shadow: 0px 1px 5px -1px rgba(0, 0, 0, 0.5);
   flex-basis: 40%;
@@ -135,7 +144,7 @@ const TravelItemCollapse = styled(Collapse)`
   height: 100%;
   border: none;
   border-radius: 0;
-  padding: 5px 10px 10px;
+  padding: 5px 10px;
   > .ant-collapse-item {
     margin-bottom: 15px;
     position: relative;
@@ -198,6 +207,23 @@ const TravelItemCollapse = styled(Collapse)`
   }
 `;
 
+const TravelItemLoading = styled.div`
+  background: #fff;
+  height: 100%;
+  margin: 0px 5px 0px;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.06) 25%,
+    rgba(0, 0, 0, 0.15) 37%,
+    rgba(0, 0, 0, 0.06) 63%
+  );
+  background-size: 400% 100%;
+  animation-name: ${loading};
+  animation-duration: 1.4s;
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
+`;
+
 export {
   fromLeft,
   mapAni,
@@ -208,4 +234,5 @@ export {
   TravelListContainer,
   TravelListFilter,
   TravelItemCollapse,
+  TravelItemLoading,
 };

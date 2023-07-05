@@ -10,8 +10,9 @@ import { STATUS_LOADING, STATUS_SERVER_ERROR } from '../App';
 
 const Main = () => {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const [mapPath, setMapPath] = useState(null);
+  const [calendarPath, setCalendarPath] = useState(null);
   const [switchBool, setSwitchBool] = useState(pathname.includes('map'));
   const [regionData, setRegionData] = useState(null);
   const [regionDataLoading, setRegionDataLoading] = useState(STATUS_LOADING);
@@ -32,18 +33,22 @@ const Main = () => {
 
   useEffect(() => {
     if (pathname.includes('map')) {
+      if (!calendarPath) {
+        setCalendarPath('/calendar');
+      }
       setSwitchBool(true);
-      setMapPath(pathname);
+      setMapPath(pathname + search);
     } else if (pathname.includes('calendar')) {
       if (!mapPath) {
         setMapPath('/map');
       }
       setSwitchBool(false);
+      setCalendarPath(pathname + search);
     }
-  }, [pathname]);
+  }, [pathname, search]);
 
   useEffect(() => {
-    navigate(switchBool ? mapPath : '/calendar');
+    navigate(switchBool ? mapPath : calendarPath);
   }, [switchBool]);
 
   const handleSwitchChange = () => {

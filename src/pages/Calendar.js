@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import './../styles/fullCalendar.css';
@@ -7,6 +7,7 @@ import { Drawer } from 'antd';
 import Schedule from '../components/calendar/Schedule';
 import { CalendarDiv } from './../styles/CalendarStyle';
 import axios from 'axios';
+import { useSearchParams } from 'react-router-dom';
 
 const Calendar = ({ originData }) => {
   // (캘린더 표시) 기존 종료일 + 1
@@ -15,6 +16,12 @@ const Calendar = ({ originData }) => {
   const addOneDay = 86400000;
   const newDate = Number(date) + addOneDay;
   const newEndDate = moment(newDate).format('YYYY-MM-DD');
+
+  // 주석
+  const [searchParam, setSearchParam] = useSearchParams();
+  const queryYear = searchParam.get('year');
+  const queryMonth = searchParam.get('month');
+  const calRef = useRef(null);
 
   // 여행 일정 클릭시
   const [selectTitle, setSelecTitle] = useState('');
@@ -81,46 +88,54 @@ const Calendar = ({ originData }) => {
     headerCell.forEach((item, index) => (item.innerHTML = day[index]));
   });
 
-  let year;
-  let month;
-
-  const handleDatesSet = arg => {
-    const startDate = arg.start; // 변경된 날짜 범위의 시작 날짜
-    const endDate = arg.end; // 변경된 날짜 범위의 종료 날짜
-
-    const currentYear = startDate.getFullYear();
-    year = currentYear;
-
-    const startMonth = startDate.getMonth() + 1; // 시작 날짜의 월 (0부터 시작)
-    const endMonth = endDate.getMonth() + 1; // 종료 날짜의 월 (0부터 시작)
-    const currentMonth = endDate.getMonth();
-    month = currentMonth;
-
-    console.log('시작 월:', startMonth);
-    console.log('종료 월:', endMonth);
-    console.log('현재 월:', currentMonth);
-
-    // 원하는 동작을 수행하거나 상태를 업데이트할 수 있습니다.
-    // 예: API 호출, 데이터 로딩 등
+  const handleDatesSet = () => {
+    const currentDate = document.querySelector('.fc-toolbar-title').innerHTML;
+    const currentYear = currentDate.split('/')[1];
+    const currentMonth = currentDate.split('/')[0];
+    searchParam.set('year', currentYear);
+    searchParam.set('month', currentMonth);
+    setSearchParam(searchParam);
   };
 
   useEffect(() => {
+    const today = moment(Date.now()).format('YYYY-MM');
+    const year = today.split('-')[0];
+    const month = today.split('-')[1];
+
+    //첫 로딩
+    const isValidDate = Boolean(queryYear || queryMonth);
+
+    if (!isValidDate) {
+      searchParam.set('year', year);
+      searchParam.set('month', month);
+      setSearchParam(searchParam);
+    }
+
+    if (calRef.current) {
+      const calApi = calRef.current.getApi();
+      calApi.gotoDate(isValidDate ? `${queryYear}${queryMonth}` : `${year}${month}`);
+    }
+
     const getCalendarData = async () => {
       try {
-        const res = await axios.get(`/api/calender?year=${year}&month=${month}`);
+        const res = await axios.get(`/api/calender?year=${queryYear}&month=${queryMonth}`);
         const result = res.data;
         console.log(result);
       } catch (err) {
         console.log(err);
       }
     };
-    getCalendarData();
-  }, []);
+
+    if (isValidDate) {
+      getCalendarData();
+    }
+  }, [queryYear, queryMonth, calRef]);
 
   return (
     <CalendarDiv>
       <div className="wrap">
         <FullCalendar
+          ref={calRef}
           height="74.4vh"
           initialView="dayGridMonth"
           titleFormat={{

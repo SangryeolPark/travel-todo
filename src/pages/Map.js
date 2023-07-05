@@ -7,6 +7,7 @@ import {
   TravelListFilter,
   TravelListContainer,
   TravelItemCollapse,
+  TravelItemLoading,
 } from '../styles/MapStyle';
 import { Link, Outlet, useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -277,7 +278,7 @@ const Map = () => {
             <span className="loading-msg">등록된 할 일이 없습니다.</span>
           )
         ) : (
-          <span className="loading-msg">{travelListLoading}</span>
+          <TravelItemLoading>{travelListLoading}</TravelItemLoading>
         )}
       </TravelListContainer>
     </MapContainer>
