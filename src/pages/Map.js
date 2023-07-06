@@ -93,7 +93,7 @@ const Map = () => {
                 newData.length !== 0 ? (
                   <TravelTodo items={newData} />
                 ) : (
-                  <span>등록된 할 일이 없습니다.</span>
+                  <span className="no-todo">등록된 할 일이 없습니다.</span>
                 ),
             };
           }
@@ -118,12 +118,8 @@ const Map = () => {
     }
   };
 
-  // data.map(item => {
-  //   console.log(item.title, moment(Date.now()).format('YYYY-MM-DD') < item.startDate);
-  // });
-
   useEffect(() => {
-    if (region && !filter) {
+    if (region && region !== 36 && !filter) {
       searchParam.set('filter', 'plan');
       setSearchParam(searchParam);
     }
@@ -225,21 +221,25 @@ const Map = () => {
         if (!region) {
           return regionData.region.find(data => data.idRegion == item.id).count;
         } else {
+          if (region === '36') {
+            return regionData.region.find(data => data.idRegion == 36).count;
+          }
           return regionData.regionDetail.find(data => data.idRegionDetail == item.id).count;
         }
       };
 
       const findRegionTotalCount = () => {
-        if (!region) {
+        if (!region || region === '36') {
           return regionData.totalCount;
         } else {
           return regionData.region.find(data => data.idRegion == region).count;
         }
       };
+
       // Map hover 효과
       const hoverItem = item => {
         item.onmouseenter = () => {
-          item.style.filter = 'brightness(0.9)';
+          item.style.filter = 'brightness(1.2)';
         };
         item.onmouseout = () => {
           item.style.filter = 'none';
@@ -249,12 +249,24 @@ const Map = () => {
       mapData.forEach(item => {
         item.innerHTML = `<title>${findRegionName(item)}</title>`;
         // 방문 비율
-        const visitRate = findRegionCount(item) / findRegionTotalCount();
+        const visitRate = (findRegionCount(item) / findRegionTotalCount()) * 100;
+
+        let opacityValue;
+        if (!visitRate || visitRate < 5) {
+          opacityValue = 0.4;
+        } else if (visitRate < 20) {
+          opacityValue = 0.6;
+        } else if (visitRate < 35) {
+          opacityValue = 0.8;
+        } else {
+          opacityValue = 1.0;
+        }
+
         item.style.fill = mapColor[0];
         item.style.stroke = mapColor[1];
-        // 방문 비율에 따른 Opacity 값. 추후 수정 필요
-        item.style.transition = 'all 0.2s ease-in-out';
-        item.style.fillOpacity = visitRate ? visitRate : 0;
+        item.style.fillOpacity = opacityValue;
+        item.style.transition = 'filter 0.2s ease-in-out';
+
         item.onclick = () => {
           if (!region) {
             navigate(item.id);
@@ -262,7 +274,7 @@ const Map = () => {
             region === '36' ? null : navigate(`${region}/${item.id}`);
           }
         };
-        // hoverItem(item);
+        hoverItem(item);
       });
 
       // Breadcrumb
@@ -369,7 +381,7 @@ const Map = () => {
               items={travelList}
             />
           ) : (
-            <span className="loading-msg">등록된 할 일이 없습니다.</span>
+            <span className="loading-msg">등록된 일정이 없습니다.</span>
           )
         ) : (
           <span className="loading-msg">{travelListLoading}</span>
