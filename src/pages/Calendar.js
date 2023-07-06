@@ -8,6 +8,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import { Drawer } from 'antd';
 import axios from 'axios';
 import moment from 'moment';
+import tinycolor from 'tinycolor2';
 
 const Calendar = () => {
   // 캘린더 이벤트 데이터
@@ -37,10 +38,10 @@ const Calendar = () => {
   // 캘린더 월 변경
   const handleDatesSet = () => {
     const currentDate = document.querySelector('.fc-toolbar-title').innerHTML;
-    const currentYear = currentDate.split('/')[1];
-    const currentMonth = currentDate.split('/')[0];
+    const currentYear = parseInt(currentDate.split(' ')[0]);
+    const currentMonth = parseInt(currentDate.split(' ')[1]);
     searchParam.set('year', currentYear);
-    searchParam.set('month', currentMonth);
+    searchParam.set('month', currentMonth < 10 ? '0' + currentMonth : currentMonth);
     setSearchParam(searchParam);
   };
 
@@ -120,9 +121,12 @@ const Calendar = () => {
           const addOneDay = 86400000;
           const newDate = Number(date) + addOneDay;
           const newEndDate = moment(newDate).format('YYYY-MM-DD');
+          const isDark = tinycolor(`#${item.calColor}`).isDark();
+
           return {
             idTitle: item.idTitle,
             color: `#${item.calColor}`,
+            textColor: isDark ? '#fff' : '#000',
             end: newEndDate,
             start: item.startDate,
             title: item.title,
@@ -146,10 +150,8 @@ const Calendar = () => {
           ref={calRef}
           height="74.4vh"
           initialView="dayGridMonth"
-          titleFormat={{
-            year: 'numeric',
-            month: '2-digit',
-          }}
+          locale={'ko'}
+          dayCellContent={day => day.dayNumberText.replace('일', '')}
           plugins={[dayGridPlugin]}
           events={eventData}
           eventClick={showDrawer}

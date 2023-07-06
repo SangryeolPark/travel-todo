@@ -64,6 +64,9 @@ const MapInfo = styled(Breadcrumb)`
   ol {
     align-items: center;
   }
+  li:last-child {
+    color: #494949;
+  }
   .ant-breadcrumb-separator {
     font-size: 14px;
   }
@@ -134,11 +137,11 @@ const TravelListFilter = styled(Breadcrumb)`
     font-size: 14px;
   }
   .ant-breadcrumb-link {
-    color: #000;
+    color: #494949;
   }
   .ant-breadcrumb-link > a {
     height: 100%;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.3s ease-in-out;
     &:hover {
       color: #1e88e5;
       background: rgba(30, 136, 229, 0.2);
@@ -174,8 +177,8 @@ const TravelItemCollapse = styled(Collapse)`
       position: static;
       padding-inline-start: 0;
       line-height: normal;
+      color: #494949;
       > .ant-collapse-header-text {
-        color: #000;
         font-size: 18px;
         font-weight: bold;
       }
@@ -197,11 +200,17 @@ const TravelItemCollapse = styled(Collapse)`
         width: 100%;
         > div {
           display: flex;
-          gap: 10px;
+          gap: 15px;
           position: absolute;
-          top: 10px;
-          right: 10px;
+          top: 15px;
+          right: 15px;
           font-size: 18px;
+          > svg {
+            transition: all 0.3s ease-in-out;
+            &:hover {
+              color: #1e88e5;
+            }
+          }
         }
       }
     }
@@ -229,12 +238,13 @@ const TodoItemCollapse = styled(Collapse)`
         display: flex;
         align-items: center;
         gap: 10px;
-        color: #000;
+        color: #494949;
         font-size: 15px;
         font-weight: bold;
       }
     }
     > .ant-collapse-content {
+      color: #494949;
       > .ant-collapse-content-box {
         padding: 10px 13px 10px 22px;
         display: flex;
