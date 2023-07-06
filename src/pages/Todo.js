@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Cascader, Form, DatePicker, ColorPicker, Button } from 'antd';
-import { TodoDiv } from '../styles/TodoStyle';
-import axios from 'axios';
-import { tempRegionData } from '../assets/tempData';
 import { useNavigate } from 'react-router-dom';
+import { Cascader, Form, DatePicker, ColorPicker, Button } from 'antd';
 import TodoList from '../components/todo/TodoList';
 import TravelReview from '../components/todo/TravelReview';
+import { TodoDiv } from '../styles/TodoStyle';
+import axios from 'axios';
 import dayjs from 'dayjs';
-
-// 저장 버튼
 
 const Todo = ({ data, setData }) => {
   const visitList = data.visitList;
@@ -31,6 +28,8 @@ const Todo = ({ data, setData }) => {
       color: colorValue,
     };
     console.log('Received values of form: ', values);
+
+    // DB post data
     const postTitleData = {
       idRegion: values.city[0],
       idRegionDetail: values.city[1],
@@ -59,7 +58,6 @@ const Todo = ({ data, setData }) => {
 
   // 일정 추가 버튼 클릭시
   const handleAddVisitList = () => {
-    console.log('클릭됨');
     const newVisitList = {
       id: Date.now(),
       title: '',
@@ -67,9 +65,7 @@ const Todo = ({ data, setData }) => {
       checkList: [],
     };
     const newVisitListData = [...data.visitList, newVisitList];
-
     const newData = { ...data, visitList: newVisitListData };
-    console.log(newData);
     setData(newData);
   };
 
@@ -78,9 +74,7 @@ const Todo = ({ data, setData }) => {
     const getRegion = async setRegionData => {
       try {
         const res = await axios.get('/api/todo');
-        const result = res.data; // 백엔드 서버 있을 때만 작동
-        // const result = tempRegionData;
-        console.log(result);
+        const result = res.data;
         setRegionData(result);
       } catch (err) {
         console.log(err);
@@ -89,9 +83,9 @@ const Todo = ({ data, setData }) => {
     getRegion(setRegionData);
   }, []);
 
+  // 지역 데이터 필터링
   useEffect(() => {
     if (regionData) {
-      // 지역 데이터 필터링
       const region = regionData.region;
       const regionDetail = regionData.regionDetail;
       const newRegion = region.map(item => ({

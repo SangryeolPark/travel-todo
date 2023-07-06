@@ -18,16 +18,42 @@ export const CalendarDiv = styled.div`
   justify-content: center;
   gap: 0 15px;
   .wrap {
-    width: 75%;
+    width: 72%;
     height: 100%;
     background: #fff;
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, 0.5);
     max-width: 1200px;
-    /* margin: 0 auto; */
     animation: ${fromRight} 0.5s ease-in-out;
     transition: all 1.5s;
+  }
+`;
+
+export const DrawerDiv = styled.div`
+  .ant-drawer-inline {
+    position: initial;
+    height: 100%;
+    width: 18vw;
+    .ant-drawer-mask {
+      position: initial !important;
+      display: none;
+    }
+    .ant-drawer-content-wrapper {
+      top: 85px;
+      right: 30px;
+      width: 100% !important;
+      height: 100%;
+      border-radius: 10px;
+      box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, 0.5);
+      position: initial;
+      .ant-drawer-content {
+        border-radius: 10px;
+        .ant-drawer-body {
+          padding: 30px 15px !important;
+        }
+      }
+    }
   }
 `;
 
@@ -35,7 +61,7 @@ export const DetailScheduleDiv = styled.div`
   padding-top: 60px;
   position: relative;
   .btns {
-    color: #575757;
+    color: #494949;
     position: absolute;
     right: 0px;
     top: -10px;
@@ -94,7 +120,7 @@ export const DetailScheduleDiv = styled.div`
         background: rgb(250, 250, 250);
         padding-left: 10px;
         .checkbox {
-          color: #555;
+          color: #494949;
           font-size: 15px;
           background: none;
           cursor: default;
@@ -110,25 +136,18 @@ export const DetailScheduleDiv = styled.div`
         }
       }
       .checkList-wrap {
-        /* height: 65px;
-        padding: 5px; */
+        padding: 6px 0;
         .check-list {
           display: flex;
           align-items: center;
           margin-left: 20px;
-          :first-child {
-            margin-top: 5px;
-          }
-          :last-child {
-            margin-bottom: 5px;
-          }
           div {
             display: flex;
             align-items: center;
             height: 27px;
           }
           .checkbox {
-            color: #555;
+            color: #494949;
             background: none;
             cursor: default;
           }
