@@ -20,7 +20,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
 
-import { ColorPicker } from 'antd';
+import { ColorPicker, Modal } from 'antd';
 import axios from 'axios';
 
 import { STATUS_LOADING, STATUS_SERVER_ERROR } from '../App';
@@ -49,6 +49,8 @@ const Map = () => {
   const [regionInfo, setRegionInfo] = useState([]);
   const [travelList, setTravelList] = useState(null);
   const [travelListLoading, setTravelListLoading] = useState(STATUS_LOADING);
+  const { confirm } = Modal;
+  const [forceRender, setForceRender] = useState(false);
 
   const handleTodoList = idTitle => {
     const getTodoList = async () => {
@@ -118,12 +120,28 @@ const Map = () => {
     }
   };
 
-  const handleRemove = async idTitle => {
-    try {
-      await axios.delete(`/api/todo/${idTitle}`);
-    } catch (error) {
-      console.log(error);
-    }
+  const handleRemove = idTitle => {
+    confirm({
+      title: '일정 삭제',
+      content: (
+        <>
+          <p>삭제한 일정은 복구할 수 없습니다.</p>
+          <p>정말 삭제하시겠습니까?</p>
+        </>
+      ),
+      okText: '삭제',
+      okType: 'danger',
+      cancelText: '취소',
+      centered: true,
+      async onOk() {
+        try {
+          await axios.patch(`/api/todo/${idTitle}`);
+          setForceRender(!forceRender);
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    });
   };
 
   useEffect(() => {
@@ -163,14 +181,10 @@ const Map = () => {
                   <span>{`${item.startDate} ~ ${item.endDate}`}</span>
                   <div>
                     <FontAwesomeIcon
-                      // onClick={() =>
-                      //   navigate(`/todo/${item.idTitle}`, { state: item.idTitle })
-                      // }
+                      onClick={() => navigate(`/todo/${item.idTitle}`, { state: item.idTitle })}
                       icon={faPencil}
                     />
-                    <FontAwesomeIcon
-                      /* onClick={() => handleRemove(item.idTitle)} */ icon={faTrashCan}
-                    />
+                    <FontAwesomeIcon onClick={() => handleRemove(item.idTitle)} icon={faTrashCan} />
                   </div>
                 </>
               ),
@@ -189,8 +203,11 @@ const Map = () => {
                 <>
                   <span>{`${item.startDate} ~ ${item.endDate}`}</span>
                   <div>
-                    <FontAwesomeIcon icon={faPencil} />
-                    <FontAwesomeIcon icon={faTrashCan} />
+                    <FontAwesomeIcon
+                      onClick={() => navigate(`/todo/${item.idTitle}`, { state: item.idTitle })}
+                      icon={faPencil}
+                    />
+                    <FontAwesomeIcon onClick={() => handleRemove(item.idTitle)} icon={faTrashCan} />
                   </div>
                 </>
               ),
@@ -205,7 +222,7 @@ const Map = () => {
     };
 
     getData();
-  }, [region, regionDetail, filter]);
+  }, [region, regionDetail, filter, forceRender]);
 
   useEffect(() => {
     localStorage.setItem('map-color', JSON.stringify(mapColor));
