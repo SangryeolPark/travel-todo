@@ -84,11 +84,11 @@ const Calendar = () => {
     }
   };
 
-  useEffect(() => {
-    const headerCell = document.querySelectorAll('.fc-col-header-cell-cushion');
-    const day = ['일', '월', '화', '수', '목', '금', '토'];
-    headerCell.forEach((item, index) => (item.innerHTML = day[index]));
-  });
+  // useEffect(() => {
+  //   const headerCell = document.querySelectorAll('.fc-col-header-cell-cushion');
+  //   const day = ['일', '월', '화', '수', '목', '금', '토'];
+  //   headerCell.forEach((item, index) => (item.innerHTML = day[index]));
+  // });
 
   useEffect(() => {
     const today = moment(Date.now()).format('YYYY-MM');
