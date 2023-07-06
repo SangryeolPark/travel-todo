@@ -8,6 +8,7 @@ import Schedule from '../components/calendar/Schedule';
 import { CalendarDiv } from './../styles/CalendarStyle';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
+import tinycolor from 'tinycolor2';
 
 const Calendar = () => {
   // 캘린더 이벤트 데이터
@@ -122,9 +123,12 @@ const Calendar = () => {
           const addOneDay = 86400000;
           const newDate = Number(date) + addOneDay;
           const newEndDate = moment(newDate).format('YYYY-MM-DD');
+          const isDark = tinycolor(`#${item.calColor}`).isDark();
+
           return {
             idTitle: item.idTitle,
             color: `#${item.calColor}`,
+            textColor: isDark ? '#fff' : '#000',
             end: newEndDate,
             start: item.startDate,
             title: item.title,
