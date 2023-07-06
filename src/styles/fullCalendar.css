@@ -180,8 +180,7 @@ a {
   letter-spacing: 0.8px;
 }
 
-/* .ant-modal {
-  position: absolute !important;
-  top: 50%;
-  left: 50%;
-} */
+.fc-direction-ltr .fc-daygrid-more-link {
+  color: #494949;
+  font-size: 14px;
+}

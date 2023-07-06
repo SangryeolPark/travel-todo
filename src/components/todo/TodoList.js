@@ -5,8 +5,12 @@ import { faXmark, faListCheck } from '@fortawesome/free-solid-svg-icons';
 import CheckList from './CheckList';
 import { TodoListLi } from '../../styles/TodoStyle';
 
-const TodoList = ({ sub, subList, setSubList }) => {
+const TodoList = ({ id, sub, subList, setSubList }) => {
+  console.log(id);
+  console.log(sub);
+  console.log(subList);
   const [subTitle, setSubTitle] = useState(sub.subTitle);
+  const [checkList, setCheckList] = useState(sub.checkList);
 
   // 일정 이름 변경
   const handleChangeSubTitle = e => {
@@ -27,20 +31,20 @@ const TodoList = ({ sub, subList, setSubList }) => {
   };
 
   // 체크리스트 추가
-  // const handleAddCheckList = _id => {
-  //   const newCheckList = {
-  //     id: Date.now(),
-  //     checkTitle: '',
-  //   };
-  //   const newCheckListData = [...sub.checkList, newCheckList];
-  //   const newSubList = subList.map(item => {
-  //     if (item.id === _id) {
-  //       item = { ...item, checkList: newCheckListData };
-  //     }
-  //     return item;
-  //   });
-  //   setSubList(newSubList);
-  // };
+  const handleAddCheckList = subId => {
+    const newCheckList = {
+      id: Date.now(),
+      checkTitle: '',
+    };
+    const newCheckListData = [...sub.checkList, newCheckList];
+    const newSubList = subList.map(sub => {
+      if (sub.id === subId) {
+        const item = { ...sub, checkList: newCheckListData };
+        return item;
+      }
+    });
+    setSubList(newSubList);
+  };
 
   return (
     <>
@@ -66,27 +70,26 @@ const TodoList = ({ sub, subList, setSubList }) => {
               onChange={handleChangeSubTitle}
             />
           </Form.Item>
-          {/* <button onClick={() => handleAddCheckList(visitList.id)}>
+          <button onClick={() => handleAddCheckList(sub.id)}>
             <FontAwesomeIcon icon={faListCheck} className="bt-addcheck" />
-          </button> */}
+          </button>
           <button onClick={deleteSub}>
             <FontAwesomeIcon icon={faXmark} className="bt-x" />
           </button>
         </div>
         <ul>
-          {/* {visitList.checkList.map((item, index) => {
+          {sub.checkList.map(checkList => {
             return (
               <CheckList
-                key={index}
-                index={index}
-                checkList={item}
-                visitList={visitList}
-                data={data}
-                setData={setData}
-                visitListId={item.id}
+                key={checkList.id}
+                sub={sub}
+                subList={subList}
+                setSubList={setSubList}
+                checkList={checkList}
+                setCheckList={setCheckList}
               />
             );
-          })} */}
+          })}
         </ul>
       </TodoListLi>
     </>
