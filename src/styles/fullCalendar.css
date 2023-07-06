@@ -179,3 +179,9 @@ a {
   font-weight: 600;
   letter-spacing: 0.8px;
 }
+
+/* .ant-modal {
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+} */

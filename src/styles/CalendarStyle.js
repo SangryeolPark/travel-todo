@@ -60,6 +60,13 @@ export const DrawerDiv = styled.div`
 export const DetailScheduleDiv = styled.div`
   padding-top: 60px;
   position: relative;
+  .modal {
+    position: absolute;
+    top: 50%;
+    width: 520px;
+    transform: translate(-50%, -50%);
+    left: 50%;
+  }
   .btns {
     color: #494949;
     position: absolute;
@@ -112,42 +119,19 @@ export const DetailScheduleDiv = styled.div`
       border: 1px solid rgb(217, 217, 217);
       border-radius: 6px;
       margin-bottom: 10px;
-      .visit-list {
-        display: flex;
-        align-items: center;
-        border-top: 1px solid rgb(217, 217, 217);
-        border-bottom: 1px solid rgb(217, 217, 217);
-        background: rgb(250, 250, 250);
-        padding-left: 10px;
-        .checkbox {
-          color: #494949;
-          font-size: 15px;
-          background: none;
-          cursor: default;
+      overflow: hidden;
+      .visit-list-wrap {
+        :not(:last-of-type) {
+          border-bottom: 1px solid rgb(217, 217, 217);
         }
-        .input {
-          border: none;
-          background: none;
-          color: #494949;
-          font-size: 16px;
-          font-weight: 800;
-          cursor: default;
-          height: 42px;
-        }
-      }
-      .checkList-wrap {
-        padding: 6px 0;
-        .check-list {
+        .visit-list {
           display: flex;
           align-items: center;
-          margin-left: 20px;
-          div {
-            display: flex;
-            align-items: center;
-            height: 27px;
-          }
+          background: rgb(250, 250, 250);
+          padding-left: 10px;
           .checkbox {
             color: #494949;
+            font-size: 15px;
             background: none;
             cursor: default;
           }
@@ -155,10 +139,38 @@ export const DetailScheduleDiv = styled.div`
             border: none;
             background: none;
             color: #494949;
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 0.8;
+            font-size: 16px;
+            font-weight: 800;
             cursor: default;
+            height: 42px;
+          }
+        }
+        .checkList-wrap {
+          padding: 6px 0;
+          border-top: 1px solid rgb(217, 217, 217);
+          .check-list {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+            div {
+              display: flex;
+              align-items: center;
+              height: 27px;
+            }
+            .checkbox {
+              color: #494949;
+              background: none;
+              cursor: default;
+            }
+            .input {
+              border: none;
+              background: none;
+              color: #494949;
+              font-weight: 400;
+              font-size: 14px;
+              line-height: 0.8;
+              cursor: default;
+            }
           }
         }
       }
