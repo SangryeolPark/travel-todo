@@ -84,12 +84,6 @@ const Calendar = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const headerCell = document.querySelectorAll('.fc-col-header-cell-cushion');
-  //   const day = ['일', '월', '화', '수', '목', '금', '토'];
-  //   headerCell.forEach((item, index) => (item.innerHTML = day[index]));
-  // });
-
   useEffect(() => {
     const today = moment(Date.now()).format('YYYY-MM');
     const year = today.split('-')[0];
@@ -156,16 +150,14 @@ const Calendar = () => {
           events={eventData}
           eventClick={showDrawer}
           datesSet={handleDatesSet}
+          dayMaxEvents={true}
+          moreLinkContent={args => {
+            return <span>{'+' + args.num}</span>;
+          }}
         />
       </div>
       <DrawerDiv>
-        <Drawer
-          placement="right"
-          closable={false}
-          // onClose={onClose}
-          open={open}
-          getContainer={false}
-        >
+        <Drawer placement="right" closable={false} open={open} getContainer={false}>
           <Schedule
             selectTitle={selectTitle}
             selectStartDate={selectStartDate}

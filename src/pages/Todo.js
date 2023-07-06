@@ -5,7 +5,6 @@ import TodoList from '../components/todo/TodoList';
 import TravelReview from '../components/todo/TravelReview';
 import { TodoDiv } from '../styles/TodoStyle';
 import axios from 'axios';
-import dayjs from 'dayjs';
 
 const Todo = () => {
   const { state } = useLocation();
@@ -17,6 +16,7 @@ const Todo = () => {
 
   const [color, setColor] = useState('#1E88E5');
   const [subList, setSubList] = useState([]);
+  console.log(subList);
 
   // DB 데이터 불러오기
   useEffect(() => {
@@ -73,11 +73,11 @@ const Todo = () => {
       calColor: values.color.replace('#', ''),
       subList: subList,
     };
-
+    console.log(postTitleData);
     postTitle(postTitleData);
   };
 
-  // title 보내기
+  // Tododata 보내기
   const postTitle = async postTitleData => {
     try {
       const res = await axios.post('/api/todo', postTitleData);
@@ -100,7 +100,10 @@ const Todo = () => {
       subTitle: '',
       checkList: [],
     };
-    setSubList([...subList, newSub]);
+    const newSubList = [...subList, newSub];
+    setSubList(newSubList);
+    // setSubList([subList]);
+    // setSubList();
   };
 
   return (
@@ -158,15 +161,18 @@ const Todo = () => {
             <div>
               <h2>Travel Plan</h2>
               <ul className="todoList-wrap">
-                {subList.map(sub => (
-                  <TodoList
-                    key={sub.id}
-                    id={sub.id}
-                    sub={sub}
-                    subList={subList}
-                    setSubList={setSubList}
-                  />
-                ))}
+                {subList.map(sub => {
+                  console.log(sub);
+                  return (
+                    <TodoList
+                      key={sub.id}
+                      id={sub.id}
+                      sub={sub}
+                      subList={subList}
+                      setSubList={setSubList}
+                    />
+                  );
+                })}
                 <li>
                   <Button
                     type="primary"
