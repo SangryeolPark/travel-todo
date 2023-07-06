@@ -40,10 +40,10 @@ const Calendar = () => {
   // 캘린더 월 변경
   const handleDatesSet = () => {
     const currentDate = document.querySelector('.fc-toolbar-title').innerHTML;
-    const currentYear = currentDate.split('/')[1];
-    const currentMonth = currentDate.split('/')[0];
+    const currentYear = parseInt(currentDate.split(' ')[0]);
+    const currentMonth = parseInt(currentDate.split(' ')[1]);
     searchParam.set('year', currentYear);
-    searchParam.set('month', currentMonth);
+    searchParam.set('month', currentMonth < 10 ? '0' + currentMonth : currentMonth);
     setSearchParam(searchParam);
   };
 
@@ -152,10 +152,8 @@ const Calendar = () => {
           ref={calRef}
           height="74.4vh"
           initialView="dayGridMonth"
-          titleFormat={{
-            year: 'numeric',
-            month: '2-digit',
-          }}
+          locale={'ko'}
+          dayCellContent={day => day.dayNumberText.replace('일', '')}
           plugins={[dayGridPlugin]}
           events={eventData}
           eventClick={showDrawer}

@@ -118,6 +118,14 @@ const Map = () => {
     }
   };
 
+  const handleRemove = async idTitle => {
+    try {
+      await axios.delete(`/api/todo/${idTitle}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     if (region && region !== 36 && !filter) {
       searchParam.set('filter', 'plan');
@@ -154,8 +162,15 @@ const Map = () => {
                 <>
                   <span>{`${item.startDate} ~ ${item.endDate}`}</span>
                   <div>
-                    <FontAwesomeIcon icon={faPencil} />
-                    <FontAwesomeIcon icon={faTrashCan} />
+                    <FontAwesomeIcon
+                      // onClick={() =>
+                      //   navigate(`/todo/${item.idTitle}`, { state: item.idTitle })
+                      // }
+                      icon={faPencil}
+                    />
+                    <FontAwesomeIcon
+                      /* onClick={() => handleRemove(item.idTitle)} */ icon={faTrashCan}
+                    />
                   </div>
                 </>
               ),
