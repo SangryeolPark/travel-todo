@@ -104,13 +104,13 @@ a {
 .fc-direction-ltr .fc-button-group > .fc-button:not(:last-child) {
   position: absolute;
   top: 9px;
-  left: 35%;
+  left: 12vw;
 }
 
 .fc-direction-ltr .fc-button-group > .fc-button:not(:first-child) {
   position: absolute;
   top: 9px;
-  right: 35%;
+  right: 12vw;
 }
 
 .fc .fc-today-button:active {
@@ -178,33 +178,4 @@ a {
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.8px;
-}
-
-/* Drawer */
-.ant-drawer-inline {
-  position: initial;
-  height: 100%;
-}
-
-.ant-drawer .ant-drawer-mask {
-  position: initial !important;
-  display: none;
-}
-
-.ant-drawer-right > .ant-drawer-content-wrapper {
-  top: 85px;
-  right: 30px;
-  width: 100% !important;
-  height: 100%;
-  border-radius: 10px;
-  box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, 0.5);
-  position: initial;
-}
-
-.ant-drawer-content {
-  border-radius: 10px;
-}
-
-.ant-drawer-body {
-  padding: 30px 15px !important;
 }

@@ -1,20 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import Schedule from '../components/calendar/Schedule';
+import { CalendarDiv, DrawerDiv } from './../styles/CalendarStyle';
+import './../styles/fullCalendar.css';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import './../styles/fullCalendar.css';
-import moment from 'moment';
 import { Drawer } from 'antd';
-import Schedule from '../components/calendar/Schedule';
-import { CalendarDiv } from './../styles/CalendarStyle';
 import axios from 'axios';
-import { useSearchParams } from 'react-router-dom';
+import moment from 'moment';
 
 const Calendar = () => {
   // 캘린더 이벤트 데이터
   const [eventData, setEventData] = useState([]);
-  // 세부 여행 일정 열기
-  const [open, setOpen] = useState(false);
   // 여행 일정 클릭시
+  const [open, setOpen] = useState(false);
   const [selectTitle, setSelecTitle] = useState('');
   const [selectStartDate, setSelectStartDate] = useState('');
   const [selectEndDate, setSelectEndDate] = useState('');
@@ -27,9 +26,8 @@ const Calendar = () => {
   const queryMonth = searchParam.get('month');
   const calRef = useRef(null);
 
-  // 세부 여행 일정
+  // 세부 여행 일정 표시
   const showDrawer = e => {
-    console.log(e);
     const idTitle = e.event._def.extendedProps.idTitle;
     getTitle(idTitle);
     getTodo(idTitle);
@@ -158,22 +156,23 @@ const Calendar = () => {
           datesSet={handleDatesSet}
         />
       </div>
-      <Drawer
-        placement="right"
-        closable={false}
-        // onClose={onClose}
-        open={open}
-        getContainer={false}
-      >
-        <Schedule
-          setOpen={setOpen}
-          selectTitle={selectTitle}
-          selectStartDate={selectStartDate}
-          selectEndDate={selectEndDate}
-          selectReview={selectReview}
-          todoData={todoData}
-        />
-      </Drawer>
+      <DrawerDiv>
+        <Drawer
+          placement="right"
+          closable={false}
+          // onClose={onClose}
+          open={open}
+          getContainer={false}
+        >
+          <Schedule
+            selectTitle={selectTitle}
+            selectStartDate={selectStartDate}
+            selectEndDate={selectEndDate}
+            selectReview={selectReview}
+            todoData={todoData}
+          />
+        </Drawer>
+      </DrawerDiv>
     </CalendarDiv>
   );
 };
