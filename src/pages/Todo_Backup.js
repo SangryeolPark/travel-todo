@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Cascader, Form, DatePicker, ColorPicker, Button } from 'antd';
 import TodoList from '../components/todo/TodoList';
 import TravelReview from '../components/todo/TravelReview';
@@ -7,16 +7,67 @@ import { TodoDiv } from '../styles/TodoStyle';
 import axios from 'axios';
 import dayjs from 'dayjs';
 
-const Todo = () => {
-  const { state } = useLocation();
-
+const Todo = ({ data, setData }) => {
+  const visitList = data.visitList;
   const navigate = useNavigate();
   const { RangePicker } = DatePicker;
+
+  const [color, setColor] = useState('#1E88E5');
   const [regionData, setRegionData] = useState(null);
   const [region, setRegion] = useState([]);
 
-  const [color, setColor] = useState('#1E88E5');
-  const [subList, setSubList] = useState([]);
+  // 저장 버튼 클릭시
+  const onFinish = fieldsValue => {
+    console.log(fieldsValue);
+    const rangeValue = fieldsValue['date-picker'];
+    const colorValue =
+      fieldsValue['color'] === '#1E88E5' ? '#1E88E5' : fieldsValue['color'].toHexString();
+    const values = {
+      ...fieldsValue,
+      'date-picker': [rangeValue[0].format('YYYY-MM-DD'), rangeValue[1].format('YYYY-MM-DD')],
+      color: colorValue,
+    };
+    console.log('Received values of form: ', values);
+
+    // DB post data
+    const postTitleData = {
+      idRegion: values.city[0],
+      idRegionDetail: values.city[1],
+      startDate: values['date-picker'][0],
+      endDate: values['date-picker'][1],
+      calColor: values.color,
+    };
+    postTitle(postTitleData);
+  };
+
+  // title 보내기
+  const postTitle = async postTitleData => {
+    try {
+      const res = await axios.post('/api/todo', postTitleData);
+      const result = res.data;
+      console.log(result);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // 취소 버튼 클릭시
+  const handleCancel = () => {
+    navigate(-1);
+  };
+
+  // 일정 추가 버튼 클릭시
+  const handleAddVisitList = () => {
+    const newVisitList = {
+      id: Date.now(),
+      title: '',
+      complete: false,
+      checkList: [],
+    };
+    const newVisitListData = [...data.visitList, newVisitList];
+    const newData = { ...data, visitList: newVisitListData };
+    setData(newData);
+  };
 
   // DB 데이터 불러오기
   useEffect(() => {
@@ -54,67 +105,18 @@ const Todo = () => {
     }
   }, [regionData]);
 
-  // 저장 버튼 클릭시
-  const onFinish = fieldsValue => {
-    const rangeValue = fieldsValue['date-picker'];
-    const colorValue = color;
-    const values = {
-      ...fieldsValue,
-      'date-picker': [rangeValue[0].format('YYYY-MM-DD'), rangeValue[1].format('YYYY-MM-DD')],
-      color: colorValue,
-    };
-
-    // DB post data
-    const postTitleData = {
-      idRegionDetail: values.city[1],
-      idRegion: values.city[0],
-      startDate: values['date-picker'][0],
-      endDate: values['date-picker'][1],
-      calColor: values.color.replace('#', ''),
-      subList: subList,
-    };
-
-    postTitle(postTitleData);
-  };
-
-  // title 보내기
-  const postTitle = async postTitleData => {
-    try {
-      const res = await axios.post('/api/todo', postTitleData);
-      const result = res.data;
-      console.log(result);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  // 취소 버튼 클릭시
-  const handleCancel = () => {
-    navigate(-1);
-  };
-
-  // 일정 추가 버튼 클릭시
-  const handleAddSubList = () => {
-    const newSub = {
-      id: Date.now(),
-      subTitle: '',
-      checkList: [],
-    };
-    setSubList([...subList, newSub]);
-  };
-
   return (
     <TodoDiv>
       <Form
         name="time_related_controls"
         layout="horizontal"
         onFinish={onFinish}
-        // initialValues={{
-        //   color: '#1E88E5',
-        //   'visit-complete': false,
-        //   city: [11, 11110],
-        //   'date-picker': [dayjs('2023-07-04', 'YYYY-MM-DD'), dayjs('2023-07-05', 'YYYY-MM-DD')],
-        // }}
+        initialValues={{
+          color: '#1E88E5',
+          'visit-complete': false,
+          city: [11, 11110],
+          'date-picker': [dayjs('2023-07-04', 'YYYY-MM-DD'), dayjs('2023-07-05', 'YYYY-MM-DD')],
+        }}
       >
         <h2>Travel Schedule</h2>
         <div className="travel-schedule-wrap">
@@ -143,12 +145,12 @@ const Todo = () => {
               <RangePicker className="range-picker" placeholder={['시작일', '종료일']} />
             </Form.Item>
             <Form.Item name="color">
-              <ColorPicker value={color} onChange={color => setColor(color.toHexString())} />
+              <ColorPicker value={color} />
             </Form.Item>
           </div>
           <div className="add-travel-btn">
             <Button type="primary" htmlType="submit">
-              {state ? '수정' : '추가'}
+              저장
             </Button>
             <Button onClick={handleCancel}>취소</Button>
           </div>
@@ -158,13 +160,13 @@ const Todo = () => {
             <div>
               <h2>Travel Plan</h2>
               <ul className="todoList-wrap">
-                {subList.map(sub => (
+                {visitList.map((item, index) => (
                   <TodoList
-                    key={sub.id}
-                    id={sub.id}
-                    sub={sub}
-                    subList={subList}
-                    setSubList={setSubList}
+                    key={index}
+                    index={index}
+                    visitList={item}
+                    data={data}
+                    setData={setData}
                   />
                 ))}
                 <li>
@@ -172,7 +174,7 @@ const Todo = () => {
                     type="primary"
                     className="add-plan-btn"
                     style={{ background: '#1E88E5' }}
-                    onClick={handleAddSubList}
+                    onClick={handleAddVisitList}
                   >
                     일정 추가
                   </Button>
