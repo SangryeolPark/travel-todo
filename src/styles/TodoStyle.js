@@ -53,6 +53,15 @@ export const TodoDiv = styled.div`
   }
   .detail-plan-wrap {
     display: flex;
+    .travel-plan-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      h2 {
+        margin: 0;
+      }
+    }
     .travel-plan {
       display: flex;
       justify-content: start;
@@ -68,17 +77,14 @@ export const TodoDiv = styled.div`
           width: 100%;
           height: 35vh;
           overflow: auto;
-          .add-plan-btn {
-            position: absolute;
-            right: 0px;
-            top: 3px;
-          }
         }
         button {
           border: none;
           background: none;
-          margin-right: 10px;
+          margin-right: 0px;
+          padding: 3px 9px;
           cursor: pointer;
+          box-shadow: none;
         }
       }
     }

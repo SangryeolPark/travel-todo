@@ -5,6 +5,7 @@ import TodoList from '../components/todo/TodoList';
 import TravelReview from '../components/todo/TravelReview';
 import { TodoDiv } from '../styles/TodoStyle';
 import axios from 'axios';
+import moment from 'moment';
 
 const Todo = () => {
   const { state } = useLocation();
@@ -16,7 +17,6 @@ const Todo = () => {
 
   const [color, setColor] = useState('#1E88E5');
   const [subList, setSubList] = useState([]);
-  console.log(subList);
 
   // DB 데이터 불러오기
   useEffect(() => {
@@ -73,16 +73,13 @@ const Todo = () => {
       calColor: values.color.replace('#', ''),
       subList: subList,
     };
-    console.log(postTitleData);
     postTitle(postTitleData);
   };
 
   // Tododata 보내기
   const postTitle = async postTitleData => {
     try {
-      const res = await axios.post('/api/todo', postTitleData);
-      const result = res.data;
-      console.log(result);
+      await axios.post('/api/todo', postTitleData);
     } catch (err) {
       console.log(err);
     }
@@ -102,23 +99,11 @@ const Todo = () => {
     };
     const newSubList = [...subList, newSub];
     setSubList(newSubList);
-    // setSubList([subList]);
-    // setSubList();
   };
 
   return (
     <TodoDiv>
-      <Form
-        name="time_related_controls"
-        layout="horizontal"
-        onFinish={onFinish}
-        // initialValues={{
-        //   color: '#1E88E5',
-        //   'visit-complete': false,
-        //   city: [11, 11110],
-        //   'date-picker': [dayjs('2023-07-04', 'YYYY-MM-DD'), dayjs('2023-07-05', 'YYYY-MM-DD')],
-        // }}
-      >
+      <Form name="time_related_controls" layout="horizontal" onFinish={onFinish}>
         <h2>Travel Schedule</h2>
         <div className="travel-schedule-wrap">
           <div className="input-travel">
@@ -159,10 +144,20 @@ const Todo = () => {
         <div className="detail-plan-wrap">
           <div className="travel-plan">
             <div>
-              <h2>Travel Plan</h2>
+              <div className="travel-plan-title">
+                <h2>Travel Plan</h2>
+                <Button
+                  type="primary"
+                  htmlType="button"
+                  className="add-plan-btn"
+                  style={{ background: '#1E88E5' }}
+                  onClick={handleAddSubList}
+                >
+                  일정 추가
+                </Button>
+              </div>
               <ul className="todoList-wrap">
                 {subList.map(sub => {
-                  console.log(sub);
                   return (
                     <TodoList
                       key={sub.id}
@@ -173,19 +168,10 @@ const Todo = () => {
                     />
                   );
                 })}
-                <li>
-                  <Button
-                    type="primary"
-                    className="add-plan-btn"
-                    style={{ background: '#1E88E5' }}
-                    onClick={handleAddSubList}
-                  >
-                    일정 추가
-                  </Button>
-                </li>
               </ul>
             </div>
           </div>
+          {}
           <div className="travel-review">
             <h2>Travel Review</h2>
             <TravelReview />
