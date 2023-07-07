@@ -20,8 +20,6 @@ const Schedule = ({ selectTitle, selectStartDate, selectEndDate, selectReview, t
     setIsModalOpen(false);
   };
 
-  const handleEdit = () => {};
-
   return (
     <DetailScheduleDiv>
       <div className="btns">
@@ -37,38 +35,46 @@ const Schedule = ({ selectTitle, selectStartDate, selectEndDate, selectReview, t
       </div>
       <div className="travel-plan">
         <h2>Travel Plan</h2>
-        <div className="detail-plan">
-          {todoData.map(item => (
-            <div key={item.idSub}>
-              <div className="visit-list">
-                <FontAwesomeIcon
-                  icon={item.finishYn ? faSquareCheck : faSquare}
-                  className="checkbox"
-                />
-                <Input className="input" disabled={true} value={item.subTitle} />
-              </div>
-              {item.checkList.length !== 0 ? (
-                <div className="checkList-wrap">
-                  {item.checkList.map(item => (
-                    <div key={item.idCheck} className="check-list">
-                      <FontAwesomeIcon
-                        icon={item.finishYn ? faSquareCheck : faSquare}
-                        className="checkbox"
-                      />
-                      <Input className="input" disabled={true} value={item.checkList} />
-                    </div>
-                  ))}
+        {todoData.length === 0 ? (
+          '등록된 일정이 없습니다.'
+        ) : (
+          <div className="detail-plan">
+            {todoData.map(item => (
+              <div key={item.idSub} className="visit-list-wrap">
+                <div className="visit-list">
+                  <FontAwesomeIcon
+                    icon={item.finishYn ? faSquareCheck : faSquare}
+                    className="checkbox"
+                  />
+                  <Input className="input" disabled={true} value={item.subTitle} />
                 </div>
-              ) : (
-                ''
-              )}
-            </div>
-          ))}
-        </div>
+                {item.checkList.length !== 0 ? (
+                  <div className="checkList-wrap">
+                    {item.checkList.map(item => (
+                      <div key={item.idCheck} className="check-list">
+                        <FontAwesomeIcon
+                          icon={item.finishYn ? faSquareCheck : faSquare}
+                          className="checkbox"
+                        />
+                        <Input className="input" disabled={true} value={item.checkList} />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  ''
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <div className="travel-review">
         <h2>Travel Review</h2>
-        <TextArea className="text-area" value={selectReview} disabled={true} rows={5} />
+        {selectReview ? (
+          <TextArea className="text-area" value={selectReview} disabled={true} rows={5} />
+        ) : (
+          '등록된 리뷰가 없습니다.'
+        )}
       </div>
       <div>
         <Modal

@@ -6,15 +6,8 @@ import CheckList from './CheckList';
 import { TodoListLi } from '../../styles/TodoStyle';
 
 const TodoList = ({ id, sub, subList, setSubList }) => {
-  console.log(id);
-  console.log(sub);
-  console.log(subList);
-  const [subTitle, setSubTitle] = useState(sub.subTitle);
-  const [checkList, setCheckList] = useState(sub.checkList);
-
   // 일정 이름 변경
   const handleChangeSubTitle = e => {
-    setSubTitle(e.target.value);
     const newSubList = subList.map(item => {
       if (item.id === sub.id) {
         sub.subTitle = e.target.value;
@@ -31,17 +24,17 @@ const TodoList = ({ id, sub, subList, setSubList }) => {
   };
 
   // 체크리스트 추가
-  const handleAddCheckList = subId => {
+  const handleAddCheckList = () => {
     const newCheckList = {
       id: Date.now(),
       checkTitle: '',
     };
     const newCheckListData = [...sub.checkList, newCheckList];
     const newSubList = subList.map(sub => {
-      if (sub.id === subId) {
-        const item = { ...sub, checkList: newCheckListData };
-        return item;
+      if (sub.id === id) {
+        sub = { ...sub, checkList: newCheckListData };
       }
+      return sub;
     });
     setSubList(newSubList);
   };
@@ -63,14 +56,9 @@ const TodoList = ({ id, sub, subList, setSubList }) => {
               },
             ]}
           >
-            <Input
-              placeholder="일정을 입력하세요."
-              value={subTitle}
-              allowClear
-              onChange={handleChangeSubTitle}
-            />
+            <Input placeholder="일정을 입력하세요." allowClear onChange={handleChangeSubTitle} />
           </Form.Item>
-          <Button onClick={() => handleAddCheckList(sub.id)}>
+          <Button onClick={handleAddCheckList}>
             <FontAwesomeIcon icon={faListCheck} className="bt-addcheck" />
           </Button>
           <Button onClick={deleteSub}>
@@ -86,7 +74,6 @@ const TodoList = ({ id, sub, subList, setSubList }) => {
                 subList={subList}
                 setSubList={setSubList}
                 checkList={checkList}
-                setCheckList={setCheckList}
               />
             );
           })}

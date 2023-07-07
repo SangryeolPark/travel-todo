@@ -57,6 +57,10 @@ export const TodoDiv = styled.div`
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 10px;
+      h2 {
+        margin: 0;
+      }
     }
     .travel-plan {
       display: flex;
@@ -80,6 +84,7 @@ export const TodoDiv = styled.div`
           margin-right: 0px;
           padding: 3px 9px;
           cursor: pointer;
+          box-shadow: none;
         }
       }
     }
