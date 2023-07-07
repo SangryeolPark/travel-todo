@@ -1,4 +1,4 @@
-import { Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input } from 'antd';
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faListCheck } from '@fortawesome/free-solid-svg-icons';
@@ -70,12 +70,12 @@ const TodoList = ({ id, sub, subList, setSubList }) => {
               onChange={handleChangeSubTitle}
             />
           </Form.Item>
-          <button onClick={() => handleAddCheckList(sub.id)}>
+          <Button onClick={() => handleAddCheckList(sub.id)}>
             <FontAwesomeIcon icon={faListCheck} className="bt-addcheck" />
-          </button>
-          <button onClick={deleteSub}>
+          </Button>
+          <Button onClick={deleteSub}>
             <FontAwesomeIcon icon={faXmark} className="bt-x" />
-          </button>
+          </Button>
         </div>
         <ul>
           {sub.checkList.map(checkList => {

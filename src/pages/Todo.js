@@ -16,7 +16,6 @@ const Todo = () => {
 
   const [color, setColor] = useState('#1E88E5');
   const [subList, setSubList] = useState([]);
-  console.log(subList);
 
   // DB 데이터 불러오기
   useEffect(() => {
@@ -159,7 +158,18 @@ const Todo = () => {
         <div className="detail-plan-wrap">
           <div className="travel-plan">
             <div>
-              <h2>Travel Plan</h2>
+              <div className="travel-plan-title">
+                <h2>Travel Plan</h2>
+                <Button
+                  type="primary"
+                  htmlType="button"
+                  className="add-plan-btn"
+                  style={{ background: '#1E88E5' }}
+                  onClick={handleAddSubList}
+                >
+                  일정 추가
+                </Button>
+              </div>
               <ul className="todoList-wrap">
                 {subList.map(sub => {
                   console.log(sub);
@@ -173,16 +183,6 @@ const Todo = () => {
                     />
                   );
                 })}
-                <li>
-                  <Button
-                    type="primary"
-                    className="add-plan-btn"
-                    style={{ background: '#1E88E5' }}
-                    onClick={handleAddSubList}
-                  >
-                    일정 추가
-                  </Button>
-                </li>
               </ul>
             </div>
           </div>

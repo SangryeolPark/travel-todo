@@ -1,4 +1,4 @@
-import { Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input } from 'antd';
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -63,9 +63,9 @@ const CheckList = ({ sub, subList, setSubList, checkList, setCheckList }) => {
             value={checkTitle}
           />
         </Form.Item>
-        <button onClick={deleteCheckList}>
+        <Button onClick={deleteCheckList}>
           <FontAwesomeIcon icon={faXmark} className="bt-x" />
-        </button>
+        </Button>
       </CheckListLi>
     </>
   );
