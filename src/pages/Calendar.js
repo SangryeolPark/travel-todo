@@ -15,6 +15,7 @@ const Calendar = () => {
   const [eventData, setEventData] = useState([]);
   // 여행 일정 클릭시
   const [open, setOpen] = useState(false);
+  const [selectId, setSelectId] = useState(0);
   const [selectTitle, setSelecTitle] = useState('');
   const [selectStartDate, setSelectStartDate] = useState('');
   const [selectEndDate, setSelectEndDate] = useState('');
@@ -50,6 +51,8 @@ const Calendar = () => {
     try {
       const res = await axios.get(`/api/calender/${idTitle}`);
       const result = res.data;
+      console.log(result);
+      setSelectId(result.idTitle);
       setSelecTitle(result.title);
       setSelectStartDate(result.startDate);
       setSelectEndDate(result.endDate);
@@ -159,6 +162,7 @@ const Calendar = () => {
       <DrawerDiv>
         <Drawer placement="right" closable={false} open={open} getContainer={false}>
           <Schedule
+            selectId={selectId}
             selectTitle={selectTitle}
             selectStartDate={selectStartDate}
             selectEndDate={selectEndDate}

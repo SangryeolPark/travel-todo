@@ -6,6 +6,7 @@ import TravelReview from '../components/todo/TravelReview';
 import { TodoDiv } from '../styles/TodoStyle';
 import axios from 'axios';
 import dayjs from 'dayjs';
+import moment from 'moment';
 
 const Todo = ({ setIsDataChanged }) => {
   const { state } = useLocation();
@@ -16,6 +17,11 @@ const Todo = ({ setIsDataChanged }) => {
   const [color, setColor] = useState('#1E88E5');
   const [subList, setSubList] = useState([]);
   const formRef = useRef(null);
+  const [startDate, setStartdate] = useState('');
+
+  console.log(startDate);
+  const todayDate = moment(Date.now()).format('YYYY-MM-DD');
+  console.log(startDate <= todayDate);
 
   // 지역 데이터 불러오기
   useEffect(() => {
@@ -64,6 +70,7 @@ const Todo = ({ setIsDataChanged }) => {
         'travel-review': data.travelReview,
       });
       setSubList(data.subList);
+      setStartdate(data.startDate);
     };
 
     if (state) {
@@ -200,11 +207,12 @@ const Todo = ({ setIsDataChanged }) => {
               </ul>
             </div>
           </div>
-          {}
-          <div className="travel-review">
-            <h2>Travel Review</h2>
-            <TravelReview />
-          </div>
+          {state && startDate <= todayDate ? (
+            <div className="travel-review">
+              <h2>Travel Review</h2>
+              <TravelReview />
+            </div>
+          ) : null}
         </div>
       </Form>
     </TodoDiv>

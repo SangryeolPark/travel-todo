@@ -9,10 +9,6 @@ export const HomeDiv = styled.div`
   justify-content: center;
   align-items: start;
   position: relative;
-  /* position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%); */
   .title {
     position: absolute;
     top: 15%;
