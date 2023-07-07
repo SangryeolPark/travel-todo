@@ -27,6 +27,7 @@ const TodoList = ({ state, idSub, sub, subList, setSubList }) => {
   const handleAddCheckList = () => {
     const newCheckList = {
       id: Date.now(),
+      idCheck: 0,
       checkTitle: '',
     };
     const newCheckListData = [...sub.checkList, newCheckList];

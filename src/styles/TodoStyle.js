@@ -67,8 +67,7 @@ export const TodoDiv = styled.div`
       justify-content: start;
       width: 100%;
       height: 100%;
-      padding-right: 25px;
-      border-right: 1px solid #ccc;
+      /* padding-right: 25px; */
       position: relative;
       > div {
         text-align: start;
@@ -89,10 +88,20 @@ export const TodoDiv = styled.div`
       }
     }
     .travel-review {
+      position: relative;
       width: 100%;
       height: 100%;
       text-align: start;
-      padding-left: 25px;
+      padding-left: 50px;
+      ::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 25px;
+        height: 100%;
+        width: 1px;
+        background: #ccc;
+      }
     }
     .ant-form-item {
       margin-bottom: 0;
