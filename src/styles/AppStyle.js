@@ -13,10 +13,8 @@ const Header = styled(Layout.Header)`
   align-items: center;
   background: ${primary};
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
-  > span {
-    font-size: 30px;
-    font-weight: bold;
-    color: ${white};
+  > img {
+    width: 210px;
   }
 `;
 

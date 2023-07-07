@@ -150,7 +150,15 @@ a {
   color: red;
 }
 
+.fc-day-sun a:hover {
+  color: red;
+}
+
 .fc-day-sat a {
+  color: blue;
+}
+
+.fc-day-sat a:hover {
   color: blue;
 }
 
@@ -161,6 +169,10 @@ a {
 .fc-daygrid-day-number {
   font-size: 16px;
   font-weight: 500;
+}
+
+.fc-daygrid-day-number:hover {
+  color: #666666;
 }
 
 .fc .fc-event::before {

@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEarthAsia, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
 import axios from 'axios';
+import logoSmall from '../logosmall.png';
 
 import { STATUS_LOADING, STATUS_SERVER_ERROR } from '../App';
 
@@ -62,7 +63,7 @@ const Main = () => {
   return (
     <>
       <Header>
-        <span>Travel Todo</span>
+        <img src={logoSmall} alt="" className="logo-small" />
         <PageSwitch
           onChange={handleSwitchChange}
           checked={switchBool}
