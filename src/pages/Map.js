@@ -32,12 +32,13 @@ import {
   TravelListFilter,
   TravelListContainer,
   TravelItemCollapse,
+  TodoItemCollapse,
 } from '../styles/MapStyle';
 
-import TravelTodo from '../components/map/TravelTodo';
 import moment from 'moment';
+import TodoCheck from '../components/map/TodoCheck';
 
-const Map = () => {
+const Map = ({ isDataChanged, setIsDataChanged }) => {
   const navigate = useNavigate();
   const { region, regionDetail } = useParams();
   const [searchParam, setSearchParam] = useSearchParams();
@@ -50,75 +51,6 @@ const Map = () => {
   const [travelList, setTravelList] = useState(null);
   const [travelListLoading, setTravelListLoading] = useState(STATUS_LOADING);
   const { confirm } = Modal;
-  const [forceRender, setForceRender] = useState(false);
-
-  const handleTodoList = idTitle => {
-    const getTodoList = async () => {
-      try {
-        // 로딩 중 상태
-        const loading = travelList.map(travel => {
-          if (travel.key == idTitle) {
-            return {
-              ...travel,
-              children: <span>{STATUS_LOADING}</span>,
-            };
-          } else {
-            return { ...travel };
-          }
-        });
-        setTravelList(loading);
-
-        // 로딩 완료
-        const { data } = await axios.get(`/api/map/sub/${idTitle}`);
-        const newData = data.map(item => {
-          return {
-            key: item.idSub,
-            label: (
-              <>
-                {item.finishYn ? (
-                  <FontAwesomeIcon icon={faSquareCheck} />
-                ) : (
-                  <FontAwesomeIcon icon={faSquare} />
-                )}
-                {item.subTitle}
-              </>
-            ),
-            complete: JSON.stringify(item.finishYn),
-          };
-        });
-
-        const result = travelList.map(travel => {
-          if (travel.key == idTitle) {
-            return {
-              ...travel,
-              children:
-                newData.length !== 0 ? (
-                  <TravelTodo items={newData} />
-                ) : (
-                  <span className="no-todo">등록된 할 일이 없습니다.</span>
-                ),
-            };
-          }
-          return travel;
-        });
-        setTravelList(result);
-      } catch (error) {
-        // 서버 에러
-        console.log(error);
-        const result = travelList.map(travel => {
-          return {
-            ...travel,
-            children: <span>{STATUS_SERVER_ERROR}</span>,
-          };
-        });
-        setTravelList(result);
-      }
-    };
-
-    if (idTitle) {
-      getTodoList();
-    }
-  };
 
   const handleRemove = idTitle => {
     confirm({
@@ -136,7 +68,7 @@ const Map = () => {
       async onOk() {
         try {
           await axios.patch(`/api/todo/${idTitle}`);
-          setForceRender(!forceRender);
+          setIsDataChanged(prevState => !prevState);
         } catch (error) {
           console.log(error);
         }
@@ -149,71 +81,86 @@ const Map = () => {
       searchParam.set('filter', 'plan');
       setSearchParam(searchParam);
     }
+  }, [region, regionDetail, searchParam]);
 
+  useEffect(() => {
     // GET 여행 일정 데이터
     const getData = async () => {
-      setTravelList(null);
-      let url;
-      if (regionDetail) {
-        url = `/${region}/${regionDetail}`;
-      } else {
-        if (!region) {
-          url = '';
-        } else {
-          url = `/${region}`;
-        }
-      }
+      let url = regionDetail ? `/${region}/${regionDetail}` : region ? `/${region}` : '';
 
       try {
         const { data } = await axios.get(`/api/map${url}`);
+        let filteredData;
         if (filter === 'plan' || !region) {
-          const filteredData = data.filter(
+          filteredData = data.filter(
             item =>
               item.startDate >= moment(Date.now()).format('YYYY-MM-DD') ||
               item.endDate >= moment(Date.now()).format('YYYY-MM-DD')
           );
-          const result = filteredData.map(item => {
-            return {
-              key: item.idTitle,
-              label: item.title,
-              extra: (
-                <>
-                  <span>{`${item.startDate} ~ ${item.endDate}`}</span>
-                  <div>
-                    <FontAwesomeIcon
-                      onClick={() => navigate(`/todo/${item.idTitle}`, { state: item.idTitle })}
-                      icon={faPencil}
-                    />
-                    <FontAwesomeIcon onClick={() => handleRemove(item.idTitle)} icon={faTrashCan} />
-                  </div>
-                </>
-              ),
-            };
-          });
-          setTravelList(result);
-        } else if (filter == 'finish') {
-          const filteredData = data.filter(
+        } else if (filter === 'finish') {
+          filteredData = data.filter(
             item => item.endDate < moment(Date.now()).format('YYYY-MM-DD')
           );
-          const result = filteredData.map(item => {
+        }
+
+        if (filteredData) {
+          const result = await Promise.all(
+            filteredData.map(async item => {
+              return { title: item.title, detail: await getDetailData(item.idTitle) };
+            })
+          );
+          const newTravelList = result.map(item => {
+            const todoData = item.detail.subList.map(item => {
+              return {
+                key: item.idSub,
+                label: (
+                  <>
+                    {item.finishYn ? (
+                      <FontAwesomeIcon icon={faSquareCheck} />
+                    ) : (
+                      <FontAwesomeIcon icon={faSquare} />
+                    )}
+                    {item.subTitle}
+                  </>
+                ),
+                children:
+                  item.checkList !== 0 ? (
+                    <TodoCheck data={item.checkList} />
+                  ) : (
+                    <span>등록된 체크 리스트가 없습니다.</span>
+                  ),
+              };
+            });
+
             return {
-              key: item.idTitle,
+              key: item.detail.idTitle,
               label: item.title,
               extra: (
                 <>
-                  <span>{`${item.startDate} ~ ${item.endDate}`}</span>
+                  <span>{`${item.detail.startDate} ~ ${item.detail.endDate}`}</span>
                   <div>
                     <FontAwesomeIcon
-                      onClick={() => navigate(`/todo/${item.idTitle}`, { state: item.idTitle })}
+                      onClick={() =>
+                        navigate(`/todo/${item.detail.idTitle}`, { state: item.detail.idTitle })
+                      }
                       icon={faPencil}
                     />
-                    <FontAwesomeIcon onClick={() => handleRemove(item.idTitle)} icon={faTrashCan} />
+                    <FontAwesomeIcon
+                      onClick={() => handleRemove(item.detail.idTitle)}
+                      icon={faTrashCan}
+                    />
                   </div>
                 </>
               ),
+              children:
+                todoData.length !== 0 ? (
+                  <TodoItemCollapse accordion items={todoData} expandIconPosition="end" />
+                ) : (
+                  <span className="no-todo">등록된 할 일이 없습니다.</span>
+                ),
             };
           });
-          setTravelList(result);
+          setTravelList(newTravelList);
         }
       } catch (error) {
         console.log(error);
@@ -221,8 +168,17 @@ const Map = () => {
       }
     };
 
+    const getDetailData = async idTitle => {
+      try {
+        const { data } = await axios.get(`/api/todo/${idTitle}`);
+        return data;
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     getData();
-  }, [region, regionDetail, filter, forceRender]);
+  }, [region, regionDetail, filter, isDataChanged]);
 
   useEffect(() => {
     localStorage.setItem('map-color', JSON.stringify(mapColor));
@@ -233,52 +189,50 @@ const Map = () => {
   }, [region, regionDetail, regionData]);
 
   useEffect(() => {
+    const findRegionName = item => {
+      if (!region) {
+        return regionData.region.find(data => data.idRegion == item.id).region;
+      } else {
+        if (region === '36') {
+          return '세종시';
+        } else {
+          return regionData.regionDetail.find(data => data.idRegionDetail == item.id).regionDetail;
+        }
+      }
+    };
+
+    const findRegionCount = item => {
+      if (!region) {
+        return regionData.region.find(data => data.idRegion == item.id).count;
+      } else {
+        if (region === '36') {
+          return regionData.region.find(data => data.idRegion == 36).count;
+        }
+        return regionData.regionDetail.find(data => data.idRegionDetail == item.id).count;
+      }
+    };
+
+    const findRegionTotalCount = () => {
+      if (!region || region === '36') {
+        return regionData.totalCount;
+      } else {
+        return regionData.region.find(data => data.idRegion == region).count;
+      }
+    };
+
+    // Map hover 효과
+    const hoverItem = item => {
+      item.onmouseenter = () => {
+        item.style.filter = 'brightness(1.2)';
+      };
+      item.onmouseout = () => {
+        item.style.filter = 'none';
+      };
+    };
     // MapContainer 세팅
     const renderMapContainer = () => {
-      // 지명 Tooltip
-      const findRegionName = item => {
-        if (!region) {
-          return regionData.region.find(data => data.idRegion == item.id).region;
-        } else {
-          if (region === '36') {
-            return '세종시';
-          } else {
-            return regionData.regionDetail.find(data => data.idRegionDetail == item.id)
-              .regionDetail;
-          }
-        }
-      };
-
-      const findRegionCount = item => {
-        if (!region) {
-          return regionData.region.find(data => data.idRegion == item.id).count;
-        } else {
-          if (region === '36') {
-            return regionData.region.find(data => data.idRegion == 36).count;
-          }
-          return regionData.regionDetail.find(data => data.idRegionDetail == item.id).count;
-        }
-      };
-
-      const findRegionTotalCount = () => {
-        if (!region || region === '36') {
-          return regionData.totalCount;
-        } else {
-          return regionData.region.find(data => data.idRegion == region).count;
-        }
-      };
-
-      // Map hover 효과
-      const hoverItem = item => {
-        item.onmouseenter = () => {
-          item.style.filter = 'brightness(1.2)';
-        };
-        item.onmouseout = () => {
-          item.style.filter = 'none';
-        };
-      };
-
       mapData.forEach(item => {
+        // 지명 Tooltip
         item.innerHTML = `<title>${findRegionName(item)}</title>`;
         // 방문 비율
         const visitRate = (findRegionCount(item) / findRegionTotalCount()) * 100;
@@ -302,10 +256,11 @@ const Map = () => {
         item.onclick = () => {
           if (!region) {
             navigate(item.id);
-          } else {
-            region === '36' ? null : navigate(`${region}/${item.id}`);
+          } else if (region !== '36') {
+            navigate(`${region}/${item.id}`);
           }
         };
+
         hoverItem(item);
       });
 
@@ -326,24 +281,22 @@ const Map = () => {
             ).regionDetail,
           },
         ]);
+      } else if (!region) {
+        setRegionInfo([{ title: '대한민국' }]);
       } else {
-        if (!region) {
-          setRegionInfo([{ title: '대한민국' }]);
-        } else {
-          setRegionInfo([
-            { title: <Link to="/map">대한민국</Link> },
-            {
-              title: regionData.region.find(item => item.idRegion === parseInt(region)).region,
-            },
-          ]);
-        }
+        setRegionInfo([
+          { title: <Link to="/map">대한민국</Link> },
+          {
+            title: regionData.region.find(item => item.idRegion === parseInt(region)).region,
+          },
+        ]);
       }
     };
 
     if (regionData) {
       renderMapContainer();
     }
-  }, [mapData, mapColor, regionData]);
+  }, [mapData, mapColor, regionData, isDataChanged]);
 
   return (
     <MapContainer>
@@ -409,7 +362,6 @@ const Map = () => {
                 <FontAwesomeIcon icon={faChevronDown} rotation={isActive ? 180 : 0} />
               )}
               collapsible="icon"
-              onChange={idTitle => handleTodoList(idTitle[0])}
               items={travelList}
             />
           ) : (

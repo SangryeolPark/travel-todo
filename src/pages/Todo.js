@@ -7,7 +7,7 @@ import { TodoDiv } from '../styles/TodoStyle';
 import axios from 'axios';
 import dayjs from 'dayjs';
 
-const Todo = () => {
+const Todo = ({ setIsDataChanged }) => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const { RangePicker } = DatePicker;
@@ -57,7 +57,6 @@ const Todo = () => {
   useEffect(() => {
     const getData = async () => {
       const { data } = await axios.get(`/api/todo/${state}`);
-      console.log(data);
       formRef.current.setFieldsValue({
         color: data.calColor,
         city: [data.idRegion, data.idRegionDetail],
@@ -72,7 +71,7 @@ const Todo = () => {
     }
   }, [state]);
 
-  // 저장 버튼 클릭시
+  // 추가/수정 버튼 클릭시
   const onFinish = fieldsValue => {
     const rangeValue = fieldsValue['date-picker'];
     const colorValue = color;
@@ -82,8 +81,8 @@ const Todo = () => {
       color: colorValue,
     };
 
-    // DB post data
-    let postTitleData = {
+    // payload data
+    let payloadData = {
       idRegionDetail: values.city[1],
       idRegion: values.city[0],
       startDate: values['date-picker'][0],
@@ -93,17 +92,20 @@ const Todo = () => {
     };
 
     if (state) {
-      postTitleData = { ...postTitleData, idTitle: state };
+      payloadData = { ...payloadData, idTitle: state };
     }
 
-    console.log(postTitleData);
-    postTitle(postTitleData);
+    saveData(payloadData);
+    setIsDataChanged(prevState => !prevState);
+    navigate(-1);
   };
 
   // Tododata 보내기
-  const postTitle = async postTitleData => {
+  const saveData = async payload => {
     try {
-      await axios.post('/api/todo', postTitleData);
+      state
+        ? await axios.put(`/api/todo/${state}`, payload)
+        : await axios.post('/api/todo', payload);
     } catch (err) {
       console.log(err);
     }
@@ -118,6 +120,7 @@ const Todo = () => {
   const handleAddSubList = () => {
     const newSub = {
       id: Date.now(),
+      idSub: 0,
       subTitle: '',
       checkList: [],
     };

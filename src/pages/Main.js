@@ -9,7 +9,7 @@ import logoSmall from '../logosmall.png';
 
 import { STATUS_LOADING, STATUS_SERVER_ERROR } from '../App';
 
-const Main = () => {
+const Main = ({ isDataChanged }) => {
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
   const [mapPath, setMapPath] = useState(null);
@@ -30,7 +30,7 @@ const Main = () => {
     };
 
     getRegionData();
-  }, []);
+  }, [isDataChanged]);
 
   useEffect(() => {
     if (pathname.includes('map')) {

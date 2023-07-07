@@ -9,7 +9,7 @@ const TodoList = ({ state, idSub, sub, subList, setSubList }) => {
   // 일정 이름 변경
   const handleChangeSubTitle = e => {
     const newSubList = subList.map(sub => {
-      if (state && sub.idSub ? sub.idSub : sub.id === idSub) {
+      if ((state && sub.idSub ? sub.idSub : sub.id) === idSub) {
         sub.subTitle = e.target.value;
       }
       return sub;
@@ -27,6 +27,7 @@ const TodoList = ({ state, idSub, sub, subList, setSubList }) => {
   const handleAddCheckList = () => {
     const newCheckList = {
       id: Date.now(),
+      idCheck: 0,
       checkTitle: '',
     };
     const newCheckListData = [...sub.checkList, newCheckList];

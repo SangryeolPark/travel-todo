@@ -18,7 +18,7 @@ const TodoCheck = ({ data }) => {
       ) : (
         <FontAwesomeIcon icon={faSquare} />
       )}
-      {item.checkList}
+      {item.checkTitle}
     </div>
   ));
 };

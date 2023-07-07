@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Map from './pages/Map';
@@ -15,11 +15,16 @@ const STATUS_LOADING = '로딩 중...';
 export { STATUS_LOADING, STATUS_SERVER_ERROR };
 
 const App = () => {
+  const [isDataChanged, setIsDataChanged] = useState(false);
+
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route element={<Main />}>
-        <Route path="map" element={<Map />}>
+      <Route element={<Main isDataChanged={isDataChanged} />}>
+        <Route
+          path="map"
+          element={<Map isDataChanged={isDataChanged} setIsDataChanged={setIsDataChanged} />}
+        >
           <Route index element={<Korea />} />
           <Route path=":region" element={<MapDetail />}>
             <Route path=":regionDetail" element={<MapDetail />} />
@@ -27,7 +32,7 @@ const App = () => {
         </Route>
         <Route path="calendar" element={<Calendar />} />
       </Route>
-      <Route path="/todo" element={<Todo />} />
+      <Route path="/todo" element={<Todo setIsDataChanged={setIsDataChanged} />} />
       <Route path="/todo/:id" element={<Todo />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
