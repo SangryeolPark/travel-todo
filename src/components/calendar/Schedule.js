@@ -9,15 +9,29 @@ import { useState } from 'react';
 
 const Schedule = ({ selectTitle, selectStartDate, selectEndDate, selectReview, todoData }) => {
   // 일정 삭제 모달창
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { confirm } = Modal;
   const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
+    confirm({
+      title: '일정 삭제',
+      content: (
+        <>
+          <p>삭제한 일정은 복구할 수 없습니다.</p>
+          <p>정말 삭제하시겠습니까?</p>
+        </>
+      ),
+      okText: '삭제',
+      okType: 'danger',
+      cancelText: '취소',
+      centered: true,
+      // async onOk() {
+      //   try {
+      //     await axios.patch(`/api/todo/${idTitle}`);
+      //     setForceRender(!forceRender);
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
+      // },
+    });
   };
 
   return (
@@ -77,7 +91,7 @@ const Schedule = ({ selectTitle, selectStartDate, selectEndDate, selectReview, t
         )}
       </div>
       <div>
-        <Modal
+        {/* <Modal
           centered
           title="확인"
           open={isModalOpen}
@@ -87,7 +101,7 @@ const Schedule = ({ selectTitle, selectStartDate, selectEndDate, selectReview, t
         >
           <p>삭제한 일정은 복구할 수 없습니다.</p>
           <p>정말 삭제하시겠습니까?</p>
-        </Modal>
+        </Modal> */}
       </div>
     </DetailScheduleDiv>
   );
