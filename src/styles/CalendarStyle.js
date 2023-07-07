@@ -18,7 +18,7 @@ export const CalendarDiv = styled.div`
   justify-content: center;
   gap: 0 15px;
   .wrap {
-    width: 72%;
+    width: 75%;
     height: 100%;
     background: #fff;
     padding: 15px;
@@ -75,15 +75,14 @@ export const DetailScheduleDiv = styled.div`
     display: flex;
     align-items: center;
     cursor: pointer;
-    a {
-      :hover {
-        color: #1e88e5;
-      }
-    }
     .bt-pencil {
+      color: #494949;
       font-size: 20px;
       margin-right: 15px;
       cursor: pointer;
+      :hover {
+        color: #1e88e5;
+      }
     }
     .bt-trash {
       font-size: 21px;
