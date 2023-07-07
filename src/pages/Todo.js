@@ -1,26 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Cascader, Form, DatePicker, ColorPicker, Button } from 'antd';
 import TodoList from '../components/todo/TodoList';
 import TravelReview from '../components/todo/TravelReview';
 import { TodoDiv } from '../styles/TodoStyle';
 import axios from 'axios';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 const Todo = () => {
   const { state } = useLocation();
-
   const navigate = useNavigate();
   const { RangePicker } = DatePicker;
   const [regionData, setRegionData] = useState(null);
   const [region, setRegion] = useState([]);
-
   const [color, setColor] = useState('#1E88E5');
   const [subList, setSubList] = useState([]);
+  const formRef = useRef(null);
 
-  // DB 데이터 불러오기
+  // 지역 데이터 불러오기
   useEffect(() => {
-    const getRegion = async setRegionData => {
+    const getRegion = async () => {
       try {
         const res = await axios.get('/api/todo');
         const result = res.data;
@@ -29,7 +28,7 @@ const Todo = () => {
         console.log(err);
       }
     };
-    getRegion(setRegionData);
+    getRegion();
   }, []);
 
   // 지역 데이터 필터링
@@ -54,6 +53,25 @@ const Todo = () => {
     }
   }, [regionData]);
 
+  // 일정 데이터 불러오기
+  useEffect(() => {
+    const getData = async () => {
+      const { data } = await axios.get(`/api/todo/${state}`);
+      console.log(data);
+      formRef.current.setFieldsValue({
+        color: data.calColor,
+        city: [data.idRegion, data.idRegionDetail],
+        'date-picker': [dayjs(data.startDate, 'YYYY-MM-DD'), dayjs(data.endDate, 'YYYY-MM-DD')],
+        'travel-review': data.travelReview,
+      });
+      setSubList(data.subList);
+    };
+
+    if (state) {
+      getData();
+    }
+  }, [state]);
+
   // 저장 버튼 클릭시
   const onFinish = fieldsValue => {
     const rangeValue = fieldsValue['date-picker'];
@@ -65,7 +83,7 @@ const Todo = () => {
     };
 
     // DB post data
-    const postTitleData = {
+    let postTitleData = {
       idRegionDetail: values.city[1],
       idRegion: values.city[0],
       startDate: values['date-picker'][0],
@@ -73,6 +91,12 @@ const Todo = () => {
       calColor: values.color.replace('#', ''),
       subList: subList,
     };
+
+    if (state) {
+      postTitleData = { ...postTitleData, idTitle: state };
+    }
+
+    console.log(postTitleData);
     postTitle(postTitleData);
   };
 
@@ -103,7 +127,7 @@ const Todo = () => {
 
   return (
     <TodoDiv>
-      <Form name="time_related_controls" layout="horizontal" onFinish={onFinish}>
+      <Form ref={formRef} name="time_related_controls" layout="horizontal" onFinish={onFinish}>
         <h2>Travel Schedule</h2>
         <div className="travel-schedule-wrap">
           <div className="input-travel">
@@ -158,10 +182,12 @@ const Todo = () => {
               </div>
               <ul className="todoList-wrap">
                 {subList.map(sub => {
+                  let id = state && sub.idSub ? sub.idSub : sub.id;
                   return (
                     <TodoList
-                      key={sub.id}
-                      id={sub.id}
+                      key={id}
+                      state={state}
+                      idSub={id}
                       sub={sub}
                       subList={subList}
                       setSubList={setSubList}

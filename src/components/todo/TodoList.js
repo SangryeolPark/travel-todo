@@ -5,21 +5,21 @@ import { faXmark, faListCheck } from '@fortawesome/free-solid-svg-icons';
 import CheckList from './CheckList';
 import { TodoListLi } from '../../styles/TodoStyle';
 
-const TodoList = ({ id, sub, subList, setSubList }) => {
+const TodoList = ({ state, idSub, sub, subList, setSubList }) => {
   // 일정 이름 변경
   const handleChangeSubTitle = e => {
-    const newSubList = subList.map(item => {
-      if (item.id === sub.id) {
+    const newSubList = subList.map(sub => {
+      if (state && sub.idSub ? sub.idSub : sub.id === idSub) {
         sub.subTitle = e.target.value;
       }
-      return item;
+      return sub;
     });
     setSubList(newSubList);
   };
 
   //일정 삭제
   const deleteSub = () => {
-    const newSubList = subList.filter(item => item.id !== sub.id);
+    const newSubList = subList.filter(sub => (state && sub.idSub ? sub.idSub : sub.id) !== idSub);
     setSubList(newSubList);
   };
 
@@ -31,7 +31,7 @@ const TodoList = ({ id, sub, subList, setSubList }) => {
     };
     const newCheckListData = [...sub.checkList, newCheckList];
     const newSubList = subList.map(sub => {
-      if (sub.id === id) {
+      if ((state && sub.idSub ? sub.idSub : sub.id) === idSub) {
         sub = { ...sub, checkList: newCheckListData };
       }
       return sub;
@@ -43,12 +43,13 @@ const TodoList = ({ id, sub, subList, setSubList }) => {
     <>
       <TodoListLi>
         <div>
-          <Form.Item className="checkbox" name={`visit-complete${sub.id}`} valuePropName="checked">
+          <Form.Item className="checkbox" name={`visit-complete${idSub}`} valuePropName="checked">
             <Checkbox />
           </Form.Item>
           <Form.Item
-            name={`visit-title${sub.id}`}
+            name={`visit-title${idSub}`}
             className="visitList-input"
+            initialValue={sub.subTitle}
             rules={[
               {
                 required: true,
@@ -66,14 +67,18 @@ const TodoList = ({ id, sub, subList, setSubList }) => {
           </Button>
         </div>
         <ul>
-          {sub.checkList.map(checkList => {
+          {sub.checkList.map(check => {
+            let id = state && check.idCheck ? check.idCheck : check.id;
             return (
               <CheckList
-                key={checkList.id}
+                key={id}
+                state={state}
+                idSub={idSub}
                 sub={sub}
                 subList={subList}
                 setSubList={setSubList}
-                checkList={checkList}
+                idCheck={id}
+                check={check}
               />
             );
           })}

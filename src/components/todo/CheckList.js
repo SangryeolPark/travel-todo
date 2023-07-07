@@ -4,42 +4,48 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { CheckListLi } from '../../styles/TodoStyle';
 
-const CheckList = ({ sub, subList, setSubList, checkList }) => {
+const CheckList = ({ state, idSub, sub, subList, setSubList, idCheck, check }) => {
   // checklist 삭제
   const deleteCheckList = () => {
-    const newCheckList = sub.checkList.filter(item => item.id !== checkList.id);
-    const newSubList = subList.map(item => {
-      if (item.id === sub.id) {
-        item.checkList = newCheckList;
+    const newCheckList = sub.checkList.filter(
+      check => (state && check.idCheck ? check.idCheck : check.id) !== idCheck
+    );
+    const newSubList = subList.map(sub => {
+      if ((state && sub.idSub ? sub.idSub : sub.id) === idSub) {
+        sub.checkList = newCheckList;
       }
-      return item;
+      return sub;
     });
     setSubList(newSubList);
   };
 
   // 체크리스트 내용 변경
   const handleCheckInput = e => {
-    const newCheckList = sub.checkList.map(item => {
-      if (item.id === checkList.id) {
-        item.checkTitle = e.target.value;
+    const newCheckList = sub.checkList.map(check => {
+      if ((state && check.idCheck ? check.idCheck : check.id) === idCheck) {
+        check.checkTitle = e.target.value;
       }
-      return item;
+      return check;
     });
-    const newSubList = subList.map(item => {
-      if (item.id === sub.id) {
-        item.checkList = newCheckList;
+    const newSubList = subList.map(sub => {
+      if ((state && sub.idSub ? sub.idSub : sub.id) === idSub) {
+        sub.checkList = newCheckList;
       }
-      return item;
+      return sub;
     });
     setSubList(newSubList);
   };
   return (
     <>
       <CheckListLi>
-        <Form.Item valuePropName="checked" name={`check-complete${checkList.id}`}>
+        <Form.Item valuePropName="checked" name={`check-complete${idCheck}`}>
           <Checkbox className="checkbox" />
         </Form.Item>
-        <Form.Item className="checkListInput" name={`check-title${checkList.id}`}>
+        <Form.Item
+          className="checkListInput"
+          name={`check-title${idCheck}`}
+          initialValue={check.checkTitle}
+        >
           <Input placeholder="준비물을 입력해주세요." onChange={handleCheckInput} />
         </Form.Item>
         <Button onClick={deleteCheckList}>
