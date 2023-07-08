@@ -85,7 +85,7 @@ const NoMapInfo = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   width: 100%;
   height: 100%;

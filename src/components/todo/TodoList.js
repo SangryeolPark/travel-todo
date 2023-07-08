@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faListCheck } from '@fortawesome/free-solid-svg-icons';
 import CheckList from './CheckList';
 import { TodoListLi } from '../../styles/TodoStyle';
+import axios from 'axios';
 
 const TodoList = ({ state, idSub, sub, subList, setSubList, disabledPlan }) => {
   // 일정 이름 변경
@@ -18,8 +19,15 @@ const TodoList = ({ state, idSub, sub, subList, setSubList, disabledPlan }) => {
   };
 
   // 일정 삭제
-  const deleteSub = () => {
+  const deleteSub = async () => {
     const newSubList = subList.filter(sub => (state && sub.idSub ? sub.idSub : sub.id) !== idSub);
+    if (state) {
+      try {
+        await axios.delete(`/api/todo/sub/${idSub}`);
+      } catch (error) {
+        console.log(error);
+      }
+    }
     setSubList(newSubList);
   };
 

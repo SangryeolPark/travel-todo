@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AddButton, Content, Header, PageSwitch } from '../styles/AppStyle';
+import { AddButton, Content, Header, MainContainer, PageSwitch } from '../styles/AppStyle';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEarthAsia, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -59,7 +59,7 @@ const Main = ({ isDataChanged }) => {
   };
 
   return (
-    <>
+    <MainContainer>
       <Header>
         <img src={logoSmall} alt="" className="logo-small" />
         <PageSwitch
@@ -78,7 +78,7 @@ const Main = ({ isDataChanged }) => {
         type="primary"
         shape="circle"
       />
-    </>
+    </MainContainer>
   );
 };
 

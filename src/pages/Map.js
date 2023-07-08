@@ -20,10 +20,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
 
-import { ColorPicker, Modal, Result } from 'antd';
+import { ColorPicker, Modal, Result, Skeleton } from 'antd';
 
 import PacmanLoader from 'react-spinners/PacmanLoader';
 
+import moment from 'moment';
 import axios from 'axios';
 
 import {
@@ -39,9 +40,7 @@ import {
   NoMapInfo,
 } from '../styles/MapStyle';
 
-import moment from 'moment';
 import TodoCheck from '../components/map/TodoCheck';
-import SkeletonInput from 'antd/es/skeleton/Input';
 
 const Map = ({ isDataChanged, setIsDataChanged }) => {
   const navigate = useNavigate();
@@ -399,8 +398,8 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
             {dataLoading === 'loading' ? (
               [1, 2, 3, 4, 5, 6].map(item => (
                 <div key={item} className="item-loading">
-                  <SkeletonInput active={true} style={{ minWidth: 0, width: 110, height: 23 }} />
-                  <SkeletonInput active={true} style={{ width: 170, height: 16.5 }} />
+                  <Skeleton.Input active={true} style={{ minWidth: 0, width: 110, height: 23 }} />
+                  <Skeleton.Input active={true} style={{ width: 170, height: 16.5 }} />
                   <FontAwesomeIcon style={{ marginTop: 1.5 }} icon={faChevronDown} />
                 </div>
               ))

@@ -17,11 +17,10 @@ export const TodoDiv = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
-  height: 80%;
+  width: 900px;
   background: #fff;
   border-radius: 10px;
-  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.5);
   padding: 70px 50px;
   animation: ${fromBottom} 0.5s ease-in-out;
   h2 {

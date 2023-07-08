@@ -1,8 +1,32 @@
+import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Button, Layout, Switch } from 'antd';
 
 const white = '#fff';
 const primary = '#1e88e5';
+
+const mainAni = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const MainContainer = styled.div`
+  position: relative;
+  width: 75vw;
+  overflow: auto;
+  border: 2px solid #1e88e5;
+  border-radius: 10px;
+  overflow: auto;
+  background: #ecf8ff;
+  box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.5);
+  animation: ${mainAni} 0.5s ease-in-out;
+`;
 
 const Header = styled(Layout.Header)`
   width: 100%;
@@ -95,4 +119,4 @@ const AddButton = styled(Button)`
   }
 `;
 
-export { white, primary, Header, PageSwitch, Content, AddButton };
+export { white, primary, MainContainer, Header, PageSwitch, Content, AddButton };

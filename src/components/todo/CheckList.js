@@ -3,10 +3,11 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { CheckListLi } from '../../styles/TodoStyle';
+import axios from 'axios';
 
 const CheckList = ({ state, idSub, sub, subList, setSubList, idCheck, check, disabledPlan }) => {
   // checklist 삭제
-  const deleteCheckList = () => {
+  const deleteCheckList = async () => {
     const newCheckList = sub.checkList.filter(
       check => (state && check.idCheck ? check.idCheck : check.id) !== idCheck
     );
@@ -16,6 +17,13 @@ const CheckList = ({ state, idSub, sub, subList, setSubList, idCheck, check, dis
       }
       return sub;
     });
+    if (state) {
+      try {
+        await axios.delete(`/api/todo/check/${idCheck}`);
+      } catch (error) {
+        console.log(error);
+      }
+    }
     setSubList(newSubList);
   };
 
