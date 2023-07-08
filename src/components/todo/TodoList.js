@@ -25,7 +25,6 @@ const TodoList = ({ state, idSub, sub, subList, setSubList, disabledPlan }) => {
 
   // 일정 달성 여부 변경
   const handleChangeSubCheck = e => {
-    console.log(e.target.checked);
     const newSubList = subList.map(sub => {
       if ((state && sub.idSub ? sub.idSub : sub.id) === idSub) {
         sub.finishYn = e.target.checked;

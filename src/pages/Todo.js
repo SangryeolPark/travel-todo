@@ -20,7 +20,6 @@ const Todo = ({ setIsDataChanged }) => {
   const [subList, setSubList] = useState([]);
   const formRef = useRef(null);
 
-  console.log(subList);
   // 지역 데이터 불러오기
   useEffect(() => {
     const getRegion = async () => {
@@ -68,6 +67,7 @@ const Todo = ({ setIsDataChanged }) => {
         'travel-review': data.travelReview,
       });
       setSubList(data.subList);
+      setColor(data.calColor);
 
       // 일정, 리뷰 수정 가능 여부
       const todayDate = moment(Date.now()).format('YYYY-MM-DD');
@@ -140,6 +140,11 @@ const Todo = ({ setIsDataChanged }) => {
     setSubList(newSubList);
   };
 
+  // datepicker 날짜 선택 제한
+  const disabledDate = current => {
+    return current && current < dayjs().startOf('day');
+  };
+
   return (
     <TodoDiv>
       <Form ref={formRef} name="time_related_controls" layout="horizontal" onFinish={onFinish}>
@@ -167,7 +172,11 @@ const Todo = ({ setIsDataChanged }) => {
                 },
               ]}
             >
-              <RangePicker className="range-picker" placeholder={['시작일', '종료일']} />
+              <RangePicker
+                className="range-picker"
+                placeholder={['시작일', '종료일']}
+                disabledDate={disabledDate}
+              />
             </Form.Item>
             <Form.Item name="color">
               <ColorPicker value={color} onChange={color => setColor(color.toHexString())} />

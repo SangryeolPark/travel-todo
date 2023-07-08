@@ -67,6 +67,12 @@ const CheckList = ({ state, idSub, sub, subList, setSubList, idCheck, check, dis
           className="checkList-input-wrap"
           name={`check-title${idCheck}`}
           initialValue={check.checkTitle}
+          rules={[
+            {
+              required: true,
+              message: '준비물을 입력해주세요.',
+            },
+          ]}
         >
           <Input
             className="input"
