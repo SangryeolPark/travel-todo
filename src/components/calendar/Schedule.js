@@ -6,8 +6,6 @@ import { Input, Modal } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { DetailScheduleDiv } from '../../styles/CalendarStyle';
 import axios from 'axios';
-import { useState } from 'react';
-import Calendar from './../../pages/Calendar';
 
 const Schedule = ({
   selectId,
@@ -16,7 +14,7 @@ const Schedule = ({
   selectEndDate,
   selectReview,
   todoData,
-  setOpen,
+  setIsDataChanged,
 }) => {
   const navigate = useNavigate();
 
@@ -38,8 +36,7 @@ const Schedule = ({
       async onOk() {
         try {
           await axios.patch(`/api/todo/${selectId}`);
-          setOpen(false);
-          // location.reload();
+          setIsDataChanged(prevState => !prevState);
         } catch (error) {
           console.log(error);
         }

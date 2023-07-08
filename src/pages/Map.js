@@ -20,10 +20,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
 
-import { ColorPicker, Modal } from 'antd';
+import { ColorPicker, Modal, Result } from 'antd';
+
+import PacmanLoader from 'react-spinners/PacmanLoader';
+
 import axios from 'axios';
 
-import { STATUS_LOADING, STATUS_SERVER_ERROR } from '../App';
 import {
   ColorPickerContainer,
   MapContainer,
@@ -33,10 +35,13 @@ import {
   TravelListContainer,
   TravelItemCollapse,
   TodoItemCollapse,
+  TravelItemLoading,
+  NoMapInfo,
 } from '../styles/MapStyle';
 
 import moment from 'moment';
 import TodoCheck from '../components/map/TodoCheck';
+import SkeletonInput from 'antd/es/skeleton/Input';
 
 const Map = ({ isDataChanged, setIsDataChanged }) => {
   const navigate = useNavigate();
@@ -49,7 +54,7 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
   const [mapColor, setMapColor] = useState(colorData ? colorData : ['#fff', '#000']);
   const [regionInfo, setRegionInfo] = useState([]);
   const [travelList, setTravelList] = useState(null);
-  const [travelListLoading, setTravelListLoading] = useState(STATUS_LOADING);
+  const [dataLoading, setDataLoading] = useState('loading');
   const { confirm } = Modal;
 
   const handleRemove = idTitle => {
@@ -85,6 +90,8 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
 
   useEffect(() => {
     // GET 여행 일정 데이터
+    setDataLoading('loading');
+    setTravelList(null);
     const getData = async () => {
       let url = regionDetail ? `/${region}/${regionDetail}` : region ? `/${region}` : '';
 
@@ -109,6 +116,7 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
               return { title: item.title, detail: await getDetailData(item.idTitle) };
             })
           );
+
           const newTravelList = result.map(item => {
             const todoData = item.detail.subList.map(item => {
               return {
@@ -124,7 +132,7 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
                   </>
                 ),
                 children:
-                  item.checkList !== 0 ? (
+                  item.checkList.length !== 0 ? (
                     <TodoCheck data={item.checkList} />
                   ) : (
                     <span>등록된 체크 리스트가 없습니다.</span>
@@ -134,7 +142,17 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
 
             return {
               key: item.detail.idTitle,
-              label: item.title,
+              label: (
+                <>
+                  <span>{item.title}</span>
+                  <span className="item-count">
+                    {item.detail.subList.length !== 0
+                      ? item.detail.subList.filter(item => item.finishYn).length + ' / '
+                      : null}
+                    {item.detail.subList.length}
+                  </span>
+                </>
+              ),
               extra: (
                 <>
                   <span>{`${item.detail.startDate} ~ ${item.detail.endDate}`}</span>
@@ -160,11 +178,12 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
                 ),
             };
           });
+          setDataLoading('success');
           setTravelList(newTravelList);
         }
       } catch (error) {
+        setDataLoading('fail');
         console.log(error);
-        setTravelListLoading(STATUS_SERVER_ERROR);
       }
     };
 
@@ -302,35 +321,43 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
     <MapContainer>
       <MapImage>
         {regionData ? (
-          <>
-            <MapInfo separator={<FontAwesomeIcon icon={faChevronRight} />} items={regionInfo} />
-            <ColorPickerContainer>
-              <div>
-                <FontAwesomeIcon icon={faDroplet} />
-                <ColorPicker
-                  allowClear={true}
-                  arrow={true}
-                  styles={{ popup: { background: 'black' } }}
-                  value={mapColor[0]}
-                  onChange={color => setMapColor([color.toHexString(), mapColor[1]])}
-                  onClear={() => setMapColor(['#fff', mapColor[1]])}
-                />
-              </div>
-              <div>
-                <FontAwesomeIcon icon={faBorderTopLeft} />
-                <ColorPicker
-                  allowClear={true}
-                  value={mapColor[1]}
-                  onChange={color => setMapColor([mapColor[0], color.toHexString()])}
-                  onClear={() => setMapColor([mapColor[0], '#000'])}
-                />
-              </div>
-            </ColorPickerContainer>
-            <Outlet context={{ region, regionDetail, setMapData }} />
-          </>
+          <MapInfo separator={<FontAwesomeIcon icon={faChevronRight} />} items={regionInfo} />
         ) : (
-          <span>{regionDataLoading}</span>
+          <NoMapInfo>
+            {regionDataLoading !== 'fail' ? (
+              <PacmanLoader color="#ecf8ff" />
+            ) : (
+              <Result
+                status="error"
+                title="서버 통신 실패"
+                subTitle="데이터를 불러오는 데 실패하였습니다."
+              />
+            )}
+          </NoMapInfo>
         )}
+        <ColorPickerContainer>
+          <div>
+            <FontAwesomeIcon icon={faDroplet} />
+            <ColorPicker
+              allowClear={true}
+              arrow={true}
+              styles={{ popup: { background: 'black' } }}
+              value={mapColor[0]}
+              onChange={color => setMapColor([color.toHexString(), mapColor[1]])}
+              onClear={() => setMapColor(['#fff', mapColor[1]])}
+            />
+          </div>
+          <div>
+            <FontAwesomeIcon icon={faBorderTopLeft} />
+            <ColorPicker
+              allowClear={true}
+              value={mapColor[1]}
+              onChange={color => setMapColor([mapColor[0], color.toHexString()])}
+              onClear={() => setMapColor([mapColor[0], '#000'])}
+            />
+          </div>
+        </ColorPickerContainer>
+        <Outlet context={{ region, regionDetail, setMapData }} />
       </MapImage>
       <TravelListContainer>
         {region ? (
@@ -354,7 +381,7 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
         ) : (
           <span className="list-filter-title">예정된 일정</span>
         )}
-        {travelList ? (
+        {dataLoading === 'success' ? (
           travelList.length !== 0 ? (
             <TravelItemCollapse
               accordion
@@ -368,15 +395,25 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
             <span className="loading-msg">등록된 일정이 없습니다.</span>
           )
         ) : (
-          <span className="loading-msg">{travelListLoading}</span>
-          // <TravelItemLoading>
-          //   <div className="item-loading" />
-          //   <div className="item-loading" />
-          //   <div className="item-loading" />
-          //   <div className="item-loading" />
-          //   <div className="item-loading" />
-          //   <div className="item-loading" />
-          // </TravelItemLoading>
+          <TravelItemLoading>
+            {dataLoading === 'loading' ? (
+              [1, 2, 3, 4, 5, 6].map(item => (
+                <div key={item} className="item-loading">
+                  <SkeletonInput active={true} style={{ minWidth: 0, width: 110, height: 23 }} />
+                  <SkeletonInput active={true} style={{ width: 170, height: 16.5 }} />
+                  <FontAwesomeIcon style={{ marginTop: 1.5 }} icon={faChevronDown} />
+                </div>
+              ))
+            ) : (
+              <span className="loading-msg">
+                <Result
+                  status="error"
+                  title="서버 통신 실패"
+                  subTitle="데이터를 불러오는 데 실패하였습니다."
+                />
+              </span>
+            )}
+          </TravelItemLoading>
         )}
       </TravelListContainer>
     </MapContainer>

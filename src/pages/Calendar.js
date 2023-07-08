@@ -10,7 +10,7 @@ import axios from 'axios';
 import moment from 'moment';
 import tinycolor from 'tinycolor2';
 
-const Calendar = () => {
+const Calendar = ({ isDataChanged, setIsDataChanged }) => {
   // 캘린더 이벤트 데이터
   const [eventData, setEventData] = useState([]);
   // 여행 일정 클릭시
@@ -138,7 +138,7 @@ const Calendar = () => {
     if (isValidDate) {
       getCalendarData();
     }
-  }, [queryYear, queryMonth, calRef]);
+  }, [queryYear, queryMonth, calRef, isDataChanged]);
 
   return (
     <CalendarDiv>
@@ -159,7 +159,7 @@ const Calendar = () => {
           }}
         />
       </div>
-      <DrawerDiv>
+      <DrawerDiv open={open}>
         <Drawer placement="right" closable={false} open={open} getContainer={false}>
           <Schedule
             selectId={selectId}
@@ -168,6 +168,7 @@ const Calendar = () => {
             selectEndDate={selectEndDate}
             selectReview={selectReview}
             todoData={todoData}
+            setIsDataChanged={setIsDataChanged}
           />
         </Drawer>
       </DrawerDiv>

@@ -9,11 +9,6 @@ import Korea from './components/map/map_data/Korea';
 import Todo from './pages/Todo';
 import Main from './pages/Main';
 
-const STATUS_SERVER_ERROR = '서버와의 연결이 원활하지 않습니다.';
-const STATUS_LOADING = '로딩 중...';
-
-export { STATUS_LOADING, STATUS_SERVER_ERROR };
-
 const App = () => {
   const [isDataChanged, setIsDataChanged] = useState(false);
 
@@ -30,10 +25,13 @@ const App = () => {
             <Route path=":regionDetail" element={<MapDetail />} />
           </Route>
         </Route>
-        <Route path="calendar" element={<Calendar />} />
+        <Route
+          path="calendar"
+          element={<Calendar isDataChanged={isDataChanged} setIsDataChanged={setIsDataChanged} />}
+        />
       </Route>
       <Route path="/todo" element={<Todo setIsDataChanged={setIsDataChanged} />} />
-      <Route path="/todo/:id" element={<Todo />} />
+      <Route path="/todo/:id" element={<Todo setIsDataChanged={setIsDataChanged} />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

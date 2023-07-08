@@ -80,6 +80,27 @@ const MapInfo = styled(Breadcrumb)`
   }
 `;
 
+const NoMapInfo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  > .ant-result {
+    svg {
+      background: #fff;
+      border-radius: 50%;
+    }
+    div {
+      color: #fff;
+    }
+  }
+`;
+
 const ColorPickerContainer = styled.div`
   position: absolute;
   bottom: 20px;
@@ -179,6 +200,8 @@ const TravelItemCollapse = styled(Collapse)`
       line-height: normal;
       color: #494949;
       > .ant-collapse-header-text {
+        display: flex;
+        align-items: center;
         font-size: 18px;
         font-weight: bold;
       }
@@ -255,39 +278,32 @@ const TodoItemCollapse = styled(Collapse)`
   }
 `;
 
-// const TravelItemLoading = styled.div`
-//   background: #fff;
-//   height: 100%;
-//   border: none;
-//   border-radius: 0;
-//   padding: 5px 10px 0px;
-//   > .item-loading {
-//     width: 100%;
-//     height: 97.5px;
-//     background: linear-gradient(
-//       90deg,
-//       rgba(0, 0, 0, 0.06) 25%,
-//       rgba(0, 0, 0, 0.15) 37%,
-//       rgba(0, 0, 0, 0.06) 63%
-//     );
-//     background-size: 400% 100%;
-//     animation-name: ${loading};
-//     animation-duration: 1.4s;
-//     animation-timing-function: ease;
-//     animation-iteration-count: infinite;
-//     margin-bottom: 15px;
-//     position: relative;
-//     padding: 15px;
-//     padding-bottom: 10px;
-//     border-bottom: none;
-//     border-radius: 5px;
-//     box-shadow: 0px 1px 5px -1px rgba(0, 0, 0, 0.3);
-//     &:last-child {
-//       border-radius: 5px;
-//       margin-bottom: 0;
-//     }
-//   }
-// `;
+const TravelItemLoading = styled.div`
+  background: #fff;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  overflow: hidden;
+  padding: 5px 10px 0px;
+  > .item-loading {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    /* height: 97.5px; */
+    margin-bottom: 15px;
+    padding: 15px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
+    font-size: 18px;
+    color: #494949;
+    &:last-child {
+      border-radius: 5px;
+      margin-bottom: 0;
+    }
+  }
+`;
 
 export {
   fromLeft,
@@ -296,9 +312,11 @@ export {
   MapContainer,
   MapImage,
   MapInfo,
+  NoMapInfo,
   ColorPickerContainer,
   TravelListContainer,
   TravelListFilter,
   TravelItemCollapse,
   TodoItemCollapse,
+  TravelItemLoading,
 };

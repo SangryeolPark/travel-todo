@@ -82,12 +82,12 @@ const AddButton = styled(Button)`
   bottom: 30px;
   width: 60px !important;
   height: 60px;
-  background: #ff1744;
+  background: #ff4d4f;
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
   font-size: 30px;
   z-index: 999;
   &:hover {
-    background: #ff1744 !important;
+    background: #ff4d4f !important;
     filter: brightness(1.1);
   }
   &:active {

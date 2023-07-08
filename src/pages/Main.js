@@ -7,8 +7,6 @@ import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
 import axios from 'axios';
 import logoSmall from '../logosmall.png';
 
-import { STATUS_LOADING, STATUS_SERVER_ERROR } from '../App';
-
 const Main = ({ isDataChanged }) => {
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
@@ -16,7 +14,7 @@ const Main = ({ isDataChanged }) => {
   const [calendarPath, setCalendarPath] = useState(null);
   const [switchBool, setSwitchBool] = useState(pathname.includes('map'));
   const [regionData, setRegionData] = useState(null);
-  const [regionDataLoading, setRegionDataLoading] = useState(STATUS_LOADING);
+  const [regionDataLoading, setRegionDataLoading] = useState('loading');
 
   useEffect(() => {
     const getRegionData = async () => {
@@ -25,7 +23,7 @@ const Main = ({ isDataChanged }) => {
         setRegionData(data);
       } catch (error) {
         console.log(error);
-        setRegionDataLoading(STATUS_SERVER_ERROR);
+        setRegionDataLoading('fail');
       }
     };
 
