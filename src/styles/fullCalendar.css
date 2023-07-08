@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+
 :root {
-  --fc-border-color: #e0e0e0;
+  --fc-border-color: #f0f0f0;
   --fc-button-bg-color: #5e5e5e;
   --fc-button-border-color: #5e5e5e;
   --fc-button-hover-bg-color: none;
@@ -16,6 +18,10 @@ a {
   background-color: #e0edff;
 }
 
+.fc-h-event .fc-event-main-frame {
+  margin: -1px 0;
+}
+
 .fc-event-title-container {
   cursor: pointer;
 }
@@ -28,12 +34,15 @@ a {
 
 .fc .fc-toolbar-title {
   text-align: center;
-  font-size: 40px;
+  font-size: 45px;
   color: #303030;
+  font-family: 'Do Hyeon', sans-serif;
+  font-weight: 200;
+  line-height: 63px;
 }
 
 .fc-day-other {
-  background: #f5f5f5;
+  background: #f9f9f9;
 }
 
 .fc .fc-today-button {
@@ -118,6 +127,12 @@ a {
   border: 1px solid #151e27 !important;
 }
 
+.fc .fc-view-harness {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  overflow: hidden;
+}
+
 .fc-col-header {
   width: 100% !important;
 }
@@ -134,12 +149,13 @@ a {
 }
 
 .fc-col-header-cell {
-  background: rgb(234, 241, 255);
+  border: #65b7ff !important;
+  background: #65b7ff;
   font-weight: 600;
 }
 
 .fc-col-header-cell a.fc-col-header-cell-cushion {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .fc-day a {
@@ -152,6 +168,34 @@ a {
 
 .fc-day-sun a:hover {
   color: red;
+}
+
+.fc-day-sun > .fc-scrollgrid-sync-inner > .fc-col-header-cell-cushion {
+  color: #fff;
+}
+
+.fc-day-mon > .fc-scrollgrid-sync-inner > .fc-col-header-cell-cushion {
+  color: #fff;
+}
+
+.fc-day-tue > .fc-scrollgrid-sync-inner > .fc-col-header-cell-cushion {
+  color: #fff;
+}
+
+.fc-day-wed > .fc-scrollgrid-sync-inner > .fc-col-header-cell-cushion {
+  color: #fff;
+}
+
+.fc-day-thu > .fc-scrollgrid-sync-inner > .fc-col-header-cell-cushion {
+  color: #fff;
+}
+
+.fc-day-fri > .fc-scrollgrid-sync-inner > .fc-col-header-cell-cushion {
+  color: #fff;
+}
+
+.fc-day-sat > .fc-scrollgrid-sync-inner > .fc-col-header-cell-cushion {
+  color: #fff;
 }
 
 .fc-day-sat a {
@@ -190,6 +234,7 @@ a {
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.8px;
+  font-size: 13px;
 }
 
 .fc-direction-ltr .fc-daygrid-more-link {
