@@ -115,12 +115,21 @@ export const TodoListLi = styled.li`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    .checkbox {
+    .checkbox-wrap {
       margin-right: 10px;
+      .checkbox {
+        cursor: default;
+      }
     }
-    .visitList-input {
+    .visitList-input-wrap {
       width: 100%;
       margin-right: 10px;
+      .visit-list {
+        cursor: default;
+        > input {
+          cursor: default;
+        }
+      }
     }
     button:first-of-type {
       .bt-addcheck {
@@ -145,12 +154,14 @@ export const CheckListLi = styled.li`
   margin: 10px 0 0 20px;
   .checkbox {
     margin-right: 10px;
+    cursor: default;
   }
-  .checkListInput {
+  .checkList-input-wrap {
     width: 100%;
     margin-right: 10px;
     .input {
       margin-right: 10px;
+      cursor: default;
     }
   }
 

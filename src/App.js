@@ -33,7 +33,7 @@ const App = () => {
         <Route path="calendar" element={<Calendar />} />
       </Route>
       <Route path="/todo" element={<Todo setIsDataChanged={setIsDataChanged} />} />
-      <Route path="/todo/:id" element={<Todo />} />
+      <Route path="/todo/:id" element={<Todo setIsDataChanged={setIsDataChanged} />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

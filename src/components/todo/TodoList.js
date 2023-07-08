@@ -5,7 +5,7 @@ import { faXmark, faListCheck } from '@fortawesome/free-solid-svg-icons';
 import CheckList from './CheckList';
 import { TodoListLi } from '../../styles/TodoStyle';
 
-const TodoList = ({ state, idSub, sub, subList, setSubList }) => {
+const TodoList = ({ state, idSub, sub, subList, setSubList, disabledPlan }) => {
   // 일정 이름 변경
   const handleChangeSubTitle = e => {
     const newSubList = subList.map(sub => {
@@ -44,12 +44,16 @@ const TodoList = ({ state, idSub, sub, subList, setSubList }) => {
     <>
       <TodoListLi>
         <div>
-          <Form.Item className="checkbox" name={`visit-complete${idSub}`} valuePropName="checked">
-            <Checkbox />
+          <Form.Item
+            className="checkbox-wrap"
+            name={`visit-complete${idSub}`}
+            valuePropName="checked"
+          >
+            <Checkbox disabled={disabledPlan} className="checkbox" />
           </Form.Item>
           <Form.Item
             name={`visit-title${idSub}`}
-            className="visitList-input"
+            className="visitList-input-wrap"
             initialValue={sub.subTitle}
             rules={[
               {
@@ -58,9 +62,15 @@ const TodoList = ({ state, idSub, sub, subList, setSubList }) => {
               },
             ]}
           >
-            <Input placeholder="일정을 입력하세요." allowClear onChange={handleChangeSubTitle} />
+            <Input
+              className="visit-list"
+              placeholder="일정을 입력하세요."
+              allowClear
+              onChange={handleChangeSubTitle}
+              disabled={disabledPlan}
+            />
           </Form.Item>
-          <Button onClick={handleAddCheckList}>
+          <Button onClick={handleAddCheckList} disabled={disabledPlan}>
             <FontAwesomeIcon icon={faListCheck} className="bt-addcheck" />
           </Button>
           <Button onClick={deleteSub}>
@@ -80,6 +90,7 @@ const TodoList = ({ state, idSub, sub, subList, setSubList }) => {
                 setSubList={setSubList}
                 idCheck={id}
                 check={check}
+                disabledPlan={disabledPlan}
               />
             );
           })}
