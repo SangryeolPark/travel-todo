@@ -20,6 +20,7 @@ const Todo = ({ setIsDataChanged }) => {
   const [subList, setSubList] = useState([]);
   const formRef = useRef(null);
 
+  console.log(subList);
   // 지역 데이터 불러오기
   useEffect(() => {
     const getRegion = async () => {

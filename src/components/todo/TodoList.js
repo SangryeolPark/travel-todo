@@ -17,9 +17,21 @@ const TodoList = ({ state, idSub, sub, subList, setSubList, disabledPlan }) => {
     setSubList(newSubList);
   };
 
-  //일정 삭제
+  // 일정 삭제
   const deleteSub = () => {
     const newSubList = subList.filter(sub => (state && sub.idSub ? sub.idSub : sub.id) !== idSub);
+    setSubList(newSubList);
+  };
+
+  // 일정 달성 여부 변경
+  const handleChangeSubCheck = e => {
+    console.log(e.target.checked);
+    const newSubList = subList.map(sub => {
+      if ((state && sub.idSub ? sub.idSub : sub.id) === idSub) {
+        sub.finishYn = e.target.checked;
+      }
+      return sub;
+    });
     setSubList(newSubList);
   };
 
@@ -48,8 +60,13 @@ const TodoList = ({ state, idSub, sub, subList, setSubList, disabledPlan }) => {
             className="checkbox-wrap"
             name={`visit-complete${idSub}`}
             valuePropName="checked"
+            initialValue={sub.finishYn}
           >
-            <Checkbox disabled={disabledPlan} className="checkbox" />
+            <Checkbox
+              disabled={disabledPlan}
+              className="checkbox"
+              onChange={handleChangeSubCheck}
+            />
           </Form.Item>
           <Form.Item
             name={`visit-title${idSub}`}

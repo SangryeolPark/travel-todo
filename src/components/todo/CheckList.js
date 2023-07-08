@@ -35,11 +35,33 @@ const CheckList = ({ state, idSub, sub, subList, setSubList, idCheck, check, dis
     });
     setSubList(newSubList);
   };
+
+  // 체크리스트 달성 여부 변경
+  const handleChangeCheckbox = e => {
+    const newCheckList = sub.checkList.map(check => {
+      if ((state && check.idCheck ? check.idCheck : check.id) === idCheck) {
+        check.finishYn = e.target.checked;
+      }
+      return check;
+    });
+    const newSubList = subList.map(sub => {
+      if ((state && sub.idSub ? sub.idSub : sub.id) === idSub) {
+        sub.checkList = newCheckList;
+      }
+      return sub;
+    });
+    setSubList(newSubList);
+  };
+
   return (
     <>
       <CheckListLi>
-        <Form.Item valuePropName="checked" name={`check-complete${idCheck}`}>
-          <Checkbox className="checkbox" disabled={disabledPlan} />
+        <Form.Item
+          valuePropName="checked"
+          name={`check-complete${idCheck}`}
+          initialValue={check.finishYn}
+        >
+          <Checkbox className="checkbox" disabled={disabledPlan} onChange={handleChangeCheckbox} />
         </Form.Item>
         <Form.Item
           className="checkList-input-wrap"
