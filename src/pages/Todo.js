@@ -14,74 +14,13 @@ const Todo = ({ setIsDataChanged }) => {
   const { RangePicker } = DatePicker;
   const [disabledPlan, setDisabledPlan] = useState('');
   const [disabledReview, setDisabledReview] = useState('');
+  const [disabledRegion, setDisabledRegion] = useState('');
+  const [disabledRangeDate, setDisabledRangeDate] = useState('');
   const [regionData, setRegionData] = useState(null);
   const [region, setRegion] = useState([]);
   const [color, setColor] = useState('#1E88E5');
   const [subList, setSubList] = useState([]);
   const formRef = useRef(null);
-
-  // 지역 데이터 불러오기
-  useEffect(() => {
-    const getRegion = async () => {
-      try {
-        const res = await axios.get('/api/todo');
-        const result = res.data;
-        setRegionData(result);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getRegion();
-  }, []);
-
-  // 지역 데이터 필터링
-  useEffect(() => {
-    if (regionData) {
-      const region = regionData.region;
-      const regionDetail = regionData.regionDetail;
-      const newRegion = region.map(item => ({
-        value: item.idRegion,
-        label: item.region,
-      }));
-      const newRegionData = newRegion.map((newRegionItem, index) => {
-        const newregionDetail = regionDetail.filter(
-          item => item.idRegion === region[index].idRegion
-        );
-        const newChildren = newregionDetail.map(item => {
-          return { value: item.idRegionDetail, label: item.regionDetail };
-        });
-        return { ...newRegionItem, children: newChildren };
-      });
-      setRegion(newRegionData);
-    }
-  }, [regionData]);
-
-  // 일정 데이터 불러오기
-  useEffect(() => {
-    const getData = async () => {
-      const { data } = await axios.get(`/api/todo/${state}`);
-      formRef.current.setFieldsValue({
-        color: data.calColor,
-        city: [data.idRegion, data.idRegionDetail],
-        'date-picker': [dayjs(data.startDate, 'YYYY-MM-DD'), dayjs(data.endDate, 'YYYY-MM-DD')],
-        'travel-review': data.travelReview,
-      });
-      setSubList(data.subList);
-      setColor(data.calColor);
-
-      // 일정, 리뷰 수정 가능 여부
-      const todayDate = moment(Date.now()).format('YYYY-MM-DD');
-      const startDate = data.startDate;
-      const endDate = data.endDate;
-
-      setDisabledPlan(endDate < todayDate ? true : false);
-      setDisabledReview(startDate <= todayDate ? true : false);
-    };
-
-    if (state) {
-      getData();
-    }
-  }, [state]);
 
   // 추가/수정 버튼 클릭시
   const onFinish = fieldsValue => {
@@ -95,7 +34,7 @@ const Todo = ({ setIsDataChanged }) => {
 
     // payload data
     let payloadData = {
-      idRegionDetail: values.city[1],
+      idRegionDetail: values.city[0] === 36 ? 36110 : values.city[1],
       idRegion: values.city[0],
       startDate: values['date-picker'][0],
       endDate: values['date-picker'][1],
@@ -146,6 +85,71 @@ const Todo = ({ setIsDataChanged }) => {
     return current && current < dayjs().startOf('day');
   };
 
+  // 지역 데이터 불러오기
+  useEffect(() => {
+    const getRegion = async () => {
+      try {
+        const res = await axios.get('/api/todo');
+        const result = res.data;
+        setRegionData(result);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getRegion();
+  }, []);
+
+  // 지역 데이터 필터링
+  useEffect(() => {
+    if (regionData) {
+      const region = regionData.region;
+      const regionDetail = regionData.regionDetail;
+      const newRegion = region.map(item => ({
+        value: item.idRegion,
+        label: item.region,
+      }));
+      const newRegionData = newRegion.map((newRegionItem, index) => {
+        const newregionDetail = regionDetail.filter(
+          item => item.idRegion === region[index].idRegion && item.idRegion !== 36
+        );
+        const newChildren = newregionDetail.map(item => {
+          return { value: item.idRegionDetail, label: item.regionDetail };
+        });
+        return { ...newRegionItem, children: newChildren };
+      });
+      setRegion(newRegionData);
+    }
+  }, [regionData]);
+
+  // 일정 데이터 불러오기
+  useEffect(() => {
+    const getData = async () => {
+      const { data } = await axios.get(`/api/todo/${state}`);
+      formRef.current.setFieldsValue({
+        color: data.calColor,
+        city: [data.idRegion, data.idRegionDetail],
+        'date-picker': [dayjs(data.startDate, 'YYYY-MM-DD'), dayjs(data.endDate, 'YYYY-MM-DD')],
+        'travel-review': data.travelReview,
+      });
+      setSubList(data.subList);
+      setColor(data.calColor);
+
+      // 일정, 리뷰 수정 가능 여부
+      const todayDate = moment(Date.now()).format('YYYY-MM-DD');
+      const startDate = data.startDate;
+      const endDate = data.endDate;
+
+      setDisabledPlan(endDate < todayDate ? true : false);
+      setDisabledReview(startDate <= todayDate ? true : false);
+      setDisabledRegion(endDate < todayDate ? true : false);
+      setDisabledRangeDate(endDate < todayDate ? true : false);
+    };
+
+    if (state) {
+      getData();
+    }
+  }, [state]);
+
   return (
     <TodoDiv>
       <Form ref={formRef} name="time_related_controls" layout="horizontal" onFinish={onFinish}>
@@ -161,7 +165,12 @@ const Todo = ({ setIsDataChanged }) => {
                 },
               ]}
             >
-              <Cascader options={region} className="cascader" placeholder="여행 지역 선택" />
+              <Cascader
+                options={region}
+                className="cascader"
+                placeholder="여행 지역 선택"
+                disabled={disabledRegion}
+              />
             </Form.Item>
             <Form.Item
               name="date-picker"
@@ -177,6 +186,7 @@ const Todo = ({ setIsDataChanged }) => {
                 className="range-picker"
                 placeholder={['시작일', '종료일']}
                 disabledDate={disabledDate}
+                disabled={disabledRangeDate}
               />
             </Form.Item>
             <Form.Item name="color">

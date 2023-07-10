@@ -47,6 +47,13 @@ export const DrawerDiv = styled.div`
         border-radius: 10px;
         .ant-drawer-body {
           padding: 30px 15px !important;
+          position: relative;
+          .scale-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
         }
       }
     }

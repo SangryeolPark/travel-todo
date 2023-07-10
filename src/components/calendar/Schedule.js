@@ -6,6 +6,7 @@ import { Input, Modal } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { DetailScheduleDiv } from '../../styles/CalendarStyle';
 import axios from 'axios';
+import moment from 'moment';
 
 const Schedule = ({
   selectId,
@@ -18,6 +19,8 @@ const Schedule = ({
   setOpen,
 }) => {
   const navigate = useNavigate();
+  const todayDate = moment(Date.now()).format('YYYY-MM-DD');
+  const startDate = selectStartDate;
 
   // 일정 삭제 모달창
   const { confirm } = Modal;
@@ -46,6 +49,7 @@ const Schedule = ({
     });
   };
 
+  // 수정 버튼 클릭시
   const handleEdit = () => {
     navigate(`/todo/${selectId}`, { state: selectId });
   };
@@ -96,14 +100,16 @@ const Schedule = ({
           </div>
         )}
       </div>
-      <div className="travel-review">
-        <h2>Travel Review</h2>
-        {selectReview ? (
-          <TextArea className="text-area" value={selectReview} disabled={true} rows={5} />
-        ) : (
-          '등록된 리뷰가 없습니다.'
-        )}
-      </div>
+      {startDate <= todayDate ? (
+        <div className="travel-review">
+          <h2>Travel Review</h2>
+          {selectReview ? (
+            <TextArea className="text-area" value={selectReview} disabled={true} rows={5} />
+          ) : (
+            '등록된 리뷰가 없습니다.'
+          )}
+        </div>
+      ) : null}
     </DetailScheduleDiv>
   );
 };
