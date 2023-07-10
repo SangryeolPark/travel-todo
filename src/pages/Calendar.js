@@ -9,11 +9,10 @@ import { Drawer } from 'antd';
 import axios from 'axios';
 import moment from 'moment';
 import tinycolor from 'tinycolor2';
+import { ScaleLoader } from 'react-spinners';
 
 const Calendar = ({ isDataChanged, setIsDataChanged }) => {
-  // 캘린더 이벤트 데이터
   const [eventData, setEventData] = useState([]);
-  // 여행 일정 클릭시
   const [open, setOpen] = useState(false);
   const [selectId, setSelectId] = useState(0);
   const [selectTitle, setSelecTitle] = useState('');
@@ -21,8 +20,6 @@ const Calendar = ({ isDataChanged, setIsDataChanged }) => {
   const [selectEndDate, setSelectEndDate] = useState('');
   const [selectReview, setSelectReview] = useState('');
   const [todoData, setTodoData] = useState([]);
-
-  // 주석
   const [searchParam, setSearchParam] = useSearchParams();
   const queryYear = searchParam.get('year');
   const queryMonth = searchParam.get('month');
@@ -30,6 +27,7 @@ const Calendar = ({ isDataChanged, setIsDataChanged }) => {
 
   // 세부 여행 일정 표시
   const showDrawer = e => {
+    setTodoData(null);
     const idTitle = e.event._def.extendedProps.idTitle;
     getTitle(idTitle);
     getTodo(idTitle);
@@ -167,16 +165,20 @@ const Calendar = ({ isDataChanged, setIsDataChanged }) => {
           mask={false}
           destroyOnClose={true}
         >
-          <Schedule
-            selectId={selectId}
-            selectTitle={selectTitle}
-            selectStartDate={selectStartDate}
-            selectEndDate={selectEndDate}
-            selectReview={selectReview}
-            todoData={todoData}
-            setIsDataChanged={setIsDataChanged}
-            setOpen={setOpen}
-          />
+          {todoData === null ? (
+            <ScaleLoader color="#cccccc" className="scale-loader" />
+          ) : (
+            <Schedule
+              selectId={selectId}
+              selectTitle={selectTitle}
+              selectStartDate={selectStartDate}
+              selectEndDate={selectEndDate}
+              selectReview={selectReview}
+              todoData={todoData}
+              setIsDataChanged={setIsDataChanged}
+              setOpen={setOpen}
+            />
+          )}
         </Drawer>
       </DrawerDiv>
     </CalendarDiv>

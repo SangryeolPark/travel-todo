@@ -38,9 +38,22 @@ export const TodoDiv = styled.div`
       .cascader {
         width: 200px;
         margin-right: 10px;
+        .ant-select-selector {
+          cursor: default;
+        }
       }
-      .range-picker {
-        margin-right: 10px;
+      .ant-form-item-control-input {
+        .ant-form-item-control-input-content {
+          .range-picker {
+            margin-right: 10px;
+            cursor: default;
+            .ant-picker-input {
+              > input {
+                cursor: default;
+              }
+            }
+          }
+        }
       }
     }
     .add-travel-btn {

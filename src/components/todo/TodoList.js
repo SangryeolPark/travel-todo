@@ -63,18 +63,20 @@ const TodoList = ({ state, idSub, sub, subList, setSubList, disabledPlan }) => {
     <>
       <TodoListLi>
         <div>
-          <Form.Item
-            className="checkbox-wrap"
-            name={`visit-complete${idSub}`}
-            valuePropName="checked"
-            initialValue={sub.finishYn}
-          >
-            <Checkbox
-              disabled={disabledPlan}
-              className="checkbox"
-              onChange={handleChangeSubCheck}
-            />
-          </Form.Item>
+          {state ? (
+            <Form.Item
+              className="checkbox-wrap"
+              name={`visit-complete${idSub}`}
+              valuePropName="checked"
+              initialValue={sub.finishYn}
+            >
+              <Checkbox
+                disabled={disabledPlan}
+                className="checkbox"
+                onChange={handleChangeSubCheck}
+              />
+            </Form.Item>
+          ) : null}
           <Form.Item
             name={`visit-title${idSub}`}
             className="visitList-input-wrap"

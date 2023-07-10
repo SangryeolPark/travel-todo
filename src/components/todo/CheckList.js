@@ -64,13 +64,19 @@ const CheckList = ({ state, idSub, sub, subList, setSubList, idCheck, check, dis
   return (
     <>
       <CheckListLi>
-        <Form.Item
-          valuePropName="checked"
-          name={`check-complete${idCheck}`}
-          initialValue={check.finishYn}
-        >
-          <Checkbox className="checkbox" disabled={disabledPlan} onChange={handleChangeCheckbox} />
-        </Form.Item>
+        {state ? (
+          <Form.Item
+            valuePropName="checked"
+            name={`check-complete${idCheck}`}
+            initialValue={check.finishYn}
+          >
+            <Checkbox
+              className="checkbox"
+              disabled={disabledPlan}
+              onChange={handleChangeCheckbox}
+            />
+          </Form.Item>
+        ) : null}
         <Form.Item
           className="checkList-input-wrap"
           name={`check-title${idCheck}`}
