@@ -95,6 +95,7 @@ const CheckList = ({ state, idSub, sub, subList, setSubList, idCheck, check, dis
             disabled={disabledPlan}
             maxLength="20"
             showCount
+            onPressEnter={e => e.preventDefault()}
           />
         </Form.Item>
         <Button onClick={deleteCheckList}>

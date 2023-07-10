@@ -96,6 +96,7 @@ const TodoList = ({ state, idSub, sub, subList, setSubList, disabledPlan }) => {
               disabled={disabledPlan}
               maxLength="20"
               showCount
+              onPressEnter={e => e.preventDefault()}
             />
           </Form.Item>
           <Button onClick={handleAddCheckList} disabled={disabledPlan}>
