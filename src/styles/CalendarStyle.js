@@ -32,13 +32,9 @@ export const CalendarDiv = styled.div`
 
 export const DrawerDiv = styled.div`
   .ant-drawer-inline {
-    position: initial;
+    position: relative;
     height: 100%;
     width: 18vw;
-    .ant-drawer-mask {
-      position: initial !important;
-      display: none;
-    }
     .ant-drawer-content-wrapper {
       top: 85px;
       right: 30px;
@@ -142,6 +138,9 @@ export const DetailScheduleDiv = styled.div`
             font-weight: 800;
             cursor: default;
             height: 42px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
         }
         .checkList-wrap {
@@ -169,6 +168,9 @@ export const DetailScheduleDiv = styled.div`
               font-size: 14px;
               line-height: 0.8;
               cursor: default;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
           }
         }

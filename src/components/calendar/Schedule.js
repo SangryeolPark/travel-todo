@@ -15,6 +15,7 @@ const Schedule = ({
   selectReview,
   todoData,
   setIsDataChanged,
+  setOpen,
 }) => {
   const navigate = useNavigate();
 
@@ -37,6 +38,7 @@ const Schedule = ({
         try {
           await axios.patch(`/api/todo/${selectId}`);
           setIsDataChanged(prevState => !prevState);
+          setOpen(false);
         } catch (error) {
           console.log(error);
         }
@@ -45,7 +47,6 @@ const Schedule = ({
   };
 
   const handleEdit = () => {
-    console.log('수정');
     navigate(`/todo/${selectId}`, { state: selectId });
   };
 
