@@ -87,6 +87,8 @@ const CheckList = ({ state, idSub, sub, subList, setSubList, idCheck, check, dis
             placeholder="준비물을 입력해주세요."
             onChange={handleCheckInput}
             disabled={disabledPlan}
+            maxLength="20"
+            showCount
           />
         </Form.Item>
         <Button onClick={deleteCheckList}>

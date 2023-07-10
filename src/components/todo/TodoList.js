@@ -92,6 +92,8 @@ const TodoList = ({ state, idSub, sub, subList, setSubList, disabledPlan }) => {
               allowClear
               onChange={handleChangeSubTitle}
               disabled={disabledPlan}
+              maxLength="20"
+              showCount
             />
           </Form.Item>
           <Button onClick={handleAddCheckList} disabled={disabledPlan}>

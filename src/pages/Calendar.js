@@ -51,7 +51,6 @@ const Calendar = ({ isDataChanged, setIsDataChanged }) => {
     try {
       const res = await axios.get(`/api/calender/${idTitle}`);
       const result = res.data;
-      console.log(result);
       setSelectId(result.idTitle);
       setSelecTitle(result.title);
       setSelectStartDate(result.startDate);
@@ -159,8 +158,15 @@ const Calendar = ({ isDataChanged, setIsDataChanged }) => {
           }}
         />
       </div>
-      <DrawerDiv open={open}>
-        <Drawer placement="right" closable={false} open={open} getContainer={false}>
+      <DrawerDiv>
+        <Drawer
+          placement="right"
+          closable={false}
+          open={open}
+          getContainer={false}
+          mask={false}
+          destroyOnClose={true}
+        >
           <Schedule
             selectId={selectId}
             selectTitle={selectTitle}
@@ -169,6 +175,7 @@ const Calendar = ({ isDataChanged, setIsDataChanged }) => {
             selectReview={selectReview}
             todoData={todoData}
             setIsDataChanged={setIsDataChanged}
+            setOpen={setOpen}
           />
         </Drawer>
       </DrawerDiv>

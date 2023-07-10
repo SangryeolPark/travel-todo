@@ -99,6 +99,7 @@ const PageSwitch = styled(Switch)`
 const Content = styled(Layout.Content)`
   height: 80vh;
   padding: 15px;
+  overflow: hidden;
 `;
 
 const AddButton = styled(Button)`

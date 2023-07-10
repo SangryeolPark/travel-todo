@@ -162,6 +162,9 @@ export const CheckListLi = styled.li`
       margin-right: 10px;
       cursor: default;
     }
+    .ant-input-disabled {
+      cursor: default;
+    }
   }
 
   button {
@@ -181,7 +184,6 @@ export const TravelReviewDiv = styled.div`
     resize: none;
     .textarea {
       height: 35vh;
-      resize: none;
     }
   }
 `;

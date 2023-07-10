@@ -7,7 +7,14 @@ const TravelReview = () => {
   return (
     <TravelReviewDiv>
       <Form.Item name="travel-review" className="review-wrap">
-        <TextArea placeholder="여행에 대한 리뷰를 남겨주세요." className="textarea" rows={16} />
+        <TextArea
+          placeholder="여행에 대한 리뷰를 남겨주세요."
+          maxLength="500"
+          showCount
+          className="textarea"
+          rows={16}
+          style={{ resize: 'none' }}
+        />
       </Form.Item>
     </TravelReviewDiv>
   );
