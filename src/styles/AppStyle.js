@@ -97,7 +97,7 @@ const PageSwitch = styled(Switch)`
 `;
 
 const Content = styled(Layout.Content)`
-  height: 80vh;
+  height: 750px;
   padding: 15px;
   overflow: hidden;
 `;

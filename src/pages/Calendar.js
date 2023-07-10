@@ -144,7 +144,7 @@ const Calendar = ({ isDataChanged, setIsDataChanged }) => {
       <div className="wrap">
         <FullCalendar
           ref={calRef}
-          height="74.4vh"
+          height="690px"
           initialView="dayGridMonth"
           locale={'ko'}
           dayCellContent={day => day.dayNumberText.replace('일', '')}

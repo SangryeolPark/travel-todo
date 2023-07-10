@@ -213,6 +213,15 @@ const TravelItemCollapse = styled(Collapse)`
         align-items: center;
         font-size: 18px;
         font-weight: bold;
+        > .item-count {
+          margin-left: 5px;
+          padding: 2px 6px;
+          font-size: 12px;
+          background: #1e88e5;
+          color: white;
+          font-weight: normal;
+          border-radius: 10px;
+        }
       }
       > .ant-collapse-expand-icon {
         order: 1;
@@ -251,6 +260,14 @@ const TravelItemCollapse = styled(Collapse)`
       padding: 10px 0 5px;
       > .ant-collapse-content-box {
         padding: 0;
+        > .no-todo {
+          display: block;
+          padding: 9px 13px;
+          background-color: rgba(0, 0, 0, 0.01);
+          color: #494949;
+          border-radius: 5px;
+          border: 1px solid #d9d9d9;
+        }
       }
     }
   }

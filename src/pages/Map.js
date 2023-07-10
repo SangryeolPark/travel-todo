@@ -34,6 +34,7 @@ import {
 } from '../styles/MapStyle';
 
 import TodoCheck from '../components/map/TodoCheck';
+import TextArea from 'antd/es/input/TextArea';
 
 const Map = ({ isDataChanged, setIsDataChanged }) => {
   const navigate = useNavigate();
@@ -49,6 +50,8 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
   const [travelList, setTravelList] = useState(null);
   const [dataLoading, setDataLoading] = useState('loading');
   const { confirm } = Modal;
+
+  const todayDate = moment(Date.now()).format('YYYY-MM-DD');
 
   const handleRemove = idTitle => {
     confirm({
@@ -79,7 +82,7 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
       searchParam.set('filter', 'plan');
       setSearchParam(searchParam);
     }
-  }, [region, regionDetail, searchParam]);
+  }, [region, regionDetail, filter]);
 
   // GET 지역 정보 데이터
   useEffect(() => {
@@ -108,14 +111,10 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
         let filteredData;
         if (filter === 'plan' || !region) {
           filteredData = data.filter(
-            item =>
-              item.startDate >= moment(Date.now()).format('YYYY-MM-DD') ||
-              item.endDate >= moment(Date.now()).format('YYYY-MM-DD')
+            item => item.startDate >= todayDate || item.endDate >= todayDate
           );
         } else if (filter === 'finish') {
-          filteredData = data.filter(
-            item => item.endDate < moment(Date.now()).format('YYYY-MM-DD')
-          );
+          filteredData = data.filter(item => item.endDate < todayDate);
         }
 
         if (filteredData) {
@@ -178,12 +177,35 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
                   </div>
                 </>
               ),
-              children:
-                todoData.length !== 0 ? (
-                  <TodoItemCollapse accordion items={todoData} expandIconPosition="end" />
-                ) : (
-                  <span className="no-todo">등록된 할 일이 없습니다.</span>
-                ),
+              children: (
+                <>
+                  {todoData.length !== 0 ? (
+                    <TodoItemCollapse accordion items={todoData} expandIconPosition="end" />
+                  ) : (
+                    <span className="no-todo">등록된 할 일이 없습니다.</span>
+                  )}
+                  {item.detail.startDate <= todayDate ? (
+                    <TextArea
+                      style={{
+                        marginTop: 15,
+                        padding: '9px 13px',
+                        resize: 'none',
+                        background: 'none',
+                        color: '#494949',
+                        cursor: 'default',
+                      }}
+                      className="text-area"
+                      value={
+                        item.detail.travelReview
+                          ? item.detail.travelReview
+                          : '등록된 리뷰가 없습니다.'
+                      }
+                      disabled={true}
+                      rows={5}
+                    />
+                  ) : null}
+                </>
+              ),
             };
           });
           setDataLoading('success');

@@ -9,32 +9,27 @@ import logoSmall from '../logosmall.png';
 const Main = () => {
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
-  const [mapPath, setMapPath] = useState(null);
-  const [calendarPath, setCalendarPath] = useState(null);
   const [switchBool, setSwitchBool] = useState(pathname.includes('map'));
+  const [previousPath, setPreviousPath] = useState(null);
 
   useEffect(() => {
     if (pathname.includes('map')) {
-      if (!calendarPath) {
-        setCalendarPath('/calendar');
+      if (!previousPath) {
+        setPreviousPath('/calendar');
       }
       setSwitchBool(true);
-      setMapPath(pathname + search);
     } else if (pathname.includes('calendar')) {
-      if (!mapPath) {
-        setMapPath('/map');
+      if (!previousPath) {
+        setPreviousPath('/map');
       }
       setSwitchBool(false);
-      setCalendarPath(pathname + search);
     }
-  }, [pathname, search]);
-
-  useEffect(() => {
-    navigate(switchBool ? mapPath : calendarPath);
-  }, [switchBool]);
+  }, [previousPath, pathname]);
 
   const handleSwitchChange = () => {
+    setPreviousPath(pathname + search);
     setSwitchBool(!switchBool);
+    navigate(previousPath);
   };
 
   const handleAddClick = () => {
