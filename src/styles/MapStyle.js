@@ -149,6 +149,7 @@ const TravelListContainer = styled.div`
   box-shadow: 0px 1px 5px -1px rgba(0, 0, 0, 0.5);
   flex-basis: 40%;
   .list-filter-title {
+    color: #494949;
     font-size: 22px;
     font-weight: bold;
     padding: 10px;

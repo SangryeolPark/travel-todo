@@ -21,8 +21,16 @@ const Calendar = ({ isDataChanged, setIsDataChanged }) => {
   const [selectReview, setSelectReview] = useState('');
   const [todoData, setTodoData] = useState([]);
   const [searchParam, setSearchParam] = useSearchParams();
+
   const queryYear = searchParam.get('year');
   const queryMonth = searchParam.get('month');
+
+  const today = moment(Date.now()).format('YYYY-MM');
+  const todayYear = today.split('-')[0];
+  const todayMonth = today.split('-')[1];
+
+  const [year, setYear] = useState(queryYear ? queryYear : todayYear);
+  const [month, setMonth] = useState(queryMonth ? queryMonth : todayMonth);
   const calRef = useRef(null);
 
   // 세부 여행 일정 표시
@@ -36,12 +44,16 @@ const Calendar = ({ isDataChanged, setIsDataChanged }) => {
 
   // 캘린더 월 변경
   const handleDatesSet = () => {
-    const currentDate = document.querySelector('.fc-toolbar-title').innerHTML;
-    const currentYear = parseInt(currentDate.split(' ')[0]);
-    const currentMonth = parseInt(currentDate.split(' ')[1]);
-    searchParam.set('year', currentYear);
-    searchParam.set('month', currentMonth < 10 ? '0' + currentMonth : currentMonth);
-    setSearchParam(searchParam);
+    if (calRef.current) {
+      const calApi = calRef.current.getApi();
+
+      const currentYear = calApi.getDate().getYear() + 1900;
+      const currentTempMonth = calApi.getDate().getMonth() + 1;
+      const currentMonth = currentTempMonth < 10 ? '0' + currentTempMonth : currentTempMonth;
+
+      setYear(currentYear);
+      setMonth(currentMonth);
+    }
   };
 
   // title 가져오기
@@ -85,27 +97,19 @@ const Calendar = ({ isDataChanged, setIsDataChanged }) => {
   };
 
   useEffect(() => {
-    const today = moment(Date.now()).format('YYYY-MM');
-    const year = today.split('-')[0];
-    const month = today.split('-')[1];
+    searchParam.set('year', year);
+    searchParam.set('month', month);
+    setSearchParam(searchParam);
 
-    //첫 로딩
-    const isValidDate = Boolean(queryYear || queryMonth);
-
-    if (!isValidDate) {
-      searchParam.set('year', year);
-      searchParam.set('month', month);
-      setSearchParam(searchParam);
-    }
     if (calRef.current) {
       const calApi = calRef.current.getApi();
-      calApi.gotoDate(isValidDate ? `${queryYear}${queryMonth}` : `${year}${month}`);
+      calApi.gotoDate(`${year}${month}`);
     }
 
     // calendar event 데이터 가져오기
     const getCalendarData = async () => {
       try {
-        const res = await axios.get(`/api/calender?year=${queryYear}&month=${queryMonth}`);
+        const res = await axios.get(`/api/calender?year=${year}&month=${month}`);
         const result = res.data;
         // calendar event 생성
         const newEventData = result.map(item => {
@@ -132,10 +136,8 @@ const Calendar = ({ isDataChanged, setIsDataChanged }) => {
       }
     };
 
-    if (isValidDate) {
-      getCalendarData();
-    }
-  }, [queryYear, queryMonth, calRef, isDataChanged]);
+    getCalendarData();
+  }, [year, month, calRef, isDataChanged]);
 
   return (
     <CalendarDiv>
