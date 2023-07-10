@@ -18,6 +18,7 @@ const mainAni = keyframes`
 
 const MainContainer = styled.div`
   position: relative;
+  min-width: 1200px;
   width: 75vw;
   overflow: auto;
   border: 2px solid #1e88e5;
@@ -109,7 +110,8 @@ const AddButton = styled(Button)`
   background: #ff4d4f;
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
   font-size: 30px;
-  z-index: 999;
+  z-index: 9999;
+  transition: all 0.3s ease-in-out;
   &:hover {
     background: #ff4d4f !important;
     filter: brightness(1.1);

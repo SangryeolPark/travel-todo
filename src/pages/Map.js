@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Link,
-  Outlet,
-  useNavigate,
-  useOutletContext,
-  useParams,
-  useSearchParams,
-} from 'react-router-dom';
+import { Link, Outlet, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -47,10 +40,11 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
   const { region, regionDetail } = useParams();
   const [searchParam, setSearchParam] = useSearchParams();
   const filter = searchParam.get('filter');
-  const { regionData, regionDataLoading } = useOutletContext();
   const [mapData, setMapData] = useState([]);
   const colorData = JSON.parse(localStorage.getItem('map-color'));
   const [mapColor, setMapColor] = useState(colorData ? colorData : ['#fff', '#000']);
+  const [regionData, setRegionData] = useState(null);
+  const [regionDataLoading, setRegionDataLoading] = useState('loading');
   const [regionInfo, setRegionInfo] = useState([]);
   const [travelList, setTravelList] = useState(null);
   const [dataLoading, setDataLoading] = useState('loading');
@@ -87,8 +81,23 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
     }
   }, [region, regionDetail, searchParam]);
 
+  // GET 지역 정보 데이터
   useEffect(() => {
-    // GET 여행 일정 데이터
+    const getRegionData = async () => {
+      try {
+        const { data } = await axios.get('/api/map/count');
+        setRegionData(data);
+      } catch (error) {
+        console.log(error);
+        setRegionDataLoading('fail');
+      }
+    };
+
+    getRegionData();
+  }, [isDataChanged]);
+
+  // GET 여행 일정 데이터
+  useEffect(() => {
     setDataLoading('loading');
     setTravelList(null);
     const getData = async () => {
@@ -127,7 +136,7 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
                     ) : (
                       <FontAwesomeIcon icon={faSquare} />
                     )}
-                    {item.subTitle}
+                    <span>{item.subTitle}</span>
                   </>
                 ),
                 children:
@@ -206,6 +215,7 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
     setMapData(document.querySelectorAll('g > path'));
   }, [region, regionDetail, regionData]);
 
+  // 지도 렌더링
   useEffect(() => {
     const findRegionName = item => {
       if (!region) {
@@ -238,15 +248,6 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
       }
     };
 
-    // Map hover 효과
-    const hoverItem = item => {
-      item.onmouseenter = () => {
-        item.style.filter = 'brightness(1.2)';
-      };
-      item.onmouseout = () => {
-        item.style.filter = 'none';
-      };
-    };
     // MapContainer 세팅
     const renderMapContainer = () => {
       mapData.forEach(item => {
@@ -266,10 +267,7 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
           opacityValue = 1.0;
         }
 
-        item.style.fill = mapColor[0];
-        item.style.stroke = mapColor[1];
         item.style.fillOpacity = opacityValue;
-        item.style.transition = 'filter 0.2s ease-in-out';
 
         item.onclick = () => {
           if (!region) {
@@ -278,8 +276,6 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
             navigate(`${region}/${item.id}`);
           }
         };
-
-        hoverItem(item);
       });
 
       // Breadcrumb
@@ -314,11 +310,11 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
     if (regionData) {
       renderMapContainer();
     }
-  }, [mapData, mapColor, regionData, isDataChanged]);
+  }, [mapData, regionData, isDataChanged]);
 
   return (
     <MapContainer>
-      <MapImage>
+      <MapImage color={mapColor[0]} stroke={mapColor[1]}>
         {regionData ? (
           <MapInfo separator={<FontAwesomeIcon icon={faChevronRight} />} items={regionInfo} />
         ) : (
@@ -398,8 +394,14 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
             {dataLoading === 'loading' ? (
               [1, 2, 3, 4, 5, 6].map(item => (
                 <div key={item} className="item-loading">
-                  <Skeleton.Input active={true} style={{ minWidth: 0, width: 110, height: 23 }} />
-                  <Skeleton.Input active={true} style={{ width: 170, height: 16.5 }} />
+                  <Skeleton.Input
+                    active={true}
+                    style={{ minWidth: 110, width: '40%', height: 23 }}
+                  />
+                  <Skeleton.Input
+                    active={true}
+                    style={{ minWidth: 170, width: '60%', height: 16 }}
+                  />
                   <FontAwesomeIcon style={{ marginTop: 1.5 }} icon={faChevronDown} />
                 </div>
               ))

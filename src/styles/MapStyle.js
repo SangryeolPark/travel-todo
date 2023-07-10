@@ -52,6 +52,14 @@ const MapImage = styled.div`
   padding: 80px 30px;
   > svg {
     animation: ${mapAni} 0.5s ease-in-out;
+    path {
+      fill: ${props => props.color};
+      stroke: ${props => props.stroke};
+      /* transition: filter 0.2s ease-in-out; */
+      &:hover {
+        filter: brightness(1.2);
+      }
+    }
   }
 `;
 
@@ -96,6 +104,7 @@ const NoMapInfo = styled.div`
       border-radius: 50%;
     }
     div {
+      text-shadow: 0px 0px 2px #000;
       color: #fff;
     }
   }

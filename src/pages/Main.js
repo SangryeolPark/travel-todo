@@ -4,31 +4,14 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEarthAsia, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
-import axios from 'axios';
 import logoSmall from '../logosmall.png';
 
-const Main = ({ isDataChanged }) => {
+const Main = () => {
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
   const [mapPath, setMapPath] = useState(null);
   const [calendarPath, setCalendarPath] = useState(null);
   const [switchBool, setSwitchBool] = useState(pathname.includes('map'));
-  const [regionData, setRegionData] = useState(null);
-  const [regionDataLoading, setRegionDataLoading] = useState('loading');
-
-  useEffect(() => {
-    const getRegionData = async () => {
-      try {
-        const { data } = await axios.get('/api/map/count');
-        setRegionData(data);
-      } catch (error) {
-        console.log(error);
-        setRegionDataLoading('fail');
-      }
-    };
-
-    getRegionData();
-  }, [isDataChanged]);
 
   useEffect(() => {
     if (pathname.includes('map')) {
@@ -70,7 +53,7 @@ const Main = ({ isDataChanged }) => {
         />
       </Header>
       <Content>
-        <Outlet context={{ regionData, regionDataLoading }} />
+        <Outlet />
       </Content>
       <AddButton
         onClick={handleAddClick}

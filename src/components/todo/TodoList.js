@@ -1,5 +1,5 @@
 import { Button, Checkbox, Form, Input } from 'antd';
-import React, { useState } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faListCheck } from '@fortawesome/free-solid-svg-icons';
 import CheckList from './CheckList';
@@ -21,7 +21,7 @@ const TodoList = ({ state, idSub, sub, subList, setSubList, disabledPlan }) => {
   // 일정 삭제
   const deleteSub = async () => {
     const newSubList = subList.filter(sub => (state && sub.idSub ? sub.idSub : sub.id) !== idSub);
-    if (state) {
+    if (state && sub.idSub) {
       try {
         await axios.delete(`/api/todo/sub/${idSub}`);
       } catch (error) {

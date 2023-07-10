@@ -17,7 +17,7 @@ const CheckList = ({ state, idSub, sub, subList, setSubList, idCheck, check, dis
       }
       return sub;
     });
-    if (state) {
+    if (state && check.idCheck) {
       try {
         await axios.delete(`/api/todo/check/${idCheck}`);
       } catch (error) {

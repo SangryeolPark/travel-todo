@@ -101,6 +101,7 @@ const Todo = ({ setIsDataChanged }) => {
       endDate: values['date-picker'][1],
       calColor: values.color.replace('#', ''),
       subList: subList,
+      travelReview: values['travel-review'],
     };
 
     if (state) {
