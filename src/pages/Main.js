@@ -114,7 +114,7 @@ const Main = () => {
           <div>
             <span>Team Notion </span>
             <a
-              href="https://www.notion.so/devitoolz/Travel-Todo-TT-8f38ae2892434e6d953f8ae4c6589b5c"
+              href="https://devitoolz.notion.site/Travel-Todo-TT-8f38ae2892434e6d953f8ae4c6589b5c?pvs=4"
               rel="noreferrer"
               target="_blank"
             >
