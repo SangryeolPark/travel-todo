@@ -15,7 +15,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEarthAsia, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
 
-import { Button, Modal } from 'antd';
 import { register } from 'swiper/element/bundle';
 
 import logoSmall from '../logosmall.png';
@@ -108,8 +107,8 @@ const Main = () => {
       </MainContainer>
       <About
         open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
+        onOk={() => setIsModalOpen(false)}
+        onCancel={() => setIsModalOpen(false)}
         centered
         footer={
           <div>
@@ -219,6 +218,7 @@ const Main = () => {
         width={1000}
         open={tutorialOpen}
         footer={[]}
+        centered
         onCancel={() => setTutorialOpen(false)}
         maskClosable={false}
       >
