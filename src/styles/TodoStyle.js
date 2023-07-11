@@ -67,8 +67,8 @@ export const TodoDiv = styled.div`
     display: flex;
     .travel-plan-title {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      gap: 30px;
       margin-bottom: 10px;
       h2 {
         margin: 0;

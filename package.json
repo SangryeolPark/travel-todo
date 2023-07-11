@@ -2,7 +2,9 @@
   "name": "travel-todo",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://192.168.0.144:5004",
   "dependencies": {
+    "@ant-design/icons": "^5.1.4",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
@@ -22,6 +24,7 @@
     "react-router-dom": "^6.13.0",
     "react-scripts": "5.0.1",
     "react-spinners": "^0.13.8",
+    "swiper": "^10.0.4",
     "tinycolor2": "^1.6.0"
   },
   "scripts": {

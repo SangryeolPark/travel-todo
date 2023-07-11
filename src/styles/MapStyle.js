@@ -251,6 +251,7 @@ const TravelItemCollapse = styled(Collapse)`
             transition: all 0.3s ease-in-out;
             &:hover {
               color: #1e88e5;
+              cursor: pointer;
             }
           }
         }

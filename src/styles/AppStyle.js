@@ -1,6 +1,7 @@
+import { InfoCircleOutlined } from '@ant-design/icons';
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Button, Layout, Switch } from 'antd';
+import { Button, Layout, Modal, Switch } from 'antd';
 
 const white = '#fff';
 const primary = '#1e88e5';
@@ -41,6 +42,16 @@ const Header = styled(Layout.Header)`
   > img {
     width: 210px;
   }
+  > .header-btn-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+`;
+
+const InfoButton = styled(InfoCircleOutlined)`
+  font-size: 30px;
+  color: ${white};
 `;
 
 const PageSwitch = styled(Switch)`
@@ -111,7 +122,7 @@ const AddButton = styled(Button)`
   background: #ff4d4f;
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
   font-size: 30px;
-  z-index: 9999;
+  z-index: 999;
   transition: all 0.3s ease-in-out;
   &:hover {
     background: #ff4d4f !important;
@@ -122,4 +133,38 @@ const AddButton = styled(Button)`
   }
 `;
 
-export { white, primary, MainContainer, Header, PageSwitch, Content, AddButton };
+const TutorialModal = styled(Modal)`
+  .ant-modal-content {
+    padding: 20px 10px;
+  }
+  .ant-modal-header {
+    margin-bottom: 18px;
+  }
+  .ant-modal-footer {
+    margin-top: 0;
+  }
+  p {
+    padding-top: 10px;
+    font-size: 14px;
+    text-align: center;
+  }
+  strong {
+    font-size: 16px;
+  }
+  swiper-slide {
+    text-align: center;
+  }
+`;
+
+export {
+  white,
+  primary,
+  mainAni,
+  MainContainer,
+  Header,
+  InfoButton,
+  PageSwitch,
+  Content,
+  AddButton,
+  TutorialModal,
+};
