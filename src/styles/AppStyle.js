@@ -133,6 +133,117 @@ const AddButton = styled(Button)`
   }
 `;
 
+const About = styled(Modal)`
+  width: 900px !important;
+  .ant-modal-body {
+    padding: 20px 0 0px 30px;
+  }
+  .wrap {
+    font-size: 15px;
+    .title {
+      font-size: 30px;
+      color: #1e88e5;
+      margin-bottom: 10px;
+    }
+    h3 {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .about-text {
+      margin-bottom: 60px;
+      span:nth-child(5) {
+        display: block;
+      }
+      span:nth-child(7) {
+        display: block;
+        white-space: nowrap;
+      }
+    }
+    .member-title {
+      display: block;
+      font-size: 24px;
+      font-weight: 900;
+      color: #1e88e5;
+      margin-bottom: 10px;
+    }
+    .member-wrap {
+      display: flex;
+      .front-wrap,
+      .back-wrap {
+        width: 100%;
+        h4 {
+          font-size: 21px;
+          margin-bottom: 15px;
+        }
+        > div {
+          margin-bottom: 30px;
+          .member-detail-wrap {
+            display: flex;
+            flex-flow: column;
+            align-items: start;
+            /* align-items: center; */
+            > img {
+              width: 60px;
+              height: 55px;
+              border-radius: 50%;
+              padding: 3px;
+              background: rgb(181, 187, 188);
+              margin-bottom: 10px;
+            }
+            > div {
+              margin: 0 0 3px 5px;
+              display: flex;
+              align-items: end;
+              .member-name {
+                display: block;
+                margin-right: 10px;
+                font-weight: 900;
+                font-size: 17px;
+              }
+              .icons {
+                .github {
+                  width: 24px;
+                  margin: 0 3px 2px 0;
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+          .roles {
+            margin-left: 5px;
+            display: block;
+            font-size: 15px;
+            white-space: nowrap;
+          }
+        }
+      }
+      .back-wrap {
+        div:nth-child(3) {
+          margin-top: 54px;
+        }
+      }
+    }
+  }
+  .ant-modal-footer {
+    div {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      span {
+        font-size: 15px;
+        font-weight: 600;
+        margin-right: 10px;
+      }
+      a {
+        img {
+          width: 30px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+`;
+
 const TutorialModal = styled(Modal)`
   .ant-modal-content {
     padding: 20px 10px;
@@ -166,5 +277,6 @@ export {
   PageSwitch,
   Content,
   AddButton,
+  About,
   TutorialModal,
 };
