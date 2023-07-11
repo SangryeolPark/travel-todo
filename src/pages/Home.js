@@ -1,6 +1,6 @@
 import React from 'react';
-import title from '../logotitle.png';
-import logoImg from '../logoimg.png';
+import title from '../assets/logotitle.png';
+import logoImg from '../assets/logoimg.png';
 import { HomeDiv } from '../styles/HomeStyle';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';

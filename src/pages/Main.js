@@ -17,17 +17,17 @@ import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
 
 import { register } from 'swiper/element/bundle';
 
-import logoSmall from '../logosmall.png';
+import logoSmall from '../assets/logosmall.png';
 import mapImg from '../assets/map.png';
 import map2Img from '../assets/map2.png';
 import calendarImg from '../assets/calendar.png';
 import todoImg from '../assets/todo.png';
-import github from '../github.png';
-import notion from '../notion.png';
-import member1 from '../member1.png';
-import member2 from '../member2.png';
-import member3 from '../member3.png';
-import member4 from '../member4.png';
+import github from '../assets/github.png';
+import notion from '../assets/notion.png';
+import member1 from '../assets/member1.png';
+import member2 from '../assets/member2.png';
+import member3 from '../assets/member3.png';
+import member4 from '../assets/member4.png';
 
 const Main = () => {
   const navigate = useNavigate();
