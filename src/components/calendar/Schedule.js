@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faPencil, faSquareCheck } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faPencil, faSquareCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
 import { Input, Modal } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
@@ -59,6 +59,7 @@ const Schedule = ({
       <div className="btns">
         <FontAwesomeIcon icon={faPencil} className="bt-pencil" onClick={handleEdit} />
         <FontAwesomeIcon icon={faTrashCan} className="bt-trash" onClick={showModal} />
+        <FontAwesomeIcon icon={faXmark} className="bt-close" onClick={() => setOpen(false)} />
       </div>
       <div className="travel-schedule">
         <h2>Travel Schedule</h2>

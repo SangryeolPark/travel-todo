@@ -89,6 +89,13 @@ export const DetailScheduleDiv = styled.div`
     }
     .bt-trash {
       font-size: 21px;
+      margin-right: 15px;
+      :hover {
+        color: #1e88e5;
+      }
+    }
+    .bt-close {
+      font-size: 27px;
       :hover {
         color: #1e88e5;
       }
