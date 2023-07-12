@@ -184,9 +184,9 @@ const Main = () => {
               <h4>Back-end</h4>
               <div>
                 <div className="member-detail-wrap">
-                  <img src={member3} alt="권민구 이미지" />
+                  <img src={member3} alt="신형주 이미지" />
                   <div>
-                    <span className="member-name">권민구</span>
+                    <span className="member-name">신형주</span>
                     <div className="icons">
                       <a href="https://github.com/Shin-HyoungJoo/" rel="noreferrer" target="_blank">
                         <img src={github} alt="깃허브 바로가기" className="github" />
@@ -194,13 +194,13 @@ const Main = () => {
                     </div>
                   </div>
                 </div>
-                <span className="roles">todo-페이지 / 캘린더 페이지</span>
+                <span className="roles">맵 페이지 / todo-페이지</span>
               </div>
               <div>
                 <div className="member-detail-wrap">
-                  <img src={member4} alt="신형주 이미지" />
+                  <img src={member4} alt="권민구 이미지" />
                   <div>
-                    <span className="member-name">신형주</span>
+                    <span className="member-name">권민구</span>
                     <div className="icons">
                       <a href="https://github.com/KwonMingu" rel="noreferrer" target="_blank">
                         <img src={github} alt="깃허브 바로가기" className="github" />
@@ -208,7 +208,7 @@ const Main = () => {
                     </div>
                   </div>
                 </div>
-                <span className="roles">맵 페이지 / todo-페이지</span>
+                <span className="roles">todo-페이지 / 캘린더 페이지</span>
               </div>
             </div>
           </div>

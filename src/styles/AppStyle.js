@@ -151,10 +151,10 @@ const About = styled(Modal)`
     }
     .about-text {
       margin-bottom: 60px;
-      span:nth-of-type(5) {
+      span:nth-of-type(3) {
         display: block;
       }
-      span:nth-of-type(7) {
+      span:nth-of-type(4) {
         display: block;
         white-space: nowrap;
       }
@@ -218,7 +218,7 @@ const About = styled(Modal)`
         }
       }
       .back-wrap {
-        div:nth-of-type(3) {
+        div:nth-of-type(2) {
           margin-top: 54px;
         }
       }
