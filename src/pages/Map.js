@@ -387,11 +387,7 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
               },
               {
                 title:
-                  filter === 'finish' ? (
-                    '완료된 일정'
-                  ) : (
-                    <Link to="?filter=finish">완료된 일정</Link>
-                  ),
+                  filter === 'finish' ? '지난 일정' : <Link to="?filter=finish">지난 일정</Link>,
               },
             ]}
           />
