@@ -68,7 +68,7 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
       centered: true,
       async onOk() {
         try {
-          await axios.patch(`/api/todo/${idTitle}`);
+          await axios.patch(`${process.env.REACT_APP_API_URL}/api/todo/${idTitle}`);
           setIsDataChanged(prevState => !prevState);
         } catch (error) {
           console.log(error);
@@ -88,7 +88,7 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
   useEffect(() => {
     const getRegionData = async () => {
       try {
-        const { data } = await axios.get('/api/map/count');
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/map/count`);
         setRegionData(data);
       } catch (error) {
         console.log(error);
@@ -107,7 +107,7 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
       let url = regionDetail ? `/${region}/${regionDetail}` : region ? `/${region}` : '';
 
       try {
-        const { data } = await axios.get(`/api/map${url}`);
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/map${url}`);
         let filteredData;
         if (filter === 'plan' || !region) {
           filteredData = data.filter(
@@ -219,7 +219,7 @@ const Map = ({ isDataChanged, setIsDataChanged }) => {
 
     const getDetailData = async idTitle => {
       try {
-        const { data } = await axios.get(`/api/todo/${idTitle}`);
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/todo/${idTitle}`);
         return data;
       } catch (err) {
         console.log(err);

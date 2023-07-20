@@ -39,7 +39,7 @@ const Schedule = ({
       centered: true,
       async onOk() {
         try {
-          await axios.patch(`/api/todo/${selectId}`);
+          await axios.patch(`${process.env.REACT_APP_API_URL}/api/todo/${selectId}`);
           setIsDataChanged(prevState => !prevState);
           setOpen(false);
         } catch (error) {

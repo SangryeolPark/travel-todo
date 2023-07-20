@@ -56,8 +56,8 @@ const Todo = ({ setIsDataChanged }) => {
   const saveData = async payload => {
     try {
       state
-        ? await axios.put(`/api/todo/${state}`, payload)
-        : await axios.post('/api/todo', payload);
+        ? await axios.put(`${process.env.REACT_APP_API_URL}/api/todo/${state}`, payload)
+        : await axios.post(`${process.env.REACT_APP_API_URL}/api/todo`, payload);
     } catch (err) {
       console.log(err);
     }
@@ -89,7 +89,7 @@ const Todo = ({ setIsDataChanged }) => {
   useEffect(() => {
     const getRegion = async () => {
       try {
-        const res = await axios.get('/api/todo');
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/todo`);
         const result = res.data;
         setRegionData(result);
       } catch (err) {
@@ -124,7 +124,7 @@ const Todo = ({ setIsDataChanged }) => {
   // 일정 데이터 불러오기
   useEffect(() => {
     const getData = async () => {
-      const { data } = await axios.get(`/api/todo/${state}`);
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/todo/${state}`);
       formRef.current.setFieldsValue({
         color: data.calColor,
         city: [data.idRegion, data.idRegionDetail],

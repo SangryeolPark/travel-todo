@@ -23,7 +23,7 @@ const TodoList = ({ state, idSub, sub, subList, setSubList, disabledPlan }) => {
     const newSubList = subList.filter(sub => (state && sub.idSub ? sub.idSub : sub.id) !== idSub);
     if (state && sub.idSub) {
       try {
-        await axios.delete(`/api/todo/sub/${idSub}`);
+        await axios.delete(`${process.env.REACT_APP_API_URL}/api/todo/sub/${idSub}`);
       } catch (error) {
         console.log(error);
       }

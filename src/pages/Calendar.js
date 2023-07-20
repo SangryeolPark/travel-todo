@@ -59,7 +59,7 @@ const Calendar = ({ isDataChanged, setIsDataChanged }) => {
   // title 가져오기
   const getTitle = async idTitle => {
     try {
-      const res = await axios.get(`/api/calender/${idTitle}`);
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/calender/${idTitle}`);
       const result = res.data;
       setSelectId(result.idTitle);
       setSelecTitle(result.title);
@@ -74,7 +74,7 @@ const Calendar = ({ isDataChanged, setIsDataChanged }) => {
   // 할일 가져오기
   const getTodo = async idTitle => {
     try {
-      const res = await axios.get(`/api/calender/${idTitle}/sub`);
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/calender/${idTitle}/sub`);
       const result = res.data;
       const promises = result.map(item => getCheckList(item));
       const todoArray = await Promise.all(promises);
@@ -87,7 +87,9 @@ const Calendar = ({ isDataChanged, setIsDataChanged }) => {
   // 체크리스트 가져오기
   const getCheckList = async item => {
     try {
-      const res = await axios.get(`/api/calender/${item.idSub}/check`);
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/calender/${item.idSub}/check`
+      );
       const result = res.data;
       const newTodo = { ...item, checkList: result };
       return newTodo;
@@ -109,7 +111,9 @@ const Calendar = ({ isDataChanged, setIsDataChanged }) => {
     // calendar event 데이터 가져오기
     const getCalendarData = async () => {
       try {
-        const res = await axios.get(`/api/calender?year=${year}&month=${month}`);
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/calender?year=${year}&month=${month}`
+        );
         const result = res.data;
         // calendar event 생성
         const newEventData = result.map(item => {

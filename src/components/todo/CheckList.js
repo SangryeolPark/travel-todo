@@ -19,7 +19,7 @@ const CheckList = ({ state, idSub, sub, subList, setSubList, idCheck, check, dis
     });
     if (state && check.idCheck) {
       try {
-        await axios.delete(`/api/todo/check/${idCheck}`);
+        await axios.delete(`${process.env.REACT_APP_API_URL}/api/todo/check/${idCheck}`);
       } catch (error) {
         console.log(error);
       }
