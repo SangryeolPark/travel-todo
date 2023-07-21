@@ -29,11 +29,13 @@ body {
   line-height: 1.4;
   letter-spacing: -0.3px;
   word-break: keep-all;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
   background: url('background.jpeg');
+}
+
+#root {
+  display: grid;
+  place-items: center;
+  height: 100vh;
 }
 
 .loading-msg {
