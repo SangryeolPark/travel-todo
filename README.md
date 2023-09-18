@@ -37,7 +37,9 @@
 
 ![Travel Todo](https://github.com/heeheepark/travel-todo/assets/101806077/92832c54-cd63-473f-9d7b-91844e412e7d)
 
-##### 배포 URL : https://web-travel-todo-cu6q2blkafu2i7.sel4.cloudtype.app/
+##### 시연 영상 YouTube : https://youtu.be/uNK0TDr4clM
+
+##### 배포 URL : https://web-travel-todo-cu6q2blkafu2i7.sel4.cloudtype.app
 
 ## 👥  팀 구성
 
