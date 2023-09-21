@@ -39,9 +39,9 @@
 
 ![Travel Todo](https://github.com/heeheepark/travel-todo/assets/101806077/92832c54-cd63-473f-9d7b-91844e412e7d)
 
-##### 시연 영상 YouTube : https://youtu.be/uNK0TDr4clM
+시연 영상 YouTube : https://youtu.be/uNK0TDr4clM
 
-##### 배포 URL : https://web-travel-todo-cu6q2blkafu2i7.sel4.cloudtype.app
+배포 URL : https://web-travel-todo-cu6q2blkafu2i7.sel4.cloudtype.app
 
 ## 👥  팀 구성
 
@@ -106,7 +106,3 @@
 🌈  일정 추가 / 수정 시 캘린더에 설정한 색상으로 여행 일정 표시  
 📝  일정 완료 시 할 일 및 체크 리스트 수정 불가능  
       해당 일정 진행 중 혹은 완료 시 리뷰 작성 가능
-
-<br />
-
-\*\* 본 README는 프론트엔드의 입장에서만 작성되었습니다. \*\*
