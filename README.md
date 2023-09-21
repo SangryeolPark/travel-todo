@@ -1,7 +1,9 @@
 # Travel Todo (TT)
 
 #### 프론트엔드 리액트 개발자 양성 과정 1차 협업 프로젝트
-<a target="_blank" href="https://devitoolz.notion.site/Travel-Todo-TT-8f38ae2892434e6d953f8ae4c6589b5c?pvs=4" ><img height="30" width="30" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/notion.svg" /></a>
+<a target="_blank" href="https://devitoolz.notion.site/Travel-Todo-TT-8f38ae2892434e6d953f8ae4c6589b5c?pvs=4" ><img height="30" width="30" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/notion.svg" />  Notion</a>
+    
+<a target="_blank" href="https://www.canva.com/design/DAFn6X3_vtQ/J3bIH9p8yP_e3EOxWKLwBw/view?utm_content=DAFn6X3_vtQ&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink" ><img height="30" width="30" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/canva.svg" />  발표 자료</a>
 
 ## 🛫  Travel Todo: 나의 여행 일지
 
